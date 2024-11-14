@@ -1,8 +1,8 @@
-# React + Vite
+<h1>Secondary Car Marketplace and Service Platform</h1>
+Goals and Motivations: We give you comprehensive solution for buying, selling, renting, and maintaining used cars. Make the second-hand or used car market more accessible by transforming your old car into a valuable asset. Our goal is to offer fair pricing and provide the best deals, making your dream car affordable and within reach. Additionally, we ensure authentic service, effective management, and a user-friendly platform for convenient car maintenance.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br>
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<b>After Cloning the repo Must Do the things</b>
+<code> npm install </code>
+<code> npm install react-bootstrap bootstrap</code>
