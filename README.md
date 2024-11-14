@@ -5,3 +5,4 @@ Goals and Motivations: We give you comprehensive solution for buying, selling, r
 
 <b>After Cloning the repo Must Do the things</b>
 <code> npm install </code>
+<code> npm install react-bootstrap bootstrap</code>
