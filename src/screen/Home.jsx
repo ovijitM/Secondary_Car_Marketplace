@@ -44,22 +44,22 @@ function Home() {
       {/* Main Content Sections */}
       <Container className="my-4">
         <div className={`slider-container`}>
-          <div className={`slider-content ${currentSection === 0 ? 'active' : ''}`}>
+          <div >
             <h2>Cars</h2>
             <Row>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
+              <Col style={{color:'black'}}>
                 <Cards />
               </Col>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
+              <Col style={{color:'black'}}>
                 <Cards />
               </Col>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
+              <Col style={{color:'black'}}>
                 <Cards />
               </Col>
             </Row>
           </div>
 
-          <div className={`slider-content ${currentSection === 1 ? 'active' : ''}`}>
+          <div >
             <h2>Rent</h2>
             <Row>
               <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
@@ -74,7 +74,7 @@ function Home() {
             </Row>
           </div>
 
-          <div className={`slider-content ${currentSection === 2 ? 'active' : ''}`}>
+          <div >
             <h2>Repair</h2>
             <Row>
               <Col xs={12} sm={6} md={4} lg={3} className="mb-4">

@@ -22,10 +22,9 @@ function RepairPage() {
     setShowModal(true);
   };
 
-  // Handle modal close
   const handleCloseModal = () => setShowModal(false);
 
-  // Handle requesting the repair service
+
   const handleRequestRepair = () => {
     alert(`You have requested the ${selectedService.name} service.`);
     setShowModal(false);
@@ -33,8 +32,7 @@ function RepairPage() {
 
   return (
     <>
-      <CustomNavbar /> {/* Navbar component at the top */}
-
+      <CustomNavbar /> 
       <Container className="my-4">
         <h2 className="text-center mb-4">Repair Services</h2>
 
