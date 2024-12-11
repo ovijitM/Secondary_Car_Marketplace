@@ -5,9 +5,12 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Customnavbar from '../../components/Customnavbar';
 
 function Login() {
   return (
+    <>
+    <Customnavbar />
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Row>
         <Col md={12}>
@@ -38,6 +41,7 @@ function Login() {
         </Col>
       </Row>
     </Container>
+    </>
   );
 }
 

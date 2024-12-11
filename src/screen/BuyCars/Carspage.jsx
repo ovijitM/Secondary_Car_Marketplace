@@ -21,7 +21,6 @@ function CarsPage() {
     year: '',
   });
 
-  // Handle the filter changes
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
