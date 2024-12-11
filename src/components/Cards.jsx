@@ -1,8 +1,9 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Home from "./Customnavbar";
 
-export default function Cards() {
+function Cards() {
   return (
     <>
       <Card style={{ width: "18rem" }}>
@@ -23,3 +24,5 @@ export default function Cards() {
     </>
   );
 }
+
+export default Cards;

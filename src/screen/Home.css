@@ -1,0 +1,52 @@
+/* Basic styling for the slider container */
+.slider-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .slider-content {
+    display: none;
+    position: absolute;
+    width: 100%;
+    transition: transform 0.5s ease;
+  }
+  
+  .slider-content.active {
+    display: block;
+  }
+  
+  .slider-container .slider-content:nth-child(1) {
+    transform: translateX(0);
+  }
+  
+  .slider-container .slider-content:nth-child(2) {
+    transform: translateX(100%);
+  }
+  
+  .slider-container .slider-content:nth-child(3) {
+    transform: translateX(200%);
+  }
+  
+  .slider-container .slider-content.active:nth-child(1) {
+    transform: translateX(0);
+  }
+  
+  .slider-container .slider-content.active:nth-child(2) {
+    transform: translateX(-100%);
+  }
+  
+  .slider-container .slider-content.active:nth-child(3) {
+    transform: translateX(-200%);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the buttons at the bottom */
+  button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+  

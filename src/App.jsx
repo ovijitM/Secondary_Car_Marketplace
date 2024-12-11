@@ -1,30 +1,32 @@
-import { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./screen/Home";
+import Login from "./screen/Login&signup/Login";
+import Signup from "./screen/Login&signup/SignUp"
+import Cars from "./screen/BuyCars/Carspage"
+import CarDetails from "./screen/BuyCars/CarDetails"
+import Rent from "./screen/Rentcars/RentPage"
+import Repair from './screen/Repair/RepairPage'
+
 import "bootstrap/dist/css/bootstrap.min.css";
-import Customnavbar from "./components/Customnavbar";
-import Carousel from "./components/Carousels";
-import Cards from "./components/Cards";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
+    <Router>
       <div>
-        <Customnavbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/buycars" element={<Cars />} />
+          <Route path="/CarDetails" element={<CarDetails/>}/>
+          <Route path="/rentcars" element={<Rent/>}/>
+          <Route path="/repair" element={<Repair/>}/>
+        </Routes>
       </div>
-      <div className="h-[600px]">
-        <Carousel />
-      </div>
-
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-        <Cards />
-      </div>
-    </>
+    </Router>
   );
 }
 
 export default App;
+
