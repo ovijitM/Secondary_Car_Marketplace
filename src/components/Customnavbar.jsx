@@ -9,7 +9,7 @@ function CustomNavbar() {
     <>
       <Navbar bg="black" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand as={Link} to="/" ><img src="https://i.ibb.co.com/KhVd4zj/Component-4 nav-link.png" className="px-4 nav-link nav-link" alt="DriveNext" style={{width:'auto', height:'40px'}}/></Navbar.Brand> {/* Updated for routing */}
+          <Navbar.Brand as={Link} to="/" ><img src="https://i.ibb.co.com/KhVd4zj/Drive-Nextlogo.png" className="px-4 nav-link nav-link" alt="DriveNext" style={{width:'auto', height:'40px'}}/></Navbar.Brand> {/* Updated for routing */}
           <Nav className="mx-auto">
             <Nav.Link as={Link} to="/buycars" className="px-4 nav-link ">Cars</Nav.Link>
             <Nav.Link as={Link} to="/rentcars" className="px-4 nav-link" >Rent</Nav.Link>
