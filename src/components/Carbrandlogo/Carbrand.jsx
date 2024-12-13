@@ -21,7 +21,7 @@ function BrandLogo() {
   return (
     <div className="carbrand">
       <div className="brandlogo logo">
-        <ul>
+        <ul className="brandlogo-list">
           <li className="item item1">
             <img src={audi} alt="Audi" />
           </li>
@@ -50,7 +50,7 @@ function BrandLogo() {
             <img src={bmw} alt="BMW" />
           </li></ul>
           {/* duplicate the values */}
-          <ul >
+          <ul className="brandlogo-list"> 
           <li className="item item1">
             <img src={audi} alt="Audi" />
           </li>

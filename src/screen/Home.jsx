@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Customnavbar from "../components/Customnavbar/Customnavbar";
 import Carousel_main from "../components/Crousels/Home_main";
 import Carbrand from "../components/Carbrandlogo/Carbrand";
-
+import Footer from "../components/Footer/Footer";
 import Cards from "../components/Cards/Cards";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState } from "react";
@@ -109,8 +109,6 @@ function Home() {
 
           <div>
             <h2>Rent</h2>
-            
-
           </div>
 
           <div>
@@ -129,6 +127,12 @@ function Home() {
           </div>
         </div>
       </Container>
+      <div className="footer">
+        
+        <div className="footer">
+          <Footer />
+        </div>
+      </div>
     </>
   );
 }

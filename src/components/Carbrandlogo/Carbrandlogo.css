@@ -43,7 +43,7 @@ img {
 
 }
 
-ul {
+.brandlogo-list {
   list-style: none;
   flex-shrink: 0;
   min-width: 100%;
@@ -57,7 +57,7 @@ ul {
   animation: scroll 20s linear infinite;
 }
 
-.brandlogo:hover ul {
+.brandlogo:hover .brandlogo-list {
   animation-play-state: paused;
 }
 
@@ -73,7 +73,7 @@ ul {
   }
 }
 
-.brandlogo ul li {
+.brandlogo .brandlogo-list li {
   flex-shrink: 0;
   width: 100px; /* Adjust logo size */
   height: auto;
