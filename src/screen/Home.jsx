@@ -108,12 +108,77 @@ function Home() {
             </div>
           </div>
 
-          <div>
-            <h2>Rent</h2>
+          <div className="" style={{ marginTop: "90px" }}>  
+            <h2>Rent Car</h2>
+            <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
+           
+            <div className="choose-cars">
+              <div className="caritem iem1">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+              <div className="caritem iem2">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+              <div className="caritem iem3">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+              <div className="caritem iem4">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+              <div className="caritem iem5">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+              <div className="caritem iem6">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+              <div className="caritem iem7">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+              <div className="caritem iem8">
+                <Cards
+                  title="Card 3"
+                  description="This is the third card"
+                  image="https://via.placeholder.com/150"
+                />
+              </div>
+            </div>
+            <div className="load-more-section">
+              <div className="fog-overlay"></div>
+              <button className="load-more-btn">Load More</button>
+            </div>
+          </div>
           </div>
 
-          <div>
-            <h2>Repair</h2>
+          <div className=''style={{marginTop:'90px'}}>
+            <h2>Repair Parts</h2>
             <Repaircard/>
           </div>
         </div>
