@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form } from 'react-bootstrap';
-import CustomNavbar from '../../components/Customnavbar';
+import CustomNavbar from '../../components/Customnavbar/Customnavbar';
 const repairServices = [
   { id: 1, name: 'Engine Repair', description: 'Fix engine issues such as overheating, oil leaks, or misfiring.', price: 300, available: true },
   { id: 2, name: 'Tire Replacement', description: 'Replace worn-out or damaged tires with new ones.', price: 100, available: true },

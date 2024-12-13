@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
-import img2 from "../assets/img2.png";
-import img3 from "../assets/img3.jpg";
-import img4 from "../assets/img4.jpg"; 
+import img2 from "../../assets/mainscreen/img2.png";
+import img3 from "../../assets/mainscreen/img3.jpg";
+import img4 from "../../assets/mainscreen/img4.jpg"; 
 
 function Carousels() {
   const [index, setIndex] = useState(0);
@@ -19,7 +19,7 @@ function Carousels() {
           alt="First slide"
           className="d-block w-100"
           height={640}
-          weight={900}
+          width={900}
         />
         <Carousel.Caption>
           <h3>Find Your Dream Car</h3>
@@ -33,7 +33,7 @@ function Carousels() {
           alt="Second slide"
           className="d-block w-100"
           height={640}
-          weight={900}
+          width={900}
         />
         <Carousel.Caption>
           <h3>Second slide label</h3>
@@ -47,7 +47,7 @@ function Carousels() {
           alt="Third slide"
           className="d-block w-100"
           height={640}
-          weight={900}
+          width={900}
         />
 
         <Carousel.Caption>
