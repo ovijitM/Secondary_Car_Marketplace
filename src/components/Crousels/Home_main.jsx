@@ -5,10 +5,9 @@ import car2 from "../../assets/mainscreen/brombrom.jpg";
 import car3 from "../../assets/mainscreen/brombrom2.jpg";
 import car4 from "../../assets/mainscreen/brombrom3.jpg";
 import car5 from "../../assets/mainscreen/brombrom4.jpg";
-import car6 from "../../assets/mainscreen/brombrom5.jpg";
+import car6 from "../../assets/mainscreen/brombrom8-1.jpg";
 import car7 from "../../assets/mainscreen/brombrom6.jpg";
-import car8 from "../../assets/mainscreen/brombrom7.webp";
-import car9 from "../../assets/mainscreen/brombrom8.jpg";
+import car8 from "../../assets/mainscreen/brombrom7.jpg";
 
 function Carousels() {
   const [index, setIndex] = useState(0);
@@ -100,16 +99,6 @@ function Carousels() {
         <Carousel.Item>
           <img
             src={car8}
-            alt="Third slide"
-            className="d-block w-100"
-            height={640}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>{" "}
-        <Carousel.Item>
-          <img
-            src={car9}
             alt="Third slide"
             className="d-block w-100"
             height={640}
