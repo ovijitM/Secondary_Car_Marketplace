@@ -127,7 +127,7 @@ function Home() {
           </div>
         </div>
       </Container>
-      <div className="footer">
+      <div className="footer-home">
         
         <div className="footer">
           <Footer />
