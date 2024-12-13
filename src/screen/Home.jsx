@@ -109,17 +109,8 @@ function Home() {
 
           <div>
             <h2>Rent</h2>
-            <Row>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Cards />
-              </Col>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Cards />
-              </Col>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Cards />
-              </Col>
-            </Row>
+            
+
           </div>
 
           <div>
