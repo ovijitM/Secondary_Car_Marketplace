@@ -101,6 +101,10 @@ function Home() {
                 />
               </div>
             </div>
+            <div className="load-more-section">
+              <div className="fog-overlay"></div>
+              <button className="load-more-btn">Load More</button>
+            </div>
           </div>
 
           <div>
