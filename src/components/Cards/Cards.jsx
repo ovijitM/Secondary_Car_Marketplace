@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Home from "../components/Customnavbar/Customnavbar";
+import Home from "../Customnavbar/Customnavbar";
 
 function Cards() {
   return (
