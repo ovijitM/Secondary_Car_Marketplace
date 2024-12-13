@@ -4,6 +4,7 @@ import Carousel_main from "../components/Crousels/Home_main";
 import Carbrand from "../components/Carbrandlogo/Carbrand";
 import Footer from "../components/Footer/Footer";
 import Cards from "../components/Cards/Cards";
+import Repaircard from "../components/Home_Repaircards/Repaircard";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState } from "react";
 import "./Home.css";
@@ -113,22 +114,11 @@ function Home() {
 
           <div>
             <h2>Repair</h2>
-            <Row>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Cards />
-              </Col>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Cards />
-              </Col>
-              <Col xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Cards />
-              </Col>
-            </Row>
+            <Repaircard/>
           </div>
         </div>
       </Container>
       <div className="footer-home">
-        
         <div className="footer">
           <Footer />
         </div>

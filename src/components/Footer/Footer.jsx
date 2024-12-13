@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"; // Import Link for routing
 import "./footer.css";
-import React from "react";
+
 import Container from "react-bootstrap/Container";
 
 function Footer() {
