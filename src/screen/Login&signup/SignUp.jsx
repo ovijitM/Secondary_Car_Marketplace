@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
+import Customnavbar from '../../components/Customnavbar/Customnavbar';
 
 function Signup() {
   const [validated, setValidated] = useState(false);
@@ -21,6 +22,9 @@ function Signup() {
   };
 
   return (
+    
+  <>   
+    <Customnavbar />
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Card className="shadow-lg p-4" style={{ maxWidth: '600px', width: '100%' }}>
         <Card.Body>
@@ -48,45 +52,57 @@ function Signup() {
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
             </Row>
+
             <Row className="mb-3">
               <Form.Group as={Col} md="12" controlId="validationCustomUsername">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>Email</Form.Label>
                 <InputGroup hasValidation>
-                  <InputGroup.Text>@</InputGroup.Text>
+                
                   <Form.Control
                     type="text"
-                    placeholder="Username"
+                    placeholder="Enter your email"
                     aria-describedby="inputGroupPrepend"
                     required
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please choose a username.
+                    Please Enter your Email.
+                  </Form.Control.Feedback>
+                </InputGroup>
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} md="12" controlId="validationCustomUsername">
+                <Form.Label>Password</Form.Label>
+                <InputGroup hasValidation>
+                
+                  <Form.Control
+                    type="text"
+                    placeholder="Create a password"
+                    aria-describedby="inputGroupPrepend"
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Create a password.
                   </Form.Control.Feedback>
                 </InputGroup>
               </Form.Group>
             </Row>
             <Row className="mb-3">
               <Form.Group as={Col} md="6" controlId="validationCustom03">
-                <Form.Label>City</Form.Label>
-                <Form.Control type="text" placeholder="City" required />
+                <Form.Label>Country</Form.Label>
+                <Form.Control type="text" placeholder="Country" required />
                 <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
+                  Please provide a valid country.
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} md="3" controlId="validationCustom04">
-                <Form.Label>State</Form.Label>
-                <Form.Control type="text" placeholder="State" required />
+                <Form.Label>State (Optional)</Form.Label>
+                <Form.Control type="text" placeholder="State"  />
                 <Form.Control.Feedback type="invalid">
                   Please provide a valid state.
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="3" controlId="validationCustom05">
-                <Form.Label>Zip</Form.Label>
-                <Form.Control type="text" placeholder="Zip" required />
-                <Form.Control.Feedback type="invalid">
-                  Please provide a valid zip.
-                </Form.Control.Feedback>
-              </Form.Group>
+
             </Row>
             <Form.Group className="mb-3">
               <Form.Check
@@ -98,13 +114,13 @@ function Signup() {
             </Form.Group>
             <div className="d-grid gap-2">
               <Button variant="primary" type="submit">
-                Submit Form
+                Sign Up
               </Button>
             </div>
           </Form>
         </Card.Body>
       </Card>
-    </Container>
+    </Container></> 
   );
 }
 
