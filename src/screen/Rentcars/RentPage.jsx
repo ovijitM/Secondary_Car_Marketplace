@@ -8,7 +8,7 @@ import {
   Form,
   Modal,
 } from "react-bootstrap";
-import CustomNavbar from "../../components/Customnavbar";
+import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 
 const carsForRent = [
   {
