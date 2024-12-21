@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import CustomNavbar from '../../components/Customnavbar';
+import CustomNavbar from '../../components/Customnavbar/Customnavbar';
 import { Link } from 'react-router-dom';
 
 
