@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post('/createuser', async (req, res) => {
     const { name, email, password, country, state } = req.body;
+
     try {
         const db = await connectToDatabase();
         const collection = db.collection("Users");

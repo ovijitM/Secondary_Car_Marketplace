@@ -1,5 +1,4 @@
 import connectToDatabase from "../database.js";
-import { body, validationResult } from 'express-validator';
 
 export default async function addUser ({ name, email, password, country, state }) {
   try {

@@ -1,5 +1,6 @@
 import Express from "express";
-import userRoutes from './route/createuser.js';
+import userRoutes from './createuser/createuser.js';
+import checkUser from './validateuser/logincheck.js';
 
 const port = 8000;
 const app = Express();
@@ -14,6 +15,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', userRoutes); 
+app.use('/api', checkUser); 
 
 app.use((req, res) => {
   res.send("Hello World!");
