@@ -1,15 +1,19 @@
 import Express from "express";
-import { MongoClient } from "mongodb";
+import userRoutes from './route/createuser.js';
+
 const port = 8000;
 const app = Express();
 app.use(Express.json());
-const url = "mongodb://localhost:27017";
-const clint = new MongoClient(url);
-if (clint.connect()) {
-  console.log("Connected to the database");
-} else {
-  console.log("Not connected to the database");
-}
+
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+app.use('/api', userRoutes); 
 
 app.use((req, res) => {
   res.send("Hello World!");
