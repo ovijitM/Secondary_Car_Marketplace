@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 import CustomNavbar from '../../components/Customnavbar/Customnavbar';
 import { Link } from 'react-router-dom';
+import Filter from '../../components/Filter';
 
 
 const allCars = [
@@ -45,6 +46,7 @@ function CarsPage() {
   return (
     <>
       <CustomNavbar />
+      <Filter cars={cars}/>
       <Container className="my-4">
         <Form onSubmit={handleFilterSubmit} className="mb-4">
           <Row>
