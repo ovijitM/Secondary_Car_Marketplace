@@ -64,8 +64,8 @@
 <ol>
   <li>
     Clone the repository:
-    <pre><code>git clone &lt; https://github.com/ovijitM/cse470_SCM.git)&gt;
-cd &lt; cse470_SCM &gt;</code></pre>
+    <pre><code>git clone https://github.com/ovijitM/cse470_SCM.git
+cd cse470_SCM </code></pre>
   </li>
   <li>
     Install the required packages:
