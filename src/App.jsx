@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./screen/Home";
 import Login from "./screen/Login&signup/Login";
@@ -7,6 +7,8 @@ import Cars from "./screen/BuyCars/Carspage"
 import CarDetails from "./screen/BuyCars/CarDetails"
 import Rent from "./screen/Rentcars/RentPage"
 import Repair from './screen/Repair/RepairPage'
+import Post from './screen/BuyCars/Postcar'
+
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,6 +24,7 @@ function App() {
           <Route path="/CarDetails" element={<CarDetails/>}/>
           <Route path="/rentcars" element={<Rent/>}/>
           <Route path="/repair" element={<Repair/>}/>
+          <Route path="/post" element={<Post/>}/>
         </Routes>
       </div>
     </Router>

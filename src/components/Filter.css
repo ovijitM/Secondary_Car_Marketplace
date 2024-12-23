@@ -1,0 +1,137 @@
+.filter{
+    padding-top: 10%;
+}
+
+.car-filter {
+    width: 60%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.filter-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: solid 1px #616161;
+    border-bottom: 1px solid #616161;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: #ffffff;
+    border-right: 1px solid #616161;
+    border-bottom: 1px solid #616161;
+    border-radius: 0;
+}
+
+.filter-group:nth-child(4n) {
+    border-right: none;
+}
+
+.filter-group:nth-last-child(-n+4) {
+    border-bottom: none;
+}
+
+.filter-group:nth-child(n+5):nth-child(-n+8) {
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.filter-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.filter-option {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 0px;
+}
+
+.filter-option:last-child {
+    margin-bottom: 0;
+}
+
+select, input[type="range"] {
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.price-range {
+    grid-column: span 2;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+    margin-top: -20px;
+}
+
+.price-range-display {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    grid-column: span 1;
+    text-align: center;
+}
+
+.search-button {
+    background-color: white;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.sell-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #368207dd;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+.sell-button:hover {
+    background-color: #02840f;
+  }
+  
+
+
+
+.additional-features {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #000000;
+}
+
+@media (min-width: 768px) {
+    .filter-group {
+        flex: 1;
+        margin: 0 10px;
+    }
+
+    .filter-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 767px) {
+    .filter-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-button, .sell-button {
+        width: 100%;
+    }
+}
