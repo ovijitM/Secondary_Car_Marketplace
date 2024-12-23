@@ -18,42 +18,42 @@
 
 <h3><strong>Car Buy and Sell</strong></h3>
 <ul>
-  <li><strong>F1.1:</strong> Allow users to buy cars from our own company.</li>
-  <li><strong>F1.2:</strong> Users can sell cars to our company by comparing the current condition price.</li>
-  <li><strong>F1.3:</strong> Enables users to buy/sell used cars via a peer-to-peer (P2P) marketplace.</li>
-  <li><strong>F1.4:</strong> View car history and condition from site posts.</li>
+  <li>Allow users to buy cars from our own company.</li>
+  <li> Users can sell cars to our company by comparing the current condition price.</li>
+  <li> Enables users to buy/sell used cars via a peer-to-peer (P2P) marketplace.</li>
+  <li> View car history and condition from site posts.</li>
 </ul>
 
 <h3><strong>User Accessibility and Tools</strong></h3>
 <ul>
-  <li><strong>F2.1:</strong> Filtering by search.</li>
-  <li><strong>F2.2:</strong> Side-by-side comparison (model, price, etc.).</li>
-  <li><strong>F2.3:</strong> User dashboard for activity management.</li>
-  <li><strong>F2.4:</strong> Secure transaction management.</li>
+  <li> Filtering by search.</li>
+  <li> Side-by-side comparison (model, price, etc.).</li>
+  <li>User dashboard for activity management.</li>
+  <li> Secure transaction management.</li>
 </ul>
 
 <h3><strong>Rental and Booking</strong></h3>
 <ul>
-  <li><strong>F3.1:</strong> Users can rent a car.</li>
-  <li><strong>F3.2:</strong> Check car availability for rent.</li>
-  <li><strong>F3.3:</strong> Schedule rentals and manage costs.</li>
-  <li><strong>F3.4:</strong> Check driver reviews.</li>
+  <li> Users can rent a car.</li>
+  <li> Check car availability for rent.</li>
+  <li> Schedule rentals and manage costs.</li>
+  <li> Check driver reviews.</li>
 </ul>
 
 <h3><strong>Maintenance and Repair Services</strong></h3>
 <ul>
-  <li><strong>F4.1:</strong> Schedule maintenance dates.</li>
-  <li><strong>F4.2:</strong> Track maintenance updates and work status.</li>
-  <li><strong>F4.3:</strong> Manage costs (parts price and condition).</li>
-  <li><strong>F4.4:</strong> Delivery confirmation for serviced vehicles.</li>
+  <li> Schedule maintenance dates.</li>
+  <li> Track maintenance updates and work status.</li>
+  <li> Manage costs (parts price and condition).</li>
+  <li>Delivery confirmation for serviced vehicles.</li>
 </ul>
 
 <h3><strong>Security and Transparency</strong></h3>
 <ul>
-  <li><strong>F5.1:</strong> User and car verification (NID, photo, etc.).</li>
-  <li><strong>F5.2:</strong> Chatting and secure negotiation for P2P transactions.</li>
-  <li><strong>F5.3:</strong> Generate receipts and records for every legal transaction and deal.</li>
-  <li><strong>F5.4:</strong> Help, support, and FAQ section for user assistance.</li>
+  <li> User and car verification (NID, photo, etc.).</li>
+  <li> Chatting and secure negotiation for P2P transactions.</li>
+  <li> Generate receipts and records for every legal transaction and deal.</li>
+  <li> Help, support, and FAQ section for user assistance.</li>
 </ul>
 
 ---
@@ -64,7 +64,7 @@
 <ol>
   <li>
     Clone the repository:
-    <pre><code>git clone &lt;[repository-url](https://github.com/ovijitM/cse470_SCM.git)&gt;
+    <pre><code>git clone &lt; https://github.com/ovijitM/cse470_SCM.git)&gt;
 cd &lt; cse470_SCM &gt;</code></pre>
   </li>
   <li>
