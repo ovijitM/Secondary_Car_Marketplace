@@ -64,20 +64,21 @@
 <ol>
   <li>
     Clone the repository:
-    <pre><code>git clone &lt;repository-url&gt;
-cd &lt;repository-directory&gt;</code></pre>
+    <pre><code>git clone &lt;[repository-url](https://github.com/ovijitM/cse470_SCM.git)&gt;
+cd &lt; cse470_SCM &gt;</code></pre>
   </li>
   <li>
     Install the required packages:
     <pre><code>npm install</code></pre>
   </li>
   <li>
-    Install UI and routing dependencies:
+    Install Node , UI and routing dependencies:
+    <pre><code>npm install </code></pre>
     <pre><code>npm install react-bootstrap bootstrap react-router-dom</code></pre>
   </li>
   <li>
     Start the development server:
-    <pre><code>npm start</code></pre>
+    <pre><code>npm run dev </code></pre>
   </li>
 </ol>
 
@@ -116,19 +117,9 @@ cd &lt;repository-directory&gt;</code></pre>
 
 <h2>Contributing</h2>
 <p>
-  We welcome contributions! Feel free to open issues for bugs, propose features, or submit pull requests.
+  @ovijitM
+  @mdrakib719
+  @TheOnlyNaimur
 </p>
 
----
 
-<h2>License</h2>
-<p>
-  This project is open-source and available under the MIT License.
-</p>
-
----
-
-<h2>Acknowledgements</h2>
-<p>
-  Special thanks to the open-source community for providing tools and libraries that made this project possible.
-</p>
