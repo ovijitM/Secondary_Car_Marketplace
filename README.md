@@ -8,3 +8,21 @@ Goals and Motivations: We give you comprehensive solution for buying, selling, r
 <code> npm install react-bootstrap bootstrap</code>
 <code> npm install react-router-dom <code>
 
+{
+  "_id": ObjectId(),
+  "make": String,          // Car manufacturer, e.g., "Toyota"
+  "model": String,         // Car model, e.g., "Corolla"
+  "year": Number,          // Manufacturing year, e.g., 2022
+  "mileage": Number,       // Distance the car has been driven, e.g., 50000 (in km or miles)
+  "color": String,         // Car color, e.g., "Red"
+  "price": Number,         // Selling price, e.g., 15000
+  "description": String,   // Detailed description of the car
+  "image": String,         // URL or file path to the car image
+  "seller": {
+    "name": String,        // Seller's name
+    "phone": String,       // Seller's phone number
+    "email": String        // Seller's email address
+  },
+  "createdAt": Date,        // Timestamp when the document is created
+  "updatedAt": Date         // Timestamp when the document is updated
+}
