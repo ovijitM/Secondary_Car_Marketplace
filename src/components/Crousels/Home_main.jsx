@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
-import car1 from "../../assets/mainscreen/img2.png";
-import car2 from "../../assets/mainscreen/brombrom.jpg";
-import car3 from "../../assets/mainscreen/brombrom2.jpg";
-import car4 from "../../assets/mainscreen/brombrom3.jpg";
-import car5 from "../../assets/mainscreen/brombrom4.jpg";
-import car6 from "../../assets/mainscreen/brombrom8-1.jpg";
-import car7 from "../../assets/mainscreen/brombrom6.jpg";
-import car8 from "../../assets/mainscreen/brombrom7.jpg";
+// import car1 from "https://i.ibb.co.com/dBP1fj9/1.jpg";
+// import car2 from "../../assets/mainscreen/brombrom.jpg";
+// import car3 from "../../assets/mainscreen/brombrom2.jpg";
+// import car4 from "../../assets/mainscreen/brombrom3.jpg";
+// import car5 from "../../assets/mainscreen/brombrom4.jpg";
+// import car6 from "../../assets/mainscreen/brombrom8-1.jpg";
+// import car7 from "../../assets/mainscreen/brombrom6.jpg";
+// import car8 from "../../assets/mainscreen/brombrom7.jpg";
 
 function Carousels() {
   const [index, setIndex] = useState(0);
@@ -28,84 +28,75 @@ function Carousels() {
       <Carousel activeIndex={index} onSelect={handleSelect}>
         <Carousel.Item>
           <img
-            src={car1}
+            src= "https://i.ibb.co.com/19zfLG7/1.jpg"
             alt="First slide"
             className="d-block w-100"
-            height={640}
+            height={690}
             width={900}
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src={car2}
+            src="https://i.ibb.co.com/NLbtswB/2.jpg"
             alt="Second slide"
             className="d-block w-100"
-            height={640}
+            height={690}
             width={900}
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src={car3}
+            src= "https://i.ibb.co.com/dWths61/3.jpg"
             alt="Third slide"
             className="d-block w-100"
-            height={640}
+            height={690}
             width={900}
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src={car4}
+            src= "https://i.ibb.co.com/K5bymYh/4.jpg"
             alt="Third slide"
             className="d-block w-100"
-            height={640}
+            height={690}
             width={900}
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>{" "}
         <Carousel.Item>
           <img
-            src={car5}
+            src="https://i.ibb.co.com/DY9TN02/5.jpg"
             alt="Third slide"
             className="d-block w-100"
-            height={640}
+            height={690}
             width={900}
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>{" "}
         <Carousel.Item>
           <img
-            src={car6}
+            src= "https://i.ibb.co.com/cyBKMsZ/6.jpg"
             alt="Third slide"
             className="d-block w-100"
-            height={640}
+            height={690}
             width={900}
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>{" "}
         <Carousel.Item>
           <img
-            src={car7}
+            src= "https://i.ibb.co.com/zSPKZq0/7.jpg"
             alt="Third slide"
             className="d-block w-100"
-            height={640}
+            height={690}
             width={900}
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>{" "}
-        <Carousel.Item>
-          <img
-            src={car8}
-            alt="Third slide"
-            className="d-block w-100"
-            height={640}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>
+
       </Carousel>
 
       {/* Fixed Search Bar */}
@@ -130,7 +121,8 @@ function Carousels() {
               width: "800px",
               padding: "10px",
               borderRadius: "18px",
-              border: "1px solid #ccc",
+              border: "2px solid #ccc",
+              boxshadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
               outline: "none",
               fontSize: "16px",
               color: "black", // Ensures the text inside is black
