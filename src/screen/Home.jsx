@@ -185,7 +185,7 @@ export default function Home() {
 
       <Container className="my-4 " overflow="hidden">
         <div className={`slider-container`}>
-          <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
+          <div className="cars" style={{ margin: "5px 10px 50px 10px", paddingBottom: "50px" }}>
             <h2>Choose Your Dream Car</h2>
             <div className="choose-cars">
 
@@ -280,7 +280,7 @@ export default function Home() {
           
       <div
         className="carbrandlogo"
-        style={{ marginTop: "-10px", marginBottom: "50px" }}
+        style={{ marginBottom: "50px", marginBottom: "50px", paddingBottom: "50px" }}
       >
         <h2>We are Connected with</h2>
         <Carbrand />
