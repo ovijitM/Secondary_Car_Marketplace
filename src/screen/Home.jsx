@@ -6,22 +6,44 @@ import Footer from "../components/Footer/Footer";
 import Cards from "../components/Cards/Cards";
 import Repaircard from "../components/Home_Repaircards/Repaircard";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Home.css";
-function Home() {
-  const [currentSection, setCurrentSection] = useState(0);
+import { Card } from "react-bootstrap";
 
-  const sections = ["Cars", "Rent", "Repair"];
+export default function Home() {
+  const [search, setSearch] = useState("");
+  const [New_cars, setNew_cars] = useState([]);
+  const [Used_cars, setUsed_cars] = useState([]);
 
-  const nextSection = () => {
-    setCurrentSection((prevSection) => (prevSection + 1) % sections.length);
+  const loadData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/displaydata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (data.success) {
+        setNew_cars(data.new_cars);
+        setUsed_cars(data.used_cars);
+        console.log(New_cars);
+        console.log(Used_cars);
+      } else {
+        console.error("Error fetching data:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const prevSection = () => {
-    setCurrentSection(
-      (prevSection) => (prevSection - 1 + sections.length) % sections.length
-    );
-  };
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  //
 
   return (
     <>
@@ -40,67 +62,74 @@ function Home() {
         <Carbrand />
       </div>
 
-      <Container className="my-4">
+      <Container className="my-4 " overflow="hidden">
         <div className={`slider-container`}>
           <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
             <h2>Choose Your Dream Car</h2>
             <div className="choose-cars">
-              <div className="caritem iem1">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem2">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem3">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem4">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem5">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem6">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem7">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem8">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
+              {New_cars.map((car, index) => (
+                <div key={index} className="caritem" style={{height: "100%"}}>
+
+
+                  <>
+                    <Card style={{ width: "18rem" }}>
+                      <Card.Img
+                        variant="top"
+                        src={car.img}
+                        alt="Red Alfa Romeo car on road near trees"
+                        style={{
+                          height: "180px", // Set consistent height
+                          width: "auto1", // Full card width
+                          objectFit: "cover", // Ensure aspect ratio is preserved
+                          borderRadius: "5px 5px 0 0", // Match card styling
+                        }}
+                      />
+                      <Card.Body style={{ }}>
+                        <Row>
+                          <Col xs={7}>
+                            <Card.Title>{car.brand}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">
+                              {car.model}
+                            </Card.Subtitle>
+                          </Col>
+                          <Col xs={4} className="text-right">
+                            <div
+                              style={{
+                                backgroundColor:
+                                  car.label === "imported" ? "yellow" : "green",
+                                color:
+                                  car.label === "imported" ? "black" : "white",
+                                // backgroundColor: "green",
+                                // color: "white",
+                                padding: "4px 8px", // Adjust padding for better alignment
+                                borderRadius: "5px",
+                                display: "inline-block", // Prevent unnecessary stretching
+                                fontSize: "0.9rem", // Adjust font size for consistency
+                                textAlign: "center",
+                              }}
+                            >
+                              {car.label}
+                            </div>
+                            <div style={{ marginTop: "5px", color: "gray" }}>
+                              {car.year}
+                            </div>
+                          </Col>
+                        </Row>
+                        <div style={{ textAlign: "center", margin: "10px 0" }}>
+                          <h5> Price ${car.price} </h5>
+                        </div>
+                        <Card.Text className="" style={{fontSize: '15px'}}>{car.details}</Card.Text>
+                        <Button
+                          variant="primary"
+                          style={{ width: "100%", overflow: "hidden" }}
+                        >
+                          {car.label === "imported" ? "Order Now" : "Buy Now"}
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </>
+                </div>
+              ))}
             </div>
             <div className="load-more-section">
               <div className="fog-overlay"></div>
@@ -108,78 +137,38 @@ function Home() {
             </div>
           </div>
 
-          <div className="" style={{ marginTop: "90px" }}>  
+
+
+
+          <div className="" style={{ marginTop: "90px" }}>
             <h2>Rent Car</h2>
             <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
-           
-            <div className="choose-cars">
-              <div className="caritem iem1">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
+              <div className="choose-cars">
+                {Used_cars.map((car, index) => (
+                  <div key={index} className="caritem">
+                    <Cards
+                      title={`${car.brand} ${car.model}`}
+                      description={car.details}
+                      image={car.img}
+                      year={car.year}
+                      price={car.price}
+                      color={car.color}
+                      transmission={car.transmission}
+                      condition={car.condition}
+                    />
+                  </div>
+                ))}
               </div>
-              <div className="caritem iem2">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem3">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem4">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem5">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem6">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem7">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
-              </div>
-              <div className="caritem iem8">
-                <Cards
-                  title="Card 3"
-                  description="This is the third card"
-                  image="https://via.placeholder.com/150"
-                />
+              <div className="load-more-section">
+                <div className="fog-overlay"></div>
+                <button className="load-more-btn">Go to Rent</button>
               </div>
             </div>
-            <div className="load-more-section">
-              <div className="fog-overlay"></div>
-              <button className="load-more-btn">Go to Rent</button>
-            </div>
-          </div>
           </div>
 
-          <div className=''style={{marginTop:'90px'}}>
+          <div className="" style={{ marginTop: "90px" }}>
             <h2>Repair Parts</h2>
-            <Repaircard/>
+            <Repaircard />
           </div>
         </div>
       </Container>
@@ -191,5 +180,3 @@ function Home() {
     </>
   );
 }
-
-export default Home;
