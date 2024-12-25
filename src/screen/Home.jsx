@@ -15,7 +15,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [New_cars, setNew_cars] = useState([]);
   const [Used_cars, setUsed_cars] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(12); // Initial number of cars to show
+  const [visibleCount, setVisibleCount] = useState(8); // Initial number of cars to show
 
   const loadData = async () => {
     try {
@@ -141,6 +141,7 @@ export default function Home() {
           <div
             style={{
               position: "absolute",
+             // White background
               bottom: "20px",
               left: "50%",
               transform: "translateX(-50%)",
@@ -251,7 +252,7 @@ export default function Home() {
                           variant="primary"
                           style={{ width: "100%", overflow: "hidden" }}
                         >
-                          {car.label === "imported" ? "Order Now" : "Buy Now"}
+                          {car.label === "imported" ? "View details for Order" : "View details for Buy"}
                         </Button>
                       </Card.Body>
                     </Card>
