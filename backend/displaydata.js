@@ -16,6 +16,8 @@ router.post('/displaydata', async (req, res) => {
 
     const Used_cars = await Used_cars_Collection.find({}).toArray();
 
+    // console.log(New_cars);  
+
    
 
     if (!New_cars.length) {

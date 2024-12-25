@@ -27,14 +27,17 @@ export default function Home() {
       });
 
       const data = await response.json();
+      console.log(data);
       if (data.success) {
+        
         setNew_cars(data.new_cars);
         setUsed_cars(data.used_cars);
+        // console.log(New_cars);
       } else {
-        console.error("Error fetching data:", data.message);
+        console.log("Error fetching data:", data.message);
       }
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    } catch  {
+      console.log("Error fetching data:");
     }
   };
 
@@ -179,13 +182,6 @@ export default function Home() {
 
       {/* -----------------------Car Brands----------------------- */}
 
-      <div
-        className="carbrandlogo"
-        style={{ marginTop: "-10px", marginBottom: "50px" }}
-      >
-        <h2>We are Connected with</h2>
-        <Carbrand />
-      </div>
 
       <Container className="my-4 " overflow="hidden">
         <div className={`slider-container`}>
@@ -276,6 +272,19 @@ export default function Home() {
               </div>
             )}
           </div>
+
+
+
+
+
+          
+      <div
+        className="carbrandlogo"
+        style={{ marginTop: "-10px", marginBottom: "50px" }}
+      >
+        <h2>We are Connected with</h2>
+        <Carbrand />
+      </div>
 
           {/* -----------------------Rent Car----------------------- */}
 

@@ -7,7 +7,7 @@ import '../Customnavbar/Components.css'; // Import Link for routing
 function CustomNavbar() {
   return (
     <>
-      <Navbar bg="black" data-bs-theme="dark">
+      <Navbar bg="black" data-bs-theme="dark" style={{position:'sticky', top:'0', zIndex:'1000'}} expand="lg" variant="dark">
         <Container>
           <Navbar.Brand as={Link} to="/" ><img src="https://i.ibb.co.com/KhVd4zj/Drive-Nextlogo.png" className="px-4 nav-link nav-link" alt="DriveNext" style={{width:'auto', height:'40px'}}/></Navbar.Brand> {/* Updated for routing */}
           <Nav className="mx-auto">
