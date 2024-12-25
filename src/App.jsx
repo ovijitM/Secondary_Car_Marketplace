@@ -25,6 +25,7 @@ function App() {
           <Route path="/rentcars" element={<Rent/>}/>
           <Route path="/repair" element={<Repair/>}/>
           <Route path="/post" element={<Post/>}/>
+          
         </Routes>
       </div>
     </Router>

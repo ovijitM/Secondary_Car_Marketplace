@@ -10,12 +10,15 @@ import { useState, useEffect } from "react";
 import "./Home.css";
 import { Card } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [New_cars, setNew_cars] = useState([]);
   const [Used_cars, setUsed_cars] = useState([]);
   const [visibleCount, setVisibleCount] = useState(8); // Initial number of cars to show
+  const [loadMoreClicks, setLoadMoreClicks] = useState(0); // Track load-more button clicks
+  const navigate = useNavigate(); 
 
   const loadData = async () => {
     try {
@@ -45,17 +48,28 @@ export default function Home() {
     loadData();
   }, []);
 
+
+  const handleLoadMore = () => {
+    if (loadMoreClicks >= 1) {
+      // Navigate to another page after 2 clicks
+      navigate("/buycars");
+    } else {
+      setVisibleCount(visibleCount + 4);
+      setLoadMoreClicks(loadMoreClicks + 1);
+    }
+  };
+
   const filteredNewCars = New_cars.filter(
     (car) =>
       car.brand.toLowerCase().includes(search.toLowerCase()) ||
       car.model.toLowerCase().includes(search.toLowerCase())
   );
 
-  const filteredUsedCars = Used_cars.filter(
-    (car) =>
-      car.brand.toLowerCase().includes(search.toLowerCase()) ||
-      car.model.toLowerCase().includes(search.toLowerCase())
-  );
+  // const filteredUsedCars = Used_cars.filter(
+  //   (car) =>
+  //     car.brand.toLowerCase().includes(search.toLowerCase()) ||
+  //     car.model.toLowerCase().includes(search.toLowerCase())
+  // );
 
   return (
     <>
@@ -264,11 +278,8 @@ export default function Home() {
             {visibleCount < New_cars.length && (
               <div className="load-more-section">
                 <div className="fog-overlay"></div>
-                <button
-                  className="load-more-btn"
-                  onClick={() => setVisibleCount(visibleCount + 4)}
-                >
-                  View More Cars
+                <button className="load-more-btn" onClick={handleLoadMore}>
+                  {loadMoreClicks >= 1 ? "View More Cars" : "Load More"}
                 </button>
               </div>
             )}
