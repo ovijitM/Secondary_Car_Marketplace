@@ -9,6 +9,7 @@ import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "./Home.css";
 import { Card } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -41,13 +42,139 @@ export default function Home() {
     loadData();
   }, []);
 
+  const filteredNewCars = New_cars.filter(
+    (car) =>
+      car.brand.toLowerCase().includes(search.toLowerCase()) ||
+      car.model.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const filteredUsedCars = Used_cars.filter(
+    (car) =>
+      car.brand.toLowerCase().includes(search.toLowerCase()) ||
+      car.model.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <>
       <Customnavbar />
       {/* -----------------------Carousel----------------------- */}
 
       <div className="vh-100">
-        <Carousel_main />
+        <div style={{ position: "relative", overflow: "hidden" }}>
+          <Carousel>
+            <Carousel.Item>
+              <img
+                src="https://i.ibb.co.com/19zfLG7/1.jpg"
+                alt="First slide"
+                className="d-block w-100"
+                height={690}
+                width={900}
+              />
+              <Carousel.Caption></Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                src="https://i.ibb.co.com/NLbtswB/2.jpg"
+                alt="Second slide"
+                className="d-block w-100"
+                height={690}
+                width={900}
+              />
+              <Carousel.Caption></Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                src="https://i.ibb.co.com/dWths61/3.jpg"
+                alt="Third slide"
+                className="d-block w-100"
+                height={690}
+                width={900}
+              />
+              <Carousel.Caption></Carousel.Caption>
+            </Carousel.Item>
+            <Carousel.Item>
+              <img
+                src="https://i.ibb.co.com/K5bymYh/4.jpg"
+                alt="Third slide"
+                className="d-block w-100"
+                height={690}
+                width={900}
+              />
+              <Carousel.Caption></Carousel.Caption>
+            </Carousel.Item>{" "}
+            <Carousel.Item>
+              <img
+                src="https://i.ibb.co.com/DY9TN02/5.jpg"
+                alt="Third slide"
+                className="d-block w-100"
+                height={690}
+                width={900}
+              />
+              <Carousel.Caption></Carousel.Caption>
+            </Carousel.Item>{" "}
+            <Carousel.Item>
+              <img
+                src="https://i.ibb.co.com/cyBKMsZ/6.jpg"
+                alt="Third slide"
+                className="d-block w-100"
+                height={690}
+                width={900}
+              />
+              <Carousel.Caption></Carousel.Caption>
+            </Carousel.Item>{" "}
+            <Carousel.Item>
+              <img
+                src="https://i.ibb.co.com/zSPKZq0/7.jpg"
+                alt="Third slide"
+                className="d-block w-100"
+                height={690}
+                width={900}
+              />
+              <Carousel.Caption></Carousel.Caption>
+            </Carousel.Item>{" "}
+          </Carousel>
+
+          {/* Fixed Search Bar */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "20px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "100%",
+              textAlign: "center",
+              zIndex: 10, // Ensure it's above the carousel
+            }}
+          >
+            <div style={{ display: "inline-block" }}>
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="//Search for your dream car"
+                style={{
+                  width: "800px",
+                  padding: "10px",
+                  borderRadius: "18px",
+                  border: "2px solidrgb(132, 130, 130)",
+                  outline: "none",
+                  fontSize: "16px",
+                  color: "Black", // White text color
+                  backgroundColor: "transparent", // Transparent background
+                  transition: "background-color 0.3s ease, filter 0.3s ease", // Smooth transition
+                }}onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = "#fafafa"; // Slight white tint
+                  e.target.style.filter = "blur(0.1px)"; // Blur effect
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = "transparent"; // Reset background
+                  e.target.style.filter = "none"; // Remove blur
+                }}
+              />
+
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* -----------------------Car Brands----------------------- */}
@@ -65,64 +192,75 @@ export default function Home() {
           <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
             <h2>Choose Your Dream Car</h2>
             <div className="choose-cars">
-              {New_cars.slice(0, visibleCount).map((car, index) => (
-                <div key={index} className="caritem" style={{ height: "100%" }}>
-                  <Card style={{ width: "18rem" }}>
-                    <Card.Img
-                      variant="top"
-                      src={car.img}
-                      alt="Car Image"
-                      style={{
-                        height: "180px",
-                        objectFit: "cover",
-                        borderRadius: "5px 5px 0 0",
-                      }}
-                    />
-                    <Card.Body>
-                      <Row>
-                        <Col xs={7}>
-                          <Card.Title>{car.brand}</Card.Title>
-                          <Card.Subtitle className="mb-2 text-muted">
-                            {car.model}
-                          </Card.Subtitle>
-                        </Col>
-                        <Col xs={4} className="text-right">
-                          <div
-                            style={{
-                              backgroundColor:
-                                car.label === "imported" ? "yellow" : "green",
-                              color:
-                                car.label === "imported" ? "black" : "white",
-                              padding: "4px 8px",
-                              borderRadius: "5px",
-                              display: "inline-block",
-                              fontSize: "0.9rem",
-                              textAlign: "center",
-                            }}
-                          >
-                            {car.label}
-                          </div>
-                          <div style={{ marginTop: "5px", color: "gray" }}>
-                            {car.year}
-                          </div>
-                        </Col>
-                      </Row>
-                      <div style={{ textAlign: "center", margin: "10px 0" }}>
-                        <h5> Price ${car.price} </h5>
-                      </div>
-                      <Card.Text style={{ fontSize: "15px" }}>
-                        {car.details}
-                      </Card.Text>
-                      <Button
-                        variant="primary"
-                        style={{ width: "100%", overflow: "hidden" }}
-                      >
-                        {car.label === "imported" ? "Order Now" : "Buy Now"}
-                      </Button>
-                    </Card.Body>
-                  </Card>
-                </div>
-              ))}
+
+
+
+                {/* //filtering the new cars */}
+
+              {filteredNewCars.slice(0, visibleCount)
+        
+                .map((car, index) => (
+                  <div
+                    key={index}
+                    className="caritem"
+                    style={{ height: "100%" }}
+                  >
+                    <Card style={{ width: "18rem" }}>
+                      <Card.Img
+                        variant="top"
+                        src={car.img}
+                        alt="Car Image"
+                        style={{
+                          height: "180px",
+                          objectFit: "cover",
+                          borderRadius: "5px 5px 0 0",
+                        }}
+                      />
+                      <Card.Body>
+                        <Row>
+                          <Col xs={7}>
+                            <Card.Title>{car.brand}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">
+                              {car.model}
+                            </Card.Subtitle>
+                          </Col>
+                          <Col xs={4} className="text-right">
+                            <div
+                              style={{
+                                backgroundColor:
+                                  car.label === "imported" ? "yellow" : "green",
+                                color:
+                                  car.label === "imported" ? "black" : "white",
+                                padding: "4px 8px",
+                                borderRadius: "5px",
+                                display: "inline-block",
+                                fontSize: "0.9rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              {car.label}
+                            </div>
+                            <div style={{ marginTop: "5px", color: "gray" }}>
+                              {car.year}
+                            </div>
+                          </Col>
+                        </Row>
+                        <div style={{ textAlign: "center", margin: "10px 0" }}>
+                          <h5> Price ${car.price} </h5>
+                        </div>
+                        <Card.Text style={{ fontSize: "15px" }}>
+                          {car.details}
+                        </Card.Text>
+                        <Button
+                          variant="primary"
+                          style={{ width: "100%", overflow: "hidden" }}
+                        >
+                          {car.label === "imported" ? "Order Now" : "Buy Now"}
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                ))}
             </div>
 
             {/* Load More Button */}
@@ -138,13 +276,8 @@ export default function Home() {
               </div>
             )}
           </div>
- 
 
-
-
-
-{/* -----------------------Rent Car----------------------- */}
-
+          {/* -----------------------Rent Car----------------------- */}
 
           <div className="" style={{ marginTop: "90px" }}>
             <h2>Rent Car</h2>
@@ -181,7 +314,7 @@ export default function Home() {
         </div>
       </Container>
 
-       {/* -----------------------Footer----------------------- */}
+      {/* -----------------------Footer----------------------- */}
 
       <div className="footer-home">
         <div className="footer">
