@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 
+import car2 from "../../assets/mainscreen/brombrom.jpg";
+import car3 from "../../assets/mainscreen/brombrom2.jpg";
+import car4 from "../../assets/mainscreen/brombrom3.jpg";
+import car5 from "../../assets/mainscreen/brombrom4.jpg";
+import car6 from "../../assets/mainscreen/brombrom8-1.jpg";
+import car7 from "../../assets/mainscreen/brombrom6.jpg";
+
+
 
 function Carousels() {
   const [index, setIndex] = useState(0);
@@ -21,7 +29,7 @@ function Carousels() {
       <Carousel activeIndex={index} onSelect={handleSelect}>
         <Carousel.Item>
           <img
-            src= "https://i.ibb.co.com/19zfLG7/1.jpg"
+            src={car2}
             alt="First slide"
             className="d-block w-100"
             height={690}
@@ -31,7 +39,7 @@ function Carousels() {
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src="https://i.ibb.co.com/NLbtswB/2.jpg"
+            src={car3}
             alt="Second slide"
             className="d-block w-100"
             height={690}
@@ -41,7 +49,7 @@ function Carousels() {
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src= "https://i.ibb.co.com/dWths61/3.jpg"
+            src={car4}
             alt="Third slide"
             className="d-block w-100"
             height={690}
@@ -51,7 +59,7 @@ function Carousels() {
         </Carousel.Item>
         <Carousel.Item>
           <img
-            src= "https://i.ibb.co.com/K5bymYh/4.jpg"
+            src={car5}
             alt="Third slide"
             className="d-block w-100"
             height={690}
@@ -61,7 +69,7 @@ function Carousels() {
         </Carousel.Item>{" "}
         <Carousel.Item>
           <img
-            src="https://i.ibb.co.com/DY9TN02/5.jpg"
+            src={car6}
             alt="Third slide"
             className="d-block w-100"
             height={690}
@@ -71,7 +79,7 @@ function Carousels() {
         </Carousel.Item>{" "}
         <Carousel.Item>
           <img
-            src= "https://i.ibb.co.com/cyBKMsZ/6.jpg"
+            src={car7}
             alt="Third slide"
             className="d-block w-100"
             height={690}
@@ -79,17 +87,6 @@ function Carousels() {
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>{" "}
-        <Carousel.Item>
-          <img
-            src= "https://i.ibb.co.com/zSPKZq0/7.jpg"
-            alt="Third slide"
-            className="d-block w-100"
-            height={690}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>{" "}
-
       </Carousel>
 
       {/* Fixed Search Bar */}

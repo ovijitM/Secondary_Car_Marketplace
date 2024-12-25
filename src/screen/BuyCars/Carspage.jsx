@@ -1,15 +1,18 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Customnavbar from "../../components/Customnavbar/Customnavbar";
-import Carousel_main from "../../components/Crousels/Home_main";
-import Carbrand from "../../components/Carbrandlogo/Carbrand";
+
+
 import Footer from "../../components/Footer/Footer";
-import Cards from "../../components/Cards/Cards";
-import Repaircard from "../../components/Home_Repaircards/Repaircard";
+import Buycars from "../../components/Crousels/Buycars";
+import { Card } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
+
+
+
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "../Home.css";
-import { Card } from "react-bootstrap";
-import { Carousel } from "react-bootstrap";
+
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -85,7 +88,7 @@ export default function Home() {
       <Customnavbar />
       {/* -----------------------Carousel----------------------- */}
 
-
+      <Buycars />
 
       {/* -----------------------Car Brands----------------------- */}
 
