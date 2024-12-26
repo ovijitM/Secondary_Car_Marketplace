@@ -3,7 +3,7 @@ import Customnavbar from "../../components/Customnavbar/Customnavbar";
 
 
 import Footer from "../../components/Footer/Footer";
-import Buycars from "../../components/Crousels/Buycars";
+
 import { Card } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
 
@@ -11,18 +11,27 @@ import { Carousel } from "react-bootstrap";
 
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import Filter from "../../components/Filter";
 import "../Home.css";
+import car2 from "../../assets/mainscreen/brombrom.jpg";
+import car3 from "../../assets/mainscreen/brombrom2.jpg";
+import car4 from "../../assets/mainscreen/brombrom3.jpg";
+import car5 from "../../assets/mainscreen/brombrom4.jpg";
+import car6 from "../../assets/mainscreen/brombrom8-1.jpg";
+import car7 from "../../assets/mainscreen/brombrom6.jpg";
 
 
 export default function Home() {
-  const [search, setSearch] = useState("");
+  const [searchCriteria, setSearchCriteria] = useState({});
   // const [New_cars, setNew_cars] = useState([]);
   // const [Used_cars, setUsed_cars] = useState([]);
   // const [visibleCount, setVisibleCount] = useState(8);// Initial number of cars to show
 
   const [AllCars, setAllCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const carsPerPage = 8;  
+  const carsPerPage = 12; 
+  
+
 
 
 
@@ -59,11 +68,32 @@ export default function Home() {
 
 
 
-  const filteredCars = AllCars.filter(
-    (car) =>
-      car.brand.toLowerCase().includes(search.toLowerCase()) ||
-      car.model.toLowerCase().includes(search.toLowerCase())
-  );
+  // const filteredCars = AllCars.filter(
+  //   (car) =>
+  //     car.brand.toLowerCase().includes(search.toLowerCase()) ||
+  //     car.model.toLowerCase().includes(search.toLowerCase())
+  // );
+
+  const handleFilter = (criteria) => {
+    setSearchCriteria(criteria);
+  };
+
+
+
+  const filteredCars = AllCars.filter((car) => {
+    return (
+      (searchCriteria.selectedBrand === "All" ||
+        car.brand === searchCriteria.selectedBrand) &&
+      (searchCriteria.selectedModel === "All" ||
+        car.model === searchCriteria.selectedModel) &&
+      (searchCriteria.selectedCity === "All" ||
+        car.city === searchCriteria.selectedCity) &&
+      (searchCriteria.selectedCondition === "All" ||
+        car.condition === searchCriteria.selectedCondition) &&
+      car.price >= searchCriteria.priceRange[0] &&
+      car.price <= searchCriteria.priceRange[1]
+    );
+  });
 
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
@@ -88,7 +118,85 @@ export default function Home() {
       <Customnavbar />
       {/* -----------------------Carousel----------------------- */}
 
-      <Buycars />
+      <div style={{ position: "relative", overflow: "hidden" }}>
+      <Carousel >
+        <Carousel.Item>
+          <img
+            src={car2}
+            alt="First slide"
+            className="d-block w-100"
+            height={690}
+            width={900}
+          />
+          <Carousel.Caption></Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            src={car3}
+            alt="Second slide"
+            className="d-block w-100"
+            height={690}
+            width={900}
+          />
+          <Carousel.Caption></Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            src={car4}
+            alt="Third slide"
+            className="d-block w-100"
+            height={690}
+            width={900}
+          />
+          <Carousel.Caption></Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            src={car5}
+            alt="Third slide"
+            className="d-block w-100"
+            height={690}
+            width={900}
+          />
+          <Carousel.Caption></Carousel.Caption>
+        </Carousel.Item>{" "}
+        <Carousel.Item>
+          <img
+            src={car6}
+            alt="Third slide"
+            className="d-block w-100"
+            height={690}
+            width={900}
+          />
+          <Carousel.Caption></Carousel.Caption>
+        </Carousel.Item>{" "}
+        <Carousel.Item>
+          <img
+            src={car7}
+            alt="Third slide"
+            className="d-block w-100"
+            height={690}
+            width={900}
+          />
+          <Carousel.Caption></Carousel.Caption>
+        </Carousel.Item>{" "}
+      </Carousel>
+
+      {/* Fixed Search Bar */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100%",
+          textAlign: "center",
+          zIndex: 10, // Ensure it's above the carousel
+        }}
+      > <Filter onFilter={handleFilter}/>
+       
+      </div>
+    </div>
 
       {/* -----------------------Car Brands----------------------- */}
 

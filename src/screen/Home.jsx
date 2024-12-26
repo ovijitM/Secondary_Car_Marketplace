@@ -1,12 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Customnavbar from "../components/Customnavbar/Customnavbar";
-import Carousel_main from "../components/Crousels/Home_main";
+// import Carousel_main from "../components/Crousels/Home_main";
 import Carbrand from "../components/Carbrandlogo/Carbrand";
 import Footer from "../components/Footer/Footer";
-import Cards from "../components/Cards/Cards";
+// import Cards from "../components/Cards/Cards";
 import Repaircard from "../components/Home_Repaircards/Repaircard";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
+
 import "./Home.css";
 import { Card } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
@@ -15,11 +16,12 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const [search, setSearch] = useState("");
   const [New_cars, setNew_cars] = useState([]);
-  const [Used_cars, setUsed_cars] = useState([]);
+  // const [Used_cars, setUsed_cars] = useState([]);
+  const [Rent_Cars, setRent_Cars] = useState([]);
   const [visibleCount, setVisibleCount] = useState(8); // Initial number of cars to show
   const [loadMoreClicks, setLoadMoreClicks] = useState(0); // Track load-more button clicks
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
+// console.log(Rent_Cars)
   const loadData = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/displaydata", {
@@ -32,14 +34,15 @@ export default function Home() {
       const data = await response.json();
       console.log(data);
       if (data.success) {
-        
         setNew_cars(data.new_cars);
-        setUsed_cars(data.used_cars);
+      
+        setRent_Cars(data.rent_cars);
+        console.log(data.rent_cars)
         // console.log(New_cars);
       } else {
         console.log("Error fetching data:", data.message);
       }
-    } catch  {
+    } catch {
       console.log("Error fetching data:");
     }
   };
@@ -47,7 +50,6 @@ export default function Home() {
   useEffect(() => {
     loadData();
   }, []);
-
 
   const handleLoadMore = () => {
     if (loadMoreClicks >= 1) {
@@ -76,7 +78,7 @@ export default function Home() {
       <Customnavbar />
       {/* -----------------------Carousel----------------------- */}
 
-      <div className="vh-100">
+      <div className="">
         <div style={{ position: "relative", overflow: "hidden" }}>
           <Carousel>
             <Carousel.Item>
@@ -155,7 +157,7 @@ export default function Home() {
           <div
             style={{
               position: "absolute",
-             // White background
+              // White background
               bottom: "20px",
               left: "50%",
               transform: "translateX(-50%)",
@@ -180,7 +182,8 @@ export default function Home() {
                   color: "Black", // White text color
                   backgroundColor: "transparent", // Transparent background
                   transition: "background-color 0.3s ease, filter 0.3s ease", // Smooth transition
-                }}onMouseEnter={(e) => {
+                }}
+                onMouseEnter={(e) => {
                   e.target.style.backgroundColor = "#fafafa"; // Slight white tint
                   e.target.style.filter = "blur(0.1px)"; // Blur effect
                 }}
@@ -189,7 +192,6 @@ export default function Home() {
                   e.target.style.filter = "none"; // Remove blur
                 }}
               />
-
             </div>
           </div>
         </div>
@@ -197,19 +199,19 @@ export default function Home() {
 
       {/* -----------------------Car Brands----------------------- */}
 
-
       <Container className="my-4 " overflow="hidden">
         <div className={`slider-container`}>
-          <div className="cars" style={{ margin: "5px 10px 50px 10px", paddingBottom: "50px" }}>
+          <div
+            className="cars"
+            style={{ margin: "5px 10px 50px 10px", paddingBottom: "50px" }}
+          >
             <h2>Choose Your Dream Car</h2>
             <div className="choose-cars">
+              {/* //filtering the new cars */}
 
+              {filteredNewCars
+                .slice(0, visibleCount)
 
-
-                {/* //filtering the new cars */}
-
-              {filteredNewCars.slice(0, visibleCount)
-        
                 .map((car, index) => (
                   <div
                     key={index}
@@ -266,7 +268,9 @@ export default function Home() {
                           variant="primary"
                           style={{ width: "100%", overflow: "hidden" }}
                         >
-                          {car.label === "imported" ? "View details for Order" : "View details for Buy"}
+                          {car.label === "imported"
+                            ? "View details for Order"
+                            : "View details for Buy"}
                         </Button>
                       </Card.Body>
                     </Card>
@@ -285,18 +289,17 @@ export default function Home() {
             )}
           </div>
 
-
-
-
-
-          
-      <div
-        className="carbrandlogo"
-        style={{ marginBottom: "50px", marginBottom: "50px", paddingBottom: "50px" }}
-      >
-        <h2>We are Connected with</h2>
-        <Carbrand />
-      </div>
+          <div
+            className="carbrandlogo"
+            style={{
+              marginBottom: "50px",
+             
+              paddingBottom: "50px",
+            }}
+          >
+            <h2>We are Connected with</h2>
+            <Carbrand />
+          </div>
 
           {/* -----------------------Rent Car----------------------- */}
 
@@ -304,18 +307,66 @@ export default function Home() {
             <h2>Rent Car</h2>
             <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
               <div className="choose-cars">
-                {Used_cars.map((car, index) => (
-                  <div key={index} className="caritem">
-                    <Cards
-                      title={`${car.brand} ${car.model}`}
-                      description={car.details}
-                      image={car.img}
-                      year={car.year}
-                      price={car.price}
-                      color={car.color}
-                      transmission={car.transmission}
-                      condition={car.condition}
-                    />
+                {Rent_Cars.map((car, index) => (
+                  <div
+                    key={index}
+                    className="caritem"
+                    style={{ height: "100%" }}
+                  >
+                    <Card style={{ width: "18rem" }}>
+                      <Card.Img
+                        variant="top"
+                        src={car.img}
+                        alt="Car Image"
+                        style={{
+                          height: "180px",
+                          objectFit: "cover",
+                          borderRadius: "5px 5px 0 0",
+                        }}
+                      />
+                      <Card.Body>
+                        <Row>
+                          <Col xs={7}>
+                            <Card.Title>{car.brand}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">
+                              {car.model}
+                            </Card.Subtitle>
+                          </Col>
+                          <Col xs={4} className="text-right">
+                            <div
+                              style={{
+                                backgroundColor: "black",
+
+                                color: "white",
+
+                                padding: "4px 8px",
+                                borderRadius: "5px",
+                                display: "inline-block",
+                                fontSize: "0.9rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              Rent
+                            </div>
+                            <div style={{ marginTop: "5px", color: "gray" }}>
+                              {car.sit} sit
+                            </div>
+                          </Col>
+                        </Row>
+                        <div style={{ textAlign: "center", margin: "10px 0" }}>
+                          <h5></h5>
+                        </div>
+                        <Card.Text style={{ fontSize: "15px" }}>
+                          {car.details}
+                        </Card.Text>
+                        <Button
+                          variant="primary"
+                          style={{ width: "100%", overflow: "hidden" }}
+                        >
+                          Rent Now
+                        </Button>
+                      </Card.Body>
+                    </Card>
                   </div>
                 ))}
               </div>
@@ -327,6 +378,8 @@ export default function Home() {
           </div>
 
           {/* -----------------------Repair Parts----------------------- */}
+
+          {/* ---------------------------------------- */}
 
           <div className="" style={{ marginTop: "90px" }}>
             <h2>Repair Parts</h2>

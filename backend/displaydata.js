@@ -17,8 +17,12 @@ router.post('/displaydata', async (req, res) => {
     const Used_cars = await Used_cars_Collection.find({}).toArray();
 
     // console.log(New_cars);  
+    const Rent_Cars_Collection=cars.collection('Rent_Cars');
 
+    const Rent_Cars = await Rent_Cars_Collection.find({}).toArray();
    
+
+    
 
     if (!New_cars.length) {
       return res.status(404).json({
@@ -26,8 +30,10 @@ router.post('/displaydata', async (req, res) => {
         message: 'Car data not found',
       });
     }else{
-      console.log(New_cars);
-      res.status(200).json({success: true, new_cars : New_cars , used_cars: Used_cars});
+      // console.log(New_cars);
+      // console.log(Rent_Cars);
+      // console.log('------------------------------------------------------------------')
+      res.status(200).json({success: true, new_cars : New_cars , used_cars: Used_cars, rent_cars: Rent_Cars});
     }
 
     
