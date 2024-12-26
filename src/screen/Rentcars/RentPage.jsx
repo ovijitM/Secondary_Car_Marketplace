@@ -45,29 +45,33 @@ const RentCars = () => {
             <div className="car-details">
               <h2>{`${car.brand} ${car.model} (${car.year})`}</h2>
               <p>
-                <strong>Price:</strong> ${car.price}
+                <strong> Rent Price:</strong> ${car.price}
               </p>
-              <p>
+              {/* <p>
                 <strong>Mileage:</strong> {car.mileage} miles
-              </p>
+              </p> */}
               <p>
                 <strong>Color:</strong> {car.color}
               </p>
-              <p>
+              {/* <p>
                 <strong>Transmission:</strong> {car.transmission}
-              </p>
-              <p>
+              </p> */}
+              {/* <p>
                 <strong>Condition:</strong> {car.condition}
-              </p>
-              <p>
+              </p> */}
+              {/* <p>
                 <strong>Label:</strong> {car.label}
-              </p>
+              </p> */}
               <p>
                 <strong>Details:</strong> {car.details}
               </p>
               <p>
-                <strong>Purchase Location:</strong> {car.purchase_location}
+                <strong>Sit Number:</strong> {car.sit}
               </p>
+
+              {/* <p>
+                <strong>Purchase Location:</strong> {car.purchase_location}
+              </p> */}
             </div>
           </div>
         ))}
