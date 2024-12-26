@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./RentCars.css"; // Optional CSS file for styling
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Card } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+
 const RentCars = () => {
   const [cars, setCars] = useState([]);
   const [Message, setErrorMessage] = useState("");
@@ -23,7 +27,28 @@ const RentCars = () => {
         setErrorMessage(data.message);
       }
     } catch {
-      console.log("hey not foud");
+      console.log("hey not found");
+    }
+  };
+
+  const handleBooking = async (carId) => {
+    try {
+      const response = await fetch("http://localhost:8000/api/bookCar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ carId }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Car booked successfully!");
+      } else {
+        alert(`Booking failed: ${data.message}`);
+      }
+    } catch (error) {
+      alert("Error booking car. Please try again later.");
     }
   };
 
@@ -45,33 +70,24 @@ const RentCars = () => {
             <div className="car-details">
               <h2>{`${car.brand} ${car.model} (${car.year})`}</h2>
               <p>
-                <strong> Rent Price:</strong> ${car.price}
+                <strong>Rent Price:</strong> ${car.price}
               </p>
-              {/* <p>
-                <strong>Mileage:</strong> {car.mileage} miles
-              </p> */}
               <p>
                 <strong>Color:</strong> {car.color}
               </p>
-              {/* <p>
-                <strong>Transmission:</strong> {car.transmission}
-              </p> */}
-              {/* <p>
-                <strong>Condition:</strong> {car.condition}
-              </p> */}
-              {/* <p>
-                <strong>Label:</strong> {car.label}
-              </p> */}
               <p>
                 <strong>Details:</strong> {car.details}
               </p>
               <p>
-                <strong>Sit Number:</strong> {car.sit}
+                <strong>Seat Number:</strong> {car.sit}
               </p>
-
-              {/* <p>
-                <strong>Purchase Location:</strong> {car.purchase_location}
-              </p> */}
+              <Button
+                variant="primary"
+                onClick={() => handleBooking(car._id)}
+                className="book-button"
+              >
+                Book
+              </Button>
             </div>
           </div>
         ))}

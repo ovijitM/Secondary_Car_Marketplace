@@ -7,6 +7,7 @@ import CarDetails from "./screen/BuyCars/CarDetails";
 import Rent from "./screen/Rentcars/RentPage";
 import Repair from "./screen/Repair/RepairPage";
 import Post from "./screen/BuyCars/Postcar";
+import Book from "./screen/Booking_cars/Booking";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -21,6 +22,9 @@ function App() {
           <Route path="/buycars" element={<Cars />} />
           <Route path="/CarDetails" element={<CarDetails />} />
           <Route path="/RentCars" element={<Rent />} />
+
+          <Route path="/Book" element={<Book />} />
+
           <Route path="/repair" element={<Repair />} />
           <Route path="/post" element={<Post />} />
         </Routes>
