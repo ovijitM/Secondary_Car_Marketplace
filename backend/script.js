@@ -1,4 +1,5 @@
 import Express from "express";
+
 import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
 import search from './Search/search.js';
@@ -20,6 +21,19 @@ app.use('/api', userRoutes);
 app.use('/api', checkUser);
 app.use('/api', search);
 app.use('/api', logout);
+
+import { MongoClient } from "mongodb";
+const port = 8000;
+const app = Express();
+app.use(Express.json());
+const url = "mongodb://localhost:27017";
+const clint = new MongoClient(url);
+if (clint.connect()) {
+  console.log("Connected to the database");
+} else {
+  console.log("Not connected to the database");
+}
+
 
 app.use((req, res) => {
   res.send("Hello World!");
