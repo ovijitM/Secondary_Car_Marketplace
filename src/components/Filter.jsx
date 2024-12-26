@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Filter.css";
 
 const Filter = () => {
@@ -12,6 +12,7 @@ const Filter = () => {
   const [selectedCity, setSelectedCity] = useState("All");
   const [selectedCondition, setSelectedCondition] = useState("All");
   const [priceRange, setPriceRange] = useState([1, 100000000]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedBrand === "Brand A") {
@@ -24,6 +25,8 @@ const Filter = () => {
     setSelectedModel("Select brand first");
   }, [selectedBrand]);
 
+
+
   const handleSearch = () => {
     console.log("Searching with:", {
       selectedBrand,
@@ -33,6 +36,12 @@ const Filter = () => {
       priceRange,
     });
   };
+
+  const sell = () => {
+    navigate("/Postcar"); 
+  };
+
+    
 
   return (
     <>
@@ -131,9 +140,7 @@ const Filter = () => {
 
             <div className="additional-features">
               <span>Didn’t find what you were looking for?</span>
-              <Link to="/post" className="sell-button">
-                Sell your car
-              </Link>
+              <button onClick={sell} >sell cars</button>
             </div>
           </div>
         </div>

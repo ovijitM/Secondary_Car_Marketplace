@@ -1,6 +1,8 @@
 import Express from "express";
 import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
+import search from './Search/search.js';
+import logout from './validateuser/logoutcheck.js';
 
 const port = 8000;
 const app = Express();
@@ -15,7 +17,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', userRoutes); 
-app.use('/api', checkUser); 
+app.use('/api', checkUser);
+app.use('/api', search);
+app.use('/api', logout);
 
 app.use((req, res) => {
   res.send("Hello World!");

@@ -30,21 +30,26 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch('http://localhost:8000/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(info),
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(info),
     });
 
     const data = await response.json();
 
     if (data.success) {
-      navigate('/');
+        setSuccessMessage(data.message); 
+        if (data.role === 'admin') {
+            navigate('/Admin_dashboard');
+        } else {
+            navigate('/User_dashboard');
+        }
     } else {
-      setErrorMessage(data.message); 
+        setErrorMessage(data.message); 
     }
-  };
+};
 
   return (
     <>
