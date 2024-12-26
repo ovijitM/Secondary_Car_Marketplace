@@ -23,33 +23,34 @@ function Login() {
       ...info,
       [name]: value,
     });
-    setErrorMessage(''); 
-    setSuccessMessage(''); 
+    setErrorMessage('');
+    setSuccessMessage('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await fetch('http://localhost:8000/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(info),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(info),
     });
 
     const data = await response.json();
 
     if (data.success) {
-        setSuccessMessage(data.message); 
-        if (data.role === 'admin') {
-            navigate('/Admin_dashboard');
-        } else {
-            navigate('/User_dashboard');
-        }
+      setSuccessMessage(data.message);
+
+      if (data.role === 'admin') {
+        navigate('/Admin_dashboard', { state: { email: info.email, token: data.token } });
+      } else {
+        navigate('/User_dashboard', { state: { email: info.email, token: data.token } });
+      }
     } else {
-        setErrorMessage(data.message); 
+      setErrorMessage(data.message);
     }
-};
+  };
 
   return (
     <>
