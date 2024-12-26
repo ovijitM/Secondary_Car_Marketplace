@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./RentCars.css"; // Optional CSS file for styling
 
 const RentCars = () => {
   const [cars, setCars] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [Message, setErrorMessage] = useState("");
+
+  const fetchCars = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/rentCar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.success) {
+        setCars(data.data);
+      } else {
+        setErrorMessage(data.message);
+      }
+    } catch {
+      console.log("hey not foud");
+    }
+  };
 
   useEffect(() => {
-    // Fetch car data from the backend API
-    const fetchCars = async () => {
-      try {
-        const response = await axios.get("/rent-cars"); // Ensure this matches your API endpoint
-        setCars(response.data);
-      } catch (err) {
-        console.error("Error fetching car data:", err);
-        setError("Failed to load car data. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCars();
   }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
 
   return (
     <div className="rent-cars-container">
