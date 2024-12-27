@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate, useLocation } from "react-router-dom"; // Import useNavigate
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -10,7 +10,12 @@ import Row from "react-bootstrap/Row";
 import Customnavbar from "../../components/Customnavbar/Customnavbar";
 
 function Signup() {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
+  const location = useLocation(); // Use location hook to retrieve passed state
+
+  // Retrieve car details and carId from location state
+  const car = location.state?.car; // Get the car object
+  const carId = car?._id; // Get the car's ID
 
   const [validated, setValidated] = useState(false);
   const [info, setInfo] = useState({
@@ -51,17 +56,15 @@ function Signup() {
           PickUp: info.PickUp,
           Where_to_go: info.Where_to_go,
           price: info.price,
+          carId: carId, // Pass the carId
         }),
       });
 
       const data = await response.json();
-      console.log(data);
-
       if (!data.success) {
         setErrorMessage(data.message);
       } else {
         setErrorMessage("");
-        // Reset the form
         setInfo({
           firstName: "",
           lastName: "",
@@ -70,8 +73,7 @@ function Signup() {
           Where_to_go: "",
           price: "",
         });
-        // Navigate to the booking page
-        navigate("/rentCars");
+        navigate("/slip");
       }
     }
 
@@ -178,6 +180,13 @@ function Signup() {
                 )}
               </div>
             </Form>
+            {/* Display Car ID on the page */}
+            {carId && (
+              <div className="mt-3">
+                <strong>Selected Car ID: </strong>
+                {carId}
+              </div>
+            )}
           </Card.Body>
         </Card>
       </Container>

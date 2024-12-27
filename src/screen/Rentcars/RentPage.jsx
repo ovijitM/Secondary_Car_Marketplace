@@ -3,12 +3,13 @@ import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import "./RentCars.css"; // Optional CSS file for styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Container, Row, Col, Button } from "react-bootstrap";
+import { set } from "mongoose";
 
 const RentCars = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [cars, setCars] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [carId, setCarId] = useState("");
   // Fetch cars from the API
   const fetchCars = async () => {
     try {
@@ -20,9 +21,11 @@ const RentCars = () => {
       });
 
       const data = await response.json();
+      const cars = data.data;
+
       if (data.success) {
         setCars(data.data);
-        // Set fetched cars
+        setCarId(cars[1]._id);
       } else {
         setErrorMessage(data.message); // Set error message
       }
@@ -31,41 +34,14 @@ const RentCars = () => {
       setErrorMessage("Error fetching cars. Please try again later.");
     }
   };
-
-  // Handle car booking
-  const handleSubmit = async (car) => {
-    // console.log("hi"); // Assuming you need the car ID for booking
-    const info = {
-      carId: car._id,
-      // Add other necessary booking details here
-    };
-
-    // try {
-    //   const response = await fetch("http://localhost:8000/api/book", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(info),
-    //   });
-
-    const data = await response.json();
-
-    if (!data.success) {
-      // console.log("unsuess");
-      // Navigate to book page on success
-    } else {
-      navigate("/book");
-      // setErrorMessage(data.message);
-    }
-    // } catch (error) {
-    //   console.error("Error during booking:", error);
-    //   setErrorMessage("Error during booking. Please try again later.");
-    // }
+  const handleViewDetails = (car) => {
+    console.log("hi");
+    // Navigate to the /book page and pass the carId as state
+    navigate("/book", { state: { car } });
+    console.log(carId);
   };
-
   useEffect(() => {
-    fetchCars(); // Fetch cars on component mount
+    fetchCars();
   }, []);
 
   return (
@@ -93,11 +69,12 @@ const RentCars = () => {
                   <br />
                   <strong>Seat Number:</strong> {car.sit}
                 </Card.Text>
-                <Link to="/book">
-                  <Button variant="primary" onClick={() => handleSubmit(car)}>
-                    Book Now
-                  </Button>
-                </Link>
+                <Button
+                  variant="primary"
+                  onClick={() => handleViewDetails(car)} // Pass car._id
+                >
+                  Book Now
+                </Button>
               </Card.Body>
             </Card>
           </Col>

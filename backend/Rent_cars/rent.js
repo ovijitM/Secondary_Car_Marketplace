@@ -12,7 +12,10 @@ router.post("/rentCar", async (req, res) => {
 
     console.log(rent_car);
 
-    res.status(200).json({ success: true, data: rent_car });
+    res.status(200).json({
+      success: true,
+      data: rent_car,
+    });
   } catch {
     console.log("hi:");
   }
