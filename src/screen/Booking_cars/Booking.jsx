@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Import useNavigate
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -11,11 +11,11 @@ import Customnavbar from "../../components/Customnavbar/Customnavbar";
 
 function Signup() {
   const navigate = useNavigate();
-  const location = useLocation(); // Use location hook to retrieve passed state
+  const location = useLocation();
 
   // Retrieve car details and carId from location state
-  const car = location.state?.car; // Get the car object
-  const carId = car?._id; // Get the car's ID
+  const car = location.state?.car;
+  const carId = car?._id;
 
   const [validated, setValidated] = useState(false);
   const [info, setInfo] = useState({
@@ -73,7 +73,10 @@ function Signup() {
           Where_to_go: "",
           price: "",
         });
-        navigate("/slip");
+        // Navigate to the slip page with carId and number in state
+        navigate("/slip", {
+          state: { carId, number: info.number },
+        });
       }
     }
 
@@ -172,7 +175,6 @@ function Signup() {
                 <Button variant="primary" type="submit">
                   Confirm Booking
                 </Button>
-
                 {errorMessage && (
                   <div className="alert alert-danger" role="alert">
                     {errorMessage}
@@ -180,7 +182,7 @@ function Signup() {
                 )}
               </div>
             </Form>
-            {/* Display Car ID on the page */}
+
             {carId && (
               <div className="mt-3">
                 <strong>Selected Car ID: </strong>

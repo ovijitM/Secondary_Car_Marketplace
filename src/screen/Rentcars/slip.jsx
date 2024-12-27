@@ -1,81 +1,128 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Container, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
 
-const BookingDetails = () => {
-  const { carId } = useParams(); // Retrieve carId from the route
-  const [details, setDetails] = useState(null);
+function Slip() {
+  const location = useLocation();
+  const { carId, number } = location.state || {}; // Retrieve carId and number from state
+
+  const [carDetails, setCarDetails] = useState(null);
+  const [bookingDetails, setBookingDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const fetchBookingDetails = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/slip`);
-      const data = await response.json();
+  useEffect(() => {
+    if (carId && number) {
+      fetchDetails();
+    } else {
+      setErrorMessage("Invalid data received. Please try again.");
+      setLoading(false);
+    }
+  }, [carId, number]);
 
+  const fetchDetails = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/slip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ carId, number }),
+      });
+
+      const data = await response.json();
       if (data.success) {
-        setDetails(data.data);
+        setCarDetails(data.carDetails); // Data from Rent_cars
+        setBookingDetails(data.bookingDetails); // Data from Book_car
+        setErrorMessage("");
       } else {
-        setErrorMessage(data.message);
+        setErrorMessage(data.message || "Failed to fetch data.");
       }
     } catch (error) {
-      console.error("Error fetching booking details:", error);
-      setErrorMessage(
-        "Failed to load booking details. Please try again later."
-      );
+      setErrorMessage("An error occurred while fetching details.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchBookingDetails();
-  }, [carId]);
+  if (loading) {
+    return (
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" variant="primary" />
+      </Container>
+    );
+  }
 
   if (errorMessage) {
-    return <div className="alert alert-danger">{errorMessage}</div>;
+    return (
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Alert variant="danger">{errorMessage}</Alert>
+      </Container>
+    );
   }
-
-  if (!details) {
-    return <div>Loading...</div>;
-  }
-
-  const { booking, car } = details;
 
   return (
-    <div className="container">
-      <h1>Booking Details</h1>
-      <h2>Customer Details</h2>
-      <p>
-        <strong>Name:</strong> {booking.name}
-      </p>
-      <p>
-        <strong>Phone Number:</strong> {booking.number}
-      </p>
-      <p>
-        <strong>Pick Up:</strong> {booking.PickUp}
-      </p>
-      <p>
-        <strong>Destination:</strong> {booking.Where_to_go}
-      </p>
-      <p>
-        <strong>Price:</strong> ${booking.price}
-      </p>
+    <Container>
+      <h1 className="text-center my-4">Booking Slip</h1>
 
-      <h2>Car Details</h2>
-      <p>
-        <strong>Brand:</strong> {car.brand}
-      </p>
-      <p>
-        <strong>Model:</strong> {car.model}
-      </p>
-      <p>
-        <strong>Year:</strong> {car.year}
-      </p>
-      <p>
-        <strong>Color:</strong> {car.color}
-      </p>
-      <p>
-        <strong>Rent Price:</strong> ${car.price}
-      </p>
-    </div>
+      {/* Car Details Section */}
+      {carDetails && (
+        <Card className="mb-4">
+          <Card.Body>
+            <h2>Car Details</h2>
+            <Row>
+              <Col md={6}>
+                <p>
+                  <strong>Brand:</strong> {carDetails.brand}
+                </p>
+                <p>
+                  <strong>Model:</strong> {carDetails.model}
+                </p>
+                <p>
+                  <strong>Year:</strong> {carDetails.year}
+                </p>
+                <p>
+                  <strong>Color:</strong> {carDetails.color}
+                </p>
+              </Col>
+              <Col md={6}>
+                <Card.Img
+                  variant="top"
+                  src={carDetails.img}
+                  alt={`${carDetails.brand} ${carDetails.model}`}
+                  className="img-fluid"
+                />
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      )}
+
+      {/* Booking Details Section */}
+      {bookingDetails && (
+        <Card>
+          <Card.Body>
+            <h2>Booking Details</h2>
+            <p>
+              <strong>Name:</strong> {bookingDetails.name}
+            </p>
+            <p>
+              <strong>Phone Number:</strong> {bookingDetails.number}
+            </p>
+            <p>
+              <strong>Pick Up:</strong> {bookingDetails.PickUp}
+            </p>
+            <p>
+              <strong>Destination:</strong> {bookingDetails.Where_to_go}
+            </p>
+            <p>
+              <strong>Price:</strong> ${bookingDetails.price}
+            </p>
+          </Card.Body>
+        </Card>
+      )}
+    </Container>
   );
-};
+}
 
-export default BookingDetails;
+export default Slip;
