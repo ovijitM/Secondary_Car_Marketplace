@@ -31,10 +31,8 @@ export default async function addUser({
       isActive: true,
     };
 
-    // Insert the new user into the collection
     const result = await collection.insertOne(newUser);
 
-    // Return the result of the insertion
     return {
       success: true,
       message: "User  added successfully",
