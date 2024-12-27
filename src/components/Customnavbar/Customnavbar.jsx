@@ -9,7 +9,7 @@ import { set } from "mongoose";
 function CustomNavbar() {
   return (
     <>
-      <Navbar bg="black" data-bs-theme="dark">
+      <Navbar bg="black" data-bs-theme="dark" style={{position:'sticky', top:'0', zIndex:'1000'}} expand="lg" variant="dark">
         <Container>
           <Navbar.Brand as={Link} to="/">
             <img

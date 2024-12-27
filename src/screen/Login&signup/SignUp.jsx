@@ -134,6 +134,7 @@ function Signup() {
                     <Form.Control.Feedback type="invalid">
                       Please create a password.
                     </Form.Control.Feedback>
+
                 </InputGroup>
                 </Form.Group>
               </Row>
@@ -174,7 +175,9 @@ function Signup() {
                 />
               </Form.Group>
               <div className="d-grid gap-2">
+
                 <Button variant="primary" type="submit" >
+
                   Sign Up
                 </Button>
                 {errorMessage && (

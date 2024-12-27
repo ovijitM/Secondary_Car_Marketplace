@@ -1,3 +1,4 @@
+<
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./screen/Home";
 import Login from "./screen/Login&signup/Login";
@@ -10,6 +11,7 @@ import Post from './screen/BuyCars/Postcar';
 import Admin from './screen/Dashboard/Admin';
 import User from './screen/Dashboard/User';
 import Compare from './screen/CarCompare/CarComparison';
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 
@@ -23,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/buycars" element={<Cars />} />
+
           <Route path="/CarDetails" element={<CarDetails />} />
           <Route path="/rentcars" element={<Rent />} />
           <Route path="/repair" element={<Repair />} />
@@ -30,6 +33,7 @@ function App() {
           <Route path="/User _dashboard" element={<User  />} />
           <Route path="/Postcar" element={<Post />} />
           <Route path="/compare" element={<Compare />} />
+
         </Routes>
       </div>
     </Router>

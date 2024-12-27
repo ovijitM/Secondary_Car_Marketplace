@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import "./Filter.css";
 
 const Filter = () => {
@@ -14,6 +16,7 @@ const Filter = () => {
   const [priceRange, setPriceRange] = useState([1, 100000000]);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     if (selectedBrand === "Brand A") {
       setModels(["Model A1", "Model A2"]);
@@ -26,7 +29,6 @@ const Filter = () => {
   }, [selectedBrand]);
 
 
-
   const handleSearch = () => {
     console.log("Searching with:", {
       selectedBrand,
@@ -37,11 +39,11 @@ const Filter = () => {
     });
   };
 
+
   const sell = () => {
     navigate("/Postcar"); 
   };
 
-    
 
   return (
     <>
@@ -140,7 +142,9 @@ const Filter = () => {
 
             <div className="additional-features">
               <span>Didn’t find what you were looking for?</span>
+
               <button onClick={sell} >sell cars</button>
+
             </div>
           </div>
         </div>

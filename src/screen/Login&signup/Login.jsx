@@ -25,6 +25,7 @@ function Login() {
     });
     setErrorMessage('');
     setSuccessMessage('');
+
   };
 
   const handleSubmit = async (e) => {
@@ -40,6 +41,7 @@ function Login() {
     const data = await response.json();
 
     if (data.success) {
+
       setSuccessMessage(data.message);
 
       if (data.role === 'admin') {
@@ -49,6 +51,7 @@ function Login() {
       }
     } else {
       setErrorMessage(data.message);
+
     }
   };
 

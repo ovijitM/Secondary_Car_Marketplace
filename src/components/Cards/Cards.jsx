@@ -1,7 +1,11 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import Home from "../Customnavbar/Customnavbar";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+
 
 function Cards() {
   return (
@@ -13,12 +17,35 @@ function Cards() {
           alt="Red Alfa Romeo car on road near trees"
         />
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
+          <Row>
+            <Col xs={7}>
+              <Card.Title>...</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                Model Name
+              </Card.Subtitle>
+            </Col>
+            <Col xs={4} className="text-right">
+              <div
+                style={{
+                  backgroundColor: "green",
+                  color: "white",
+                  padding: "5px",
+                  borderRadius: "5px",
+                }}
+              >
+                Label
+              </div>
+              <div style={{ marginTop: "5px", color: "gray" }}>Year</div>
+            </Col>
+          </Row>
+          <div style={{ textAlign: "center", margin: "10px 0" }}>
+            <h5>Price</h5>
+          </div>
           <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            A short detail about the car goes here. This can include features,
+            specifications, or any other relevant information.
           </Card.Text>
-          <Button variant="primary">Details</Button>
+          <Button variant="primary">Buy Now</Button>
         </Card.Body>
       </Card>
     </>
@@ -26,3 +53,4 @@ function Cards() {
 }
 
 export default Cards;
+
