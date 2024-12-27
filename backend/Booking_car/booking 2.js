@@ -1,12 +1,6 @@
 import connectToDatabase from "../database.js";
 
-export default async function addUser({
-  name,
-  number,
-  PickUp,
-  Where_to_go,
-  price,
-}) {
+export default async function addUser({ name, number, PickUp, Where_to_go }) {
   try {
     const db = await connectToDatabase();
     const collection = db.collection("Book_car");
@@ -25,7 +19,6 @@ export default async function addUser({
       number,
       PickUp,
       Where_to_go,
-      price,
       createdAt: new Date(),
       updatedAt: new Date(),
       isActive: true,

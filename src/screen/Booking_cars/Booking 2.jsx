@@ -7,6 +7,10 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Customnavbar from "../../components/Customnavbar/Customnavbar";
+const distination = [
+  { to: "dhaka", from: "khulna", distance: 150 },
+  { to: "dhaka", from: "cox cazar", distance: 300 },
+];
 
 function Signup() {
   const [validated, setValidated] = useState(false);
@@ -16,10 +20,9 @@ function Signup() {
     number: "",
     PickUp: "",
     Where_to_go: "",
-    price: "",
   });
-
   const [errorMessage, setErrorMessage] = useState("");
+  const [calculatedCost, setCalculatedCost] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,36 +40,51 @@ function Signup() {
     if (form.checkValidity() === false) {
       e.stopPropagation();
     } else {
-      const response = await fetch("http://localhost:8000/api/book", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: `${info.firstName} ${info.lastName}`,
-          number: info.number,
-          PickUp: info.PickUp,
-          Where_to_go: info.Where_to_go,
-          price: info.price,
-        }),
-      });
+      // Calculate distance and cost
+      const route = distination.find(
+        (route) =>
+          route.from.toLowerCase() === info.PickUp.toLowerCase() &&
+          route.to.toLowerCase() === info.Where_to_go.toLowerCase()
+      );
 
-      const data = await response.json();
-      console.log(data);
+      if (route) {
+        const cost = route.distance * 5;
+        setCalculatedCost(cost);
 
-      if (!data.success) {
-        setErrorMessage(data.message);
-      } else {
-        setErrorMessage("");
-        // Optionally reset the form or redirect the user
-        setInfo({
-          firstName: "",
-          lastName: "",
-          number: "",
-          PickUp: "",
-          Where_to_go: "",
-          price: "",
+        // Optionally, make an API call to save the booking
+        const response = await fetch("http://localhost:8000/api/book", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: `${info.firstName} ${info.lastName}`,
+            number: info.number,
+            PickUp: info.PickUp,
+            Where_to_go: info.Where_to_go,
+            cost,
+          }),
         });
+
+        const data = await response.json();
+        console.log(data);
+
+        if (!data.success) {
+          setErrorMessage(data.message);
+        } else {
+          setErrorMessage("");
+          // Optionally reset the form or redirect the user
+          setInfo({
+            firstName: "",
+            lastName: "",
+            number: "",
+            PickUp: "",
+            Where_to_go: "",
+          });
+        }
+      } else {
+        setErrorMessage("No route found for the selected locations.");
+        setCalculatedCost(null);
       }
     }
 
@@ -161,14 +179,6 @@ function Signup() {
                 </Form.Group>
               </Row>
 
-              {/* <Form.Group className="mb-3">
-                <Form.Check
-                  required
-                  label="Agree to terms and conditions"
-                  feedback="You must agree before submitting."
-                  feedbackType="invalid"
-                />
-              </Form.Group> */}
               <div className="d-grid gap-2">
                 <Button variant="primary" type="submit">
                   Confirm Booking
@@ -176,6 +186,11 @@ function Signup() {
                 {errorMessage && (
                   <div className="alert alert-danger" role="alert">
                     {errorMessage}
+                  </div>
+                )}
+                {calculatedCost && (
+                  <div className="alert alert-success" role="alert">
+                    Total Cost: ${calculatedCost}
                   </div>
                 )}
               </div>

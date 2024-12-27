@@ -1,19 +1,16 @@
 import express from "express";
 import addUser from "./booking.js";
 import connectToDatabase from "../database.js";
-const distination = [
-  { to: "Dhaka", from: "Khulna", distance: 150 },
-  { to: "Dhaka", from: "Cox Bazar", distance: 300 },
-];
+
 const router = express.Router();
 
 router.post("/book", async (req, res) => {
-  const { name, number, PickUp, Where_to_go, price } = req.body;
+  const { name, number, PickUp, Where_to_go } = req.body;
 
   try {
     const db = await connectToDatabase();
     const collection = db.collection("Book_car");
-    const existingUser = await collection.findOne({ number });
+    // const existingUser = await collection.findOne({ number });
 
     // if (existingUser) {
     //   return res.status(400).json({
@@ -22,7 +19,7 @@ router.post("/book", async (req, res) => {
     //   });
     // }
 
-    const result = await addUser({ name, number, PickUp, Where_to_go, price });
+    const result = await addUser({ name, number, PickUp, Where_to_go });
 
     if (result.success) {
       return res.status(201).json(result);
