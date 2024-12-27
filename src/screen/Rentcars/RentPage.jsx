@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import "./RentCars.css"; // Optional CSS file for styling
-
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card } from "react-bootstrap";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Card, Container, Row, Col, Button } from "react-bootstrap";
 
 const RentCars = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [cars, setCars] = useState([]);
-  const [Message, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
+  // Fetch cars from the API
   const fetchCars = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/rentCar", {
@@ -19,80 +20,90 @@ const RentCars = () => {
       });
 
       const data = await response.json();
-      console.log(data);
-
       if (data.success) {
         setCars(data.data);
+        // Set fetched cars
       } else {
-        setErrorMessage(data.message);
+        setErrorMessage(data.message); // Set error message
       }
-    } catch {
-      console.log("hey not found");
+    } catch (error) {
+      console.error("Error fetching cars:", error);
+      setErrorMessage("Error fetching cars. Please try again later.");
     }
   };
 
-  const handleBooking = async (carId) => {
-    try {
-      const response = await fetch("http://localhost:8000/api/bookCar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ carId }),
-      });
+  // Handle car booking
+  const handleSubmit = async (car) => {
+    // console.log("hi"); // Assuming you need the car ID for booking
+    const info = {
+      carId: car._id,
+      // Add other necessary booking details here
+    };
 
-      const data = await response.json();
-      if (data.success) {
-        alert("Car booked successfully!");
-      } else {
-        alert(`Booking failed: ${data.message}`);
-      }
-    } catch (error) {
-      alert("Error booking car. Please try again later.");
+    // try {
+    //   const response = await fetch("http://localhost:8000/api/book", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(info),
+    //   });
+
+    const data = await response.json();
+
+    if (!data.success) {
+      // console.log("unsuess");
+      // Navigate to book page on success
+    } else {
+      navigate("/book");
+      // setErrorMessage(data.message);
     }
+    // } catch (error) {
+    //   console.error("Error during booking:", error);
+    //   setErrorMessage("Error during booking. Please try again later.");
+    // }
   };
 
   useEffect(() => {
-    fetchCars();
+    fetchCars(); // Fetch cars on component mount
   }, []);
 
   return (
-    <div className="rent-cars-container">
+    <Container className="rent-cars-container">
       <h1>Available Rental Cars</h1>
-      <div className="cars-grid">
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+      <Row className="cars-grid">
         {cars.map((car) => (
-          <div key={car._id} className="car-card">
-            <img
-              src={car.img}
-              alt={`${car.brand} ${car.model}`}
-              className="car-image"
-            />
-            <div className="car-details">
-              <h2>{`${car.brand} ${car.model} (${car.year})`}</h2>
-              <p>
-                <strong>Rent Price:</strong> ${car.price}
-              </p>
-              <p>
-                <strong>Color:</strong> {car.color}
-              </p>
-              <p>
-                <strong>Details:</strong> {car.details}
-              </p>
-              <p>
-                <strong>Seat Number:</strong> {car.sit}
-              </p>
-              <Button
-                variant="primary"
-                onClick={() => handleBooking(car._id)}
-                className="book-button"
-              >
-                Book
-              </Button>
-            </div>
-          </div>
+          <Col key={car._id} md={4} className="mb-4">
+            <Card className="car-card">
+              <Card.Img
+                variant="top"
+                src={car.img}
+                alt={`${car.brand} ${car.model}`}
+                className="car-image"
+              />
+              <Card.Body>
+                <Card.Title>{`${car.brand} ${car.model} (${car.year})`}</Card.Title>
+                <Card.Text>
+                  <strong>Rent Price:</strong> ${car.price}
+                  <br />
+                  <strong>Color:</strong> {car.color}
+                  <br />
+                  <strong>Details:</strong> {car.details}
+                  <br />
+                  <strong>Seat Number:</strong> {car.sit}
+                </Card.Text>
+                <Link to="/book">
+                  <Button variant="primary" onClick={() => handleSubmit(car)}>
+                    Book Now
+                  </Button>
+                </Link>
+              </Card.Body>
+            </Card>
+          </Col>
         ))}
-      </div>
-    </div>
+      </Row>
+    </Container>
   );
 };
 

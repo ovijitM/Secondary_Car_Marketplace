@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -9,6 +10,8 @@ import Row from "react-bootstrap/Row";
 import Customnavbar from "../../components/Customnavbar/Customnavbar";
 
 function Signup() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const [validated, setValidated] = useState(false);
   const [info, setInfo] = useState({
     firstName: "",
@@ -58,7 +61,7 @@ function Signup() {
         setErrorMessage(data.message);
       } else {
         setErrorMessage("");
-        // Optionally reset the form or redirect the user
+        // Reset the form
         setInfo({
           firstName: "",
           lastName: "",
@@ -67,6 +70,8 @@ function Signup() {
           Where_to_go: "",
           price: "",
         });
+        // Navigate to the booking page
+        navigate("/rentCars");
       }
     }
 
@@ -161,18 +166,11 @@ function Signup() {
                 </Form.Group>
               </Row>
 
-              {/* <Form.Group className="mb-3">
-                <Form.Check
-                  required
-                  label="Agree to terms and conditions"
-                  feedback="You must agree before submitting."
-                  feedbackType="invalid"
-                />
-              </Form.Group> */}
               <div className="d-grid gap-2">
                 <Button variant="primary" type="submit">
                   Confirm Booking
                 </Button>
+
                 {errorMessage && (
                   <div className="alert alert-danger" role="alert">
                     {errorMessage}
