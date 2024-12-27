@@ -9,15 +9,27 @@ router.post('/login', async (req, res) => {
     try {
         const db = await connectToDatabase();
         const collection = db.collection("Users");
-        const existingUser = await collection.findOne({ email, password });
+        const existingUser  = await collection.findOne({ email });
 
-        if (!existingUser) {
+        if (!existingUser ) {
             return res.status(400).json({ success: false, message: 'Email or password is wrong' });
         }
-        res.status(200).json({ success: true, message: 'User found' });
-    } catch {
-        console.log("user info not received");
+
+        if (existingUser .password !== password) {
+            return res.status(400).json({ success: false, message: 'Email or password is wrong' });
+        }
+
+        await collection.updateOne(
+            { email }, 
+            { $set: { token: 1 } }
+        );
+
+        res.status(200).json({ success: true, message: 'User  found', role: existingUser .role ,token: existingUser .token});
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
 
 export default router;
+

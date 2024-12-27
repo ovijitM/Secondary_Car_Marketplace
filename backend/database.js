@@ -65,3 +65,4 @@ export default async function connectToDatabase() {
     console.error("Error connecting to the database:", error);
   }
 }
+

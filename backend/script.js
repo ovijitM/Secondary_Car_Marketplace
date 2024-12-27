@@ -1,18 +1,15 @@
 import Express from "express";
+
+
 import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
-import displayData from './displaydata.js';
-import connectToDatabase from './database.js'; // Import the database connection function
-
-
-
-
+import search from './Search/search.js';
+import logout from './validateuser/logoutcheck.js';
 
 const port = 8000;
 const app = Express();
+app.use(Express.json());
 
-// Connect to MongoDB
-connectToDatabase();
 
 
 
@@ -24,20 +21,21 @@ app.use((req, res, next) => {
 });
 
 
-app.use(Express.json());
-
 app.use('/api', userRoutes); 
 app.use('/api', checkUser);
+app.use('/api', search);
+app.use('/api', logout);
 
-app.use('/api', displayData); 
+
 
 app.use((req, res) => {
   res.send("Hello World!");
 });
 
 
-
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
+
+

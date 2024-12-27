@@ -23,8 +23,9 @@ function Login() {
       ...info,
       [name]: value,
     });
-    setErrorMessage(''); 
-    setSuccessMessage(''); 
+    setErrorMessage('');
+    setSuccessMessage('');
+
   };
 
   const handleSubmit = async (e) => {
@@ -40,9 +41,17 @@ function Login() {
     const data = await response.json();
 
     if (data.success) {
-      navigate('/');
+
+      setSuccessMessage(data.message);
+
+      if (data.role === 'admin') {
+        navigate('/Admin_dashboard', { state: { email: info.email, token: data.token } });
+      } else {
+        navigate('/User_dashboard', { state: { email: info.email, token: data.token } });
+      }
     } else {
-      setErrorMessage(data.message); 
+      setErrorMessage(data.message);
+
     }
   };
 
