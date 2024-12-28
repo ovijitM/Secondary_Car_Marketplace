@@ -12,6 +12,7 @@ import User from "./screen/Dashboard/User";
 import Compare from "./screen/CarCompare/CarComparison";
 import Transaction from "./screen/Transaction/Transaction";
 import Receipt from "./screen/Transaction/Reciept";
+import Book from "./screen/Booking_cars/Booking";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 
@@ -25,8 +26,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/buycars" element={<Cars />} />
 
+
           <Route path="/CarDetails" element={<CarDetails />} />
-          <Route path="/rentcars" element={<Rent />} />
+//           <Route path="/rentcars" element={<Rent />} />
           <Route path="/repair" element={<Repair />} />
           <Route path="/Admin_dashboard" element={<Admin />} />
           <Route path="/User _dashboard" element={<User />} />
@@ -34,7 +36,9 @@ function App() {
           <Route path="/compare" element={<Compare />} />
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/reciept" element={<Receipt />} />
-
+          <Route path="/RentCars" element={<Rent />} />
+          <Route path="/book" element={<Book />} />
+          <Route path="/post" element={<Post />} />
 
         </Routes>
       </div>
