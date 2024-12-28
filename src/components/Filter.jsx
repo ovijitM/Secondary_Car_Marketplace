@@ -5,6 +5,7 @@ import "./Filter.css";
 const Filter = () => {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
+  const [cities, setCities] = useState([]);
   const [conditions, setConditions] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState("All");
   const [selectedModel, setSelectedModel] = useState("Select brand first");
@@ -67,10 +68,27 @@ const Filter = () => {
     }
   };
 
+  const loadLocation = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/city");
+      const data = await response.json();
+      console.log(data);
+
+      if (data.success) {
+        setCities(data.brands);
+      } else {
+        console.error("Error fetching brands:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching brands:", error);
+    }
+  };
+
 
   useEffect(() => {
     loadBrands();
     loadConditions();
+    loadLocation();
   }, []);
 
 
@@ -140,7 +158,7 @@ const Filter = () => {
               onChange={(e) => setSelectedCity(e.target.value)}
             >
               <option value="All">All</option>
-              {["City A", "City B", "City C"].map((city) => (
+              {cities.map((city) => (
                 <option key={city} value={city}>
                   {city}
                 </option>

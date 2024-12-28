@@ -66,6 +66,24 @@ router.get('/conditions', async (req, res) => {
     }
 });
 
+router.get('/city', async (req, res) => {
+    try {
+        const db = await connectToDatabase();
+        const newCarsCollection = db.collection('New_cars');
+        const usedCarsCollection = db.collection('Used_cars');
+
+        const newLocation = await newCarsCollection.distinct('purchase_location');
+        const usedLocation = await usedCarsCollection.distinct('purchase_location');
+
+        const combinedLocation = [...new Set([...newLocation, ...usedLocation])];
+
+        res.json({ success: true, brands: combinedLocation });
+    } catch (error) {
+        console.error('Error fetching brands:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 
 export default router;
