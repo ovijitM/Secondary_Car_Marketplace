@@ -1,115 +1,216 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import CustomNavbar from '../../components/Customnavbar/Customnavbar';
-import { Link } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Customnavbar from "../../components/Customnavbar/Customnavbar";
+import Footer from "../../components/Footer/Footer";
+import { Card } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Filter from "../../components/Filter";
+import "../Home.css";
+import car2 from "../../assets/mainscreen/brombrom.jpg";
 
 
-const allCars = [
-  { id: 1, brand: 'Tesla', model: 'Model S', year: 2023, price: 79999, image: 'path/to/image1.jpg' },
-  { id: 2, brand: 'Ford', model: 'Mustang GT', year: 2021, price: 55999, image: 'path/to/image2.jpg' },
-  { id: 3, brand: 'Chevrolet', model: 'Camaro ZL1', year: 2022, price: 65000, image: 'path/to/image3.jpg' },
-  { id: 4, brand: 'BMW', model: 'M3', year: 2020, price: 70000, image: 'path/to/image4.jpg' },
-  { id: 5, brand: 'Audi', model: 'A6', year: 2021, price: 50000, image: 'path/to/image5.jpg' },
 
-];
+export default function Home() {
 
-function CarsPage() {
-  const [cars, setCars] = useState(allCars);
-  const [filters, setFilters] = useState({
-    brand: '',
-    model: '',
-    year: '',
-  });
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [name]: value,
-    }));
+  const [AllCars, setAllCars] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const carsPerPage = 12; 
+  const navigate = useNavigate();
+  
+  const loadData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/displaydata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (data.success) {
+        const mergedCars = [...data.new_cars, ...data.used_cars];
+        setAllCars(mergedCars);
+
+      } else {
+        console.log("Error fetching data:", data.message);
+      }
+    } catch  {
+      console.log("Error fetching data:");
+    }
   };
 
+  useEffect(() => {
+    loadData();
+  }, []);
 
-  const handleFilterSubmit = (e) => {
-    e.preventDefault();
-    const filteredCars = allCars.filter((car) => {
-      return (
-        (filters.brand ? car.brand.toLowerCase().includes(filters.brand.toLowerCase()) : true) &&
-        (filters.model ? car.model.toLowerCase().includes(filters.model.toLowerCase()) : true) &&
-        (filters.year ? car.year.toString() === filters.year : true)
-      );
-    });
-    setCars(filteredCars);
+
+
+
+
+  const indexOfLastCar = currentPage * carsPerPage;
+  const indexOfFirstCar = indexOfLastCar - carsPerPage;
+  const currentCars = AllCars.slice(indexOfFirstCar, indexOfLastCar);
+
+  const totalPages = Math.ceil(AllCars.length / carsPerPage);
+
+  const handleViewDetails = (car) => {
+
+    navigate("/CarDetails", { state: { car } });
   };
+
 
   return (
     <>
-      <CustomNavbar />
-      <Container className="my-4">
-        <Form onSubmit={handleFilterSubmit} className="mb-4">
-          <Row>
-            <Col md={3}>
-              <Form.Control
-                type="text"
-                placeholder="Brand"
-                name="brand"
-                value={filters.brand}
-                onChange={handleFilterChange}
-              />
-            </Col>
-            <Col md={3}>
-              <Form.Control
-                type="text"
-                placeholder="Model"
-                name="model"
-                value={filters.model}
-                onChange={handleFilterChange}
-              />
-            </Col>
-            <Col md={3}>
-              <Form.Control
-                type="number"
-                placeholder="Year"
-                name="year"
-                value={filters.year}
-                onChange={handleFilterChange}
-              />
-            </Col>
-            <Col md={3}>
-              <Button variant="primary" type="submit" className="w-100">
-                Filter
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-        <Row>
-          {cars.length === 0 ? (
-            <Col>
-              <h3>No cars found with the given filters</h3>
-            </Col>
-          ) : (
-            cars.map((car) => (
-              <Col key={car.id} md={4} className="mb-4">
-                <Card>
-                  <Card.Img variant="top" src={car.image} />
-                  <Card.Body>
-                    <Card.Title>{car.brand} {car.model}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{car.year}</Card.Subtitle>
-                    <Card.Text>Price: ${car.price}</Card.Text>
-                    <Link to="/CarDetails">
-                      <Button variant="primary">
-                        View Details
-                      </Button>
-                    </Link>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))
-          )}
-        </Row>
+      <Customnavbar />
+      {/* -----------------------Carousel----------------------- */}
+
+      <div style={{ position: "relative", overflow: "hidden" }}>
+      <Carousel >
+        <Carousel.Item>
+          <img
+            src={car2}
+            alt="First slide"
+            className="d-block w-100"
+            height={690}
+            width={900}
+          />
+          <Carousel.Caption></Carousel.Caption>
+        </Carousel.Item>
+
+      </Carousel>
+
+      {/* Fixed Search Bar */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100%",
+          textAlign: "center",
+          zIndex: 10, // Ensure it's above the carousel
+        }}
+      > <Filter />
+       
+      </div>
+    </div>
+
+      {/* -----------------------Car Brands----------------------- */}
+
+
+      <Container className="my-4 " overflow="hidden">
+        <div className={`slider-container`}>
+          <div className="cars" style={{ margin: "5px 10px 50px 10px", paddingBottom: "50px" }}>
+            <h2>Choose Your Dream Car</h2>
+            <div className="choose-cars">
+
+
+
+                {/* //filtering the new cars */}
+
+              {currentCars
+        
+                .map((car, index) => (
+                  <div
+                    key={index}
+                    className="caritem"
+                    style={{ height: "100%" }}
+                  >
+                    <Card style={{ width: "18rem" }}>
+                      <Card.Img
+                        variant="top"
+                        src={car.img}
+                        alt="Car Image"
+                        style={{
+                          height: "180px",
+                          objectFit: "cover",
+                          borderRadius: "5px 5px 0 0",
+                        }}
+                      />
+                      <Card.Body>
+                        <Row>
+                          <Col xs={7}>
+                            <Card.Title>{car.brand}</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">
+                              {car.model}
+                            </Card.Subtitle>
+                          </Col>
+                          <Col xs={4} className="text-right">
+                            <div
+                              style={{
+                                backgroundColor:
+                                car.label === "imported"
+                                ? "yellow"
+                                : car.label === "new"
+                                ? "green"
+                                : "gray",
+                                color:
+                                  car.label === "imported" ? "black" : "white",
+                                padding: "4px 8px",
+                                borderRadius: "5px",
+                                display: "inline-block",
+                                fontSize: "0.9rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              {car.label}
+                            </div>
+                            <div style={{ marginTop: "5px", color: "gray" }}>
+                              {car.year}
+                            </div>
+                          </Col>
+                        </Row>
+                        <div style={{ textAlign: "center", margin: "10px 0" }}>
+                          <h5> Price ${car.price} </h5>
+                        </div>
+                        <div style={{ textAlign: "center", margin: "10px 0", color:'gray'}}>
+                          <h5> {car.offer_price} </h5>
+                        </div>
+                        <Card.Text style={{ fontSize: "15px" }}>
+                          {car.details}
+                        </Card.Text>
+                        <Button
+                          variant="primary"
+                          style={{ width: "100%", overflow: "hidden" }}onClick={() => handleViewDetails(car)}
+                        >
+                          {car.label === "imported" ? "View details for Order" : "View details for Buy"}
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                ))}
+            </div>
+
+
+          </div>
+
+        {/* Pagination Controls */}
+        <div className="d-flex justify-content-center my-4">
+          {Array.from({ length: totalPages }, (_, i) => (
+            <Button
+              key={i + 1}
+              onClick={() => setCurrentPage(i + 1)}
+              variant={currentPage === i + 1 ? "primary" : "outline-primary"}
+              className="mx-1"
+            >
+              {i + 1}
+            </Button>
+          ))}
+        </div>
+      </div>
       </Container>
+
+      {/* -----------------------Footer----------------------- */}
+
+      <div className="footer-home">
+        <div className="footer">
+          <Footer />
+        </div>
+      </div>
     </>
   );
 }
-
-export default CarsPage;
