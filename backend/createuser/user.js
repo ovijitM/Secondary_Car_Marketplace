@@ -14,9 +14,13 @@ export default async function addUser ({ name, email, password, country, state }
       password, 
       country,
       state,
+      role: "user",
+      token: 0,
       createdAt: new Date(),
       updatedAt: new Date(), 
-      isActive: true,
+      isVerified: false,
+
+
     };
 
     const result = await collection.insertOne(newUser);
