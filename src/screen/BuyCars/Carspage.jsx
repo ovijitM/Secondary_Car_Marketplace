@@ -58,7 +58,7 @@ export default function Home() {
   const totalPages = Math.ceil(AllCars.length / carsPerPage);
 
   const handleViewDetails = (car) => {
-   
+
     navigate("/CarDetails", { state: { car } });
   };
 

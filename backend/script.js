@@ -5,8 +5,10 @@ import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
 import search from './Search/search.js';
 import logout from './validateuser/logoutcheck.js';
-import display from './displaydata.js';
 import filter from "./Search/filtercar.js";
+import displaydata from './displaydata.js';
+import user_history from './userhistory.js'; // Add this line to import user_history
+
 
 const port = 8000;
 const app = Express();
@@ -27,8 +29,10 @@ app.use('/api', userRoutes);
 app.use('/api', checkUser);
 app.use('/api', search);
 app.use('/api', logout);
-app.use('/api', display);
 app.use('/api', filter);
+app.use('/api', displaydata);
+app.use('/api', user_history); 
+
 
 
 
