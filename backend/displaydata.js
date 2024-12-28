@@ -2,6 +2,7 @@ import connectToDatabase from './database.js'; // Import the database connection
 import express from 'express';
 
 
+
 const router = express.Router();
 
 router.post('/displaydata', async (req, res) => {

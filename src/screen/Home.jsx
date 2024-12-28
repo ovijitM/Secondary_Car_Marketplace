@@ -21,6 +21,8 @@ export default function Home() {
   const [visibleCount, setVisibleCount] = useState(8); // Initial number of cars to show
   const [loadMoreClicks, setLoadMoreClicks] = useState(0); // Track load-more button clicks
   const navigate = useNavigate();
+
+
 // console.log(Rent_Cars)
   const loadData = async () => {
     try {
@@ -72,7 +74,10 @@ export default function Home() {
   //     car.brand.toLowerCase().includes(search.toLowerCase()) ||
   //     car.model.toLowerCase().includes(search.toLowerCase())
   // );
-
+  const handleViewDetails = (car) => {
+    // console.log("Navigating with car:", car);
+    navigate("/CarDetails", { state: { car } });
+  };
   return (
     <>
       <Customnavbar />
@@ -267,6 +272,7 @@ export default function Home() {
                         <Button
                           variant="primary"
                           style={{ width: "100%", overflow: "hidden" }}
+                          onClick={() => handleViewDetails(car)}
                         >
                           {car.label === "imported"
                             ? "View details for Order"
@@ -361,7 +367,7 @@ export default function Home() {
                         </Card.Text>
                         <Button
                           variant="primary"
-                          style={{ width: "100%", overflow: "hidden" }}
+                          style={{ width: "100%", overflow: "hidden" }} onClick={() => handleViewDetails(car)}
                         >
                           Rent Now
                         </Button>
