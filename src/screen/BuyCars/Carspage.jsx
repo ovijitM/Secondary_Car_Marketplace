@@ -1,41 +1,25 @@
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import Customnavbar from "../../components/Customnavbar/Customnavbar";
-
-
 import Footer from "../../components/Footer/Footer";
-
 import { Card } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
-
-
-
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter";
 import "../Home.css";
 import car2 from "../../assets/mainscreen/brombrom.jpg";
-import car3 from "../../assets/mainscreen/brombrom2.jpg";
-import car4 from "../../assets/mainscreen/brombrom3.jpg";
-import car5 from "../../assets/mainscreen/brombrom4.jpg";
-import car6 from "../../assets/mainscreen/brombrom8-1.jpg";
-import car7 from "../../assets/mainscreen/brombrom6.jpg";
+
 
 
 export default function Home() {
-  const [searchCriteria, setSearchCriteria] = useState({});
-  // const [New_cars, setNew_cars] = useState([]);
-  // const [Used_cars, setUsed_cars] = useState([]);
-  // const [visibleCount, setVisibleCount] = useState(8);// Initial number of cars to show
+
 
   const [AllCars, setAllCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 12; 
+  const navigate = useNavigate();
   
-
-
-
-
   const loadData = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/displaydata", {
@@ -50,10 +34,7 @@ export default function Home() {
       if (data.success) {
         const mergedCars = [...data.new_cars, ...data.used_cars];
         setAllCars(mergedCars);
-        
-        // setNew_cars(data.new_cars);
-        // setUsed_cars(data.used_cars);
-        // console.log(New_cars);
+
       } else {
         console.log("Error fetching data:", data.message);
       }
@@ -69,50 +50,18 @@ export default function Home() {
 
 
 
-  // const filteredCars = AllCars.filter(
-  //   (car) =>
-  //     car.brand.toLowerCase().includes(search.toLowerCase()) ||
-  //     car.model.toLowerCase().includes(search.toLowerCase())
-  // );
-
-  const handleFilter = (criteria) => {
-    setSearchCriteria(criteria);
-  };
-
-
-
-  const filteredCars = AllCars.filter((car) => {
-    return (
-      (searchCriteria.selectedBrand === "All" ||
-        car.brand === searchCriteria.selectedBrand) &&
-      (searchCriteria.selectedModel === "All" ||
-        car.model === searchCriteria.selectedModel) &&
-      (searchCriteria.selectedCity === "All" ||
-        car.city === searchCriteria.selectedCity) &&
-      (searchCriteria.selectedCondition === "All" ||
-        car.condition === searchCriteria.selectedCondition) &&
-      car.price >= searchCriteria.priceRange[0] &&
-      car.price <= searchCriteria.priceRange[1]
-    );
-  });
 
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
-  const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
+  const currentCars = AllCars.slice(indexOfFirstCar, indexOfLastCar);
 
-  const totalPages = Math.ceil(filteredCars.length / carsPerPage);
+  const totalPages = Math.ceil(AllCars.length / carsPerPage);
 
-  // const filteredNewCars = New_cars.filter(
-  //   (car) =>
-  //     car.brand.toLowerCase().includes(search.toLowerCase()) ||
-  //     car.model.toLowerCase().includes(search.toLowerCase())
-  // );
+  const handleViewDetails = (car) => {
+   
+    navigate("/CarDetails", { state: { car } });
+  };
 
-  // const filteredUsedCars = Used_cars.filter(
-  //   (car) =>
-  //     car.brand.toLowerCase().includes(search.toLowerCase()) ||
-  //     car.model.toLowerCase().includes(search.toLowerCase())
-  // );
 
   return (
     <>
@@ -131,56 +80,7 @@ export default function Home() {
           />
           <Carousel.Caption></Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item>
-          <img
-            src={car3}
-            alt="Second slide"
-            className="d-block w-100"
-            height={690}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            src={car4}
-            alt="Third slide"
-            className="d-block w-100"
-            height={690}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            src={car5}
-            alt="Third slide"
-            className="d-block w-100"
-            height={690}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>{" "}
-        <Carousel.Item>
-          <img
-            src={car6}
-            alt="Third slide"
-            className="d-block w-100"
-            height={690}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>{" "}
-        <Carousel.Item>
-          <img
-            src={car7}
-            alt="Third slide"
-            className="d-block w-100"
-            height={690}
-            width={900}
-          />
-          <Carousel.Caption></Carousel.Caption>
-        </Carousel.Item>{" "}
+
       </Carousel>
 
       {/* Fixed Search Bar */}
@@ -194,7 +94,7 @@ export default function Home() {
           textAlign: "center",
           zIndex: 10, // Ensure it's above the carousel
         }}
-      > <Filter onFilter={handleFilter}/>
+      > <Filter />
        
       </div>
     </div>
@@ -267,12 +167,15 @@ export default function Home() {
                         <div style={{ textAlign: "center", margin: "10px 0" }}>
                           <h5> Price ${car.price} </h5>
                         </div>
+                        <div style={{ textAlign: "center", margin: "10px 0", color:'gray'}}>
+                          <h5> {car.offer_price} </h5>
+                        </div>
                         <Card.Text style={{ fontSize: "15px" }}>
                           {car.details}
                         </Card.Text>
                         <Button
                           variant="primary"
-                          style={{ width: "100%", overflow: "hidden" }}
+                          style={{ width: "100%", overflow: "hidden" }}onClick={() => handleViewDetails(car)}
                         >
                           {car.label === "imported" ? "View details for Order" : "View details for Buy"}
                         </Button>
