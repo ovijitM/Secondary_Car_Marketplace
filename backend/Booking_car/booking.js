@@ -7,6 +7,13 @@ export default async function addUser({
   Where_to_go,
   price,
   carId,
+  carBrand,
+  carModel,
+  carYear,
+  carColor,
+  carSit,
+  carDetails,
+  carImg,
 }) {
   try {
     const db = await connectToDatabase();
@@ -28,6 +35,13 @@ export default async function addUser({
       Where_to_go,
       price,
       carId,
+      carBrand,
+      carModel,
+      carYear,
+      carColor,
+      carSit,
+      carDetails,
+      carImg,
       createdAt: new Date(),
       updatedAt: new Date(),
       isActive: true,

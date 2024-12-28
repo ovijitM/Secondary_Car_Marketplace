@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "./RentCars.css"; // Optional CSS file for styling
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Container, Row, Col, Button } from "react-bootstrap";
-import { set } from "mongoose";
 
 const RentCars = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [carId, setCarId] = useState("");
+
   // Fetch cars from the API
   const fetchCars = async () => {
     try {
@@ -21,11 +20,9 @@ const RentCars = () => {
       });
 
       const data = await response.json();
-      const cars = data.data;
 
       if (data.success) {
         setCars(data.data);
-        setCarId(cars[1]._id);
       } else {
         setErrorMessage(data.message); // Set error message
       }
@@ -34,12 +31,14 @@ const RentCars = () => {
       setErrorMessage("Error fetching cars. Please try again later.");
     }
   };
+
+  // Handle "Book Now" button click
   const handleViewDetails = (car) => {
-    console.log("hi");
-    // Navigate to the /book page and pass the carId as state
+    console.log("Navigating to book page with car details:", car);
+    // Navigate to the /book page and pass the full car details as state
     navigate("/book", { state: { car } });
-    console.log(carId);
   };
+
   useEffect(() => {
     fetchCars();
   }, []);
@@ -71,7 +70,7 @@ const RentCars = () => {
                 </Card.Text>
                 <Button
                   variant="primary"
-                  onClick={() => handleViewDetails(car)} // Pass car._id
+                  onClick={() => handleViewDetails(car)} // Pass the full car object
                 >
                   Book Now
                 </Button>

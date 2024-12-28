@@ -23,7 +23,21 @@ const router = express.Router();
 
 router.post("/book", async (req, res) => {
   console.log("Request Body:", req.body);
-  const { name, number, PickUp, Where_to_go, carId } = req.body;
+  const {
+    name,
+    number,
+    PickUp,
+    Where_to_go,
+    price,
+    carId,
+    carBrand,
+    carModel,
+    carYear,
+    carColor,
+    carSit,
+    carDetails,
+    carImg,
+  } = req.body;
 
   try {
     // Find the matching route
@@ -67,7 +81,14 @@ router.post("/book", async (req, res) => {
       PickUp,
       Where_to_go,
       price,
-      carId: carId,
+      carId,
+      carBrand,
+      carModel,
+      carYear,
+      carColor,
+      carSit,
+      carDetails,
+      carImg,
     });
 
     if (result.success) {
