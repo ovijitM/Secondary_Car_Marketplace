@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import "../Carbrandlogo/Carbrandlogo.css";
 import audi from "../../assets/brandlogo/audi-logo-2016-640.png";
 import marcedes from "../../assets/brandlogo/Mercedes-Benz-logo-2011-640x369.jpg";
