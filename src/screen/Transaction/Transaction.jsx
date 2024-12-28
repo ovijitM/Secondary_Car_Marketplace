@@ -65,6 +65,7 @@ function TransactionPage() {
                   Model Year: {car.year}
                 </Card.Subtitle>
                 <Card.Text>Price: ${car.price}</Card.Text>
+                <Card.Text> {car.offer_price}</Card.Text>
                 <Card.Text>Condition: {car.label}</Card.Text>
                 <Card.Text>Location: {car.purchase_location}</Card.Text>
                 <Card.Text>Mileage: {car.mileage}</Card.Text>
@@ -77,6 +78,7 @@ function TransactionPage() {
             <Card>
               <Card.Body>
                 <h4>Confirm Your Details</h4>
+                <h6>*You Need to atleast pay the half for booking</h6>
                 <Form>
                   <Form.Group className="mb-3" controlId="formName">
                     <Form.Label>Full Name</Form.Label>
@@ -104,6 +106,7 @@ function TransactionPage() {
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formPaymentMethod">
                     <Form.Label>Payment Method</Form.Label>
+
                     <Form.Select required>
                       <option value="">Select a payment method</option>
                       <option value="credit-card">Credit Card</option>
@@ -111,23 +114,40 @@ function TransactionPage() {
                       <option value="bank-transfer">Bank Transfer</option>
                     </Form.Select>
                   </Form.Group>
-                  <Button
-                    variant="primary"
-                    className="w-100"
-                    onClick={handleConfirmBooking} // Ensure this calls the updated function
-                  >
-                    Confirm Booking
-                  </Button>
                 </Form>
               </Card.Body>
             </Card>
+            <div
+              className="text-center mt-4"
+              style={{
+                display: "flex",
+                marginLeft: "auto",
+                marginRight: "auto",
+                gap: "1rem",
+              }}
+            >
+              <Button
+                className="text-center mt-2 w-50"
+                style={{
+                  display: "block",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
+                variant="secondary"
+                onClick={() => navigate(-1)}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                className="text-center mt-2 w-50"
+                onClick={handleConfirmBooking} // Ensure this calls the updated function
+              >
+                Confirm Booking
+              </Button>
+            </div>
           </Col>
         </Row>
-        <div className="text-center mt-4">
-          <Button variant="secondary" onClick={() => navigate(-1)}>
-            Cancel
-          </Button>
-        </div>
       </Container>
     </>
   );

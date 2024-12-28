@@ -204,6 +204,9 @@ export default function Home() {
                         <div style={{ textAlign: "center", margin: "10px 0" }}>
                           <h5> Price ${car.price} </h5>
                         </div>
+                        <div style={{ textAlign: "center", margin: "10px 0", color:'gray'}}>
+                          <h5> {car.offer_price} </h5>
+                        </div>
                         <Card.Text style={{ fontSize: "15px" }}>
                           {car.details}
                         </Card.Text>

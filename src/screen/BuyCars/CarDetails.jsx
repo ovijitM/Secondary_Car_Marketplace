@@ -1,12 +1,84 @@
-// 
+// // 
+// import { useLocation, useNavigate } from 'react-router-dom';
+// import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+// import CustomNavbar from '../../components/Customnavbar/Customnavbar';
+
+// function CarDetails() {
+//   const handleViewDetails = (car) => {
+//     navigate("/transaction", { state: { car } });
+//   };
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+//   // Retrieve the car data from the location's state
+//   const car = location.state?.car;
+
+//   if (!car) {
+//     console.log("Car not found in location state");
+//   }
+
+//   return (
+//     <>
+//       <CustomNavbar />
+//       <Container className="my-4">
+//         <Card>
+//           <Row className="g-8">
+//             {/* Left column for the car image */}
+//             <Col md={5}>
+//               <Card.Img
+//                 variant="top"
+//                 src={car.img}
+//                 alt={`${car.brand} ${car.model}`}
+//                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
+//               />
+//             </Col>
+//             {/* Right column for the car details */}
+//             <Col md={7}>
+//               <Card.Body>
+//                 <Card.Title>{car.brand} {car.model}</Card.Title>
+//                 <Card.Subtitle className="mb-2 text-muted">Model Year: {car.year}</Card.Subtitle>
+//                 <Card.Text>Details: {car.details}</Card.Text>
+//                 <Card.Text>Label: {car.label}</Card.Text>
+//                 <Card.Text>Price: ${car.price}</Card.Text>
+//                 <Card.Text className='' style={{}}>Offer: {car.offer_price}</Card.Text>
+
+//                 <Card.Text>Condition: {car.label}</Card.Text>
+//                 <Card.Text>Location: {car.purchase_location}</Card.Text>
+//                 <Card.Text>Transmission: {car.transmission}</Card.Text>
+//                 <Card.Text>Engine: {car.engine}</Card.Text>
+//                 <Card.Text>Color: {car.color}</Card.Text>
+//                 <Card.Text>Body Type: {car.body_type}</Card.Text>
+//                 <Card.Text>Drive Type: {car.drive_type}</Card.Text>
+//                 <Card.Text>Interior: {car.interior}</Card.Text>
+//                 <Card.Text>Exterior: {car.exterior}</Card.Text>
+//                 <Card.Text>Mileage: {car.mileage}</Card.Text>
+//               </Card.Body>
+//             </Col>
+//           </Row>
+//         </Card>
+//         {/* Buttons section */}
+//         <div className="d-flex justify-content-center mt-3">
+//           <Button variant="secondary" onClick={() => navigate(-1)}>Go Back</Button>
+            
+//           <Button
+//             onClick={() => handleViewDetails(car)}
+//             variant="primary"
+//             style={{ marginLeft: "10px" }}
+//           >
+//             Proceed To Book
+//           </Button>
+//         </div>
+//       </Container>
+//     </>
+//   );
+// }
+
+// export default CarDetails;
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import CustomNavbar from '../../components/Customnavbar/Customnavbar';
 
 function CarDetails() {
-  const handleViewDetails = (car) => {
-    navigate("/transaction", { state: { car } });
-  };
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -15,60 +87,79 @@ function CarDetails() {
 
   if (!car) {
     console.log("Car not found in location state");
+    return (
+      <Container className="text-center my-4">
+        <h2>Error</h2>
+        <p>No car details available.</p>
+        <Button variant="secondary" onClick={() => navigate(-1)}>
+          Go Back
+        </Button>
+      </Container>
+    );
   }
+
+  const handleViewDetails = (car) => {
+    navigate("/transaction", { state: { car } });
+  };
 
   return (
     <>
       <CustomNavbar />
       <Container className="my-4">
-        <Card>
-          <Row className="g-8">
-            {/* Left column for the car image */}
-            <Col md={5}>
+        <h2 className="text-center mb-4">Car Details</h2>
+        <Row>
+          {/* Left column for the car image */}
+          <Col md={6}>
+            <Card>
               <Card.Img
                 variant="top"
                 src={car.img}
                 alt={`${car.brand} ${car.model}`}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "400px", objectFit: "cover" }}
               />
-            </Col>
-            {/* Right column for the car details */}
-            <Col md={7}>
+            </Card>
+             {/* Button Section */}
+             <div className="d-flex justify-content-center mt-3">
+                  <Button variant="secondary" onClick={() => navigate(-1)}>Go Back</Button>
+                  <Button
+                    onClick={() => handleViewDetails(car)}
+                    variant="primary"
+                    style={{ marginLeft: '10px' }}
+                  >
+                    Proceed To Book
+                  </Button>
+                </div>
+          </Col>
+          
+
+          {/* Right column for the car details */}
+          <Col md={6}>
+            <Card>
               <Card.Body>
                 <Card.Title>{car.brand} {car.model}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Model Year: {car.year}</Card.Subtitle>
-                <Card.Text>Details: {car.details}</Card.Text>
-                <Card.Text>Label: {car.label}</Card.Text>
-                <Card.Text>Price: ${car.price}</Card.Text>
-                <Card.Text>Condition: {car.label}</Card.Text>
-                <Card.Text>Location: {car.purchase_location}</Card.Text>
-                <Card.Text>Transmission: {car.transmission}</Card.Text>
-                <Card.Text>Engine: {car.engine}</Card.Text>
-                <Card.Text>Color: {car.color}</Card.Text>
-                <Card.Text>Body Type: {car.body_type}</Card.Text>
-                <Card.Text>Drive Type: {car.drive_type}</Card.Text>
-                <Card.Text>Interior: {car.interior}</Card.Text>
-                <Card.Text>Exterior: {car.exterior}</Card.Text>
-                <Card.Text>Mileage: {car.mileage}</Card.Text>
+                <Card.Text><strong>Price:</strong> ${car.price}</Card.Text>
+                <Card.Text><strong>Offer Price:</strong> {car.offer_price}</Card.Text>
+                <Card.Text><strong>Condition:</strong> {car.label}</Card.Text>
+                <Card.Text><strong>Location:</strong> {car.purchase_location}</Card.Text>
+                <Card.Text><strong>Mileage:</strong> {car.mileage}</Card.Text>
+                <Card.Text><strong>Transmission:</strong> {car.transmission}</Card.Text>
+                <Card.Text><strong>Engine:</strong> {car.engine}</Card.Text>
+                <Card.Text><strong>Color:</strong> {car.color}</Card.Text>
+                <Card.Text><strong>Body Type:</strong> {car.body_type}</Card.Text>
+                <Card.Text><strong>Drive Type:</strong> {car.drive_type}</Card.Text>
+                <Card.Text><strong>Interior:</strong> {car.interior}</Card.Text>
+                <Card.Text><strong>Exterior:</strong> {car.exterior}</Card.Text>
+
+               
               </Card.Body>
-            </Col>
-          </Row>
-        </Card>
-        {/* Buttons section */}
-        <div className="d-flex justify-content-center mt-3">
-          <Button variant="secondary" onClick={() => navigate(-1)}>Go Back</Button>
-            
-          <Button
-            onClick={() => handleViewDetails(car)}
-            variant="primary"
-            style={{ marginLeft: "10px" }}
-          >
-            Proceed To Book
-          </Button>
-        </div>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </>
   );
 }
 
 export default CarDetails;
+
