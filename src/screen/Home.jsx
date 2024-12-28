@@ -211,6 +211,7 @@ export default function Home() {
             style={{ margin: "5px 10px 50px 10px", paddingBottom: "50px" }}
           >
             <h2>Choose Your Dream Car</h2>
+            <hr/>
             <div className="choose-cars">
               {/* //filtering the new cars */}
 
@@ -311,6 +312,7 @@ export default function Home() {
 
           <div className="" style={{ marginTop: "90px" }}>
             <h2>Rent Car</h2>
+            <hr/>
             <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
               <div className="choose-cars">
                 {Rent_Cars.map((car, index) => (

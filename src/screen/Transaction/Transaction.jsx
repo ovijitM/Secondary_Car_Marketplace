@@ -22,7 +22,8 @@ function TransactionPage() {
     );
   }
 
-  const handleConfirmBooking = () => {
+
+  const handleConfirmBooking = async () => {
     const name = document.getElementById("formName").value;
     const email = document.getElementById("formEmail").value;
     const phone = document.getElementById("formPhone").value;
@@ -33,14 +34,52 @@ function TransactionPage() {
       return;
     }
 
-    const userDetails = { name, email, phone };
+    const userDetails = {
+      name,
+      email,
+      phone,
+      paymentMethod,
+      car, // Include the car details
+      transaction: Math.floor(Math.random() * 1000000), // Generate a random transaction ID
+    };
 
-    console.log("Booking confirmed for:", car, userDetails, paymentMethod);
+    try {
+      // Send data to backend
+      const response = await fetch("http://localhost:8000/api/user_history", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDetails),
+      });
 
-    navigate("/reciept", {
-      state: { car, userDetails, paymentMethod },
-    });
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Booking saved:", result);
+
+        // Navigate to receipt page with necessary data
+        navigate("/reciept", { state: { car, userDetails, paymentMethod } });
+      } else {
+        console.error("Failed to save booking:", response.statusText);
+        alert("Failed to confirm booking. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during booking:", error);
+      alert("An error occurred. Please try again later.");
+    }
   };
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <>

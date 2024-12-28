@@ -1,8 +1,8 @@
 // ReceiptPage.js
-import { useLocation } from "react-router-dom";
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import { jsPDF } from "jspdf";
-import "jspdf-autotable";
+import { useLocation } from 'react-router-dom';
+import { Container, Card, Button, Row, Col } from 'react-bootstrap';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 function ReceiptPage() {
   const location = useLocation();
@@ -45,6 +45,7 @@ function ReceiptPage() {
     doc.text(`Discount: $${car.offer_price}`, 14, 100);
     doc.text(`TransactionId: $${car.price}`, 14, 100);
 
+
     // Car Details
     doc.text("Car Details:", 14, 110);
     doc.text(`Brand: ${car.brand}`, 14, 120);
@@ -64,90 +65,47 @@ function ReceiptPage() {
       <h2 className="text-center mb-4">Receipt</h2>
       <Card>
         <Card.Body>
-          <div className="text-center mb-4">
-            <div>
-              <h4>Car Purchase Receipt</h4>
-              <img
-                src="https://i.ibb.co.com/BBjyM0b/Component-5.png"
-                alt="DriveNext"
-                style={{
-                  width: "200px",
-                  height: "50px",
-                  position: "absolute",
-                  left: "1rem",
-                  top: "1rem",
-                }}
-              />
-              <p>Thank you for your purchase!</p>
-            </div>
+          <div className="text-center mb-4" >
+            <div  ><h4>Car Purchase Receipt</h4>
+            <img src= "https://i.ibb.co.com/BBjyM0b/Component-5.png" alt="DriveNext" style={{ width: "200px", height: "50px", position:'absolute',left:'2rem',top:'1rem'}} />
+            <p>Thank you for your purchase!</p></div>
           </div>
           <Row>
             <Col md={6}>
               <h5>Buyer Details</h5>
-              <p>
-                <strong>Name:</strong> {userDetails.name}
-              </p>
-              <p>
-                <strong>Email:</strong> {userDetails.email}
-              </p>
-              <p>
-                <strong>Phone:</strong> {userDetails.phone}
-              </p>
+              <p><strong>Name:</strong> {userDetails.name}</p>
+              <p><strong>Email:</strong> {userDetails.email}</p>
+              <p><strong>Phone:</strong> {userDetails.phone}</p>
             </Col>
             <Col md={6}>
               <h5>Payment Details</h5>
-              <p>
-                <strong>Payment Method:</strong> {paymentMethod}
-              </p>
-              <p>
-                <strong>Amount Paid:</strong> ${car.price}
-              </p>
-              <p>
-                <strong>Discount:</strong> ${car.offer_price}
-              </p>
-              <p>
-                <strong>TransactionID:</strong> {}
-              </p>
+              <p><strong>Payment Method:</strong> {paymentMethod}</p>
+              <p><strong>Amount Paid:</strong> ${car.price}</p>
+              <p><strong>Discount:</strong> {car.offer_price}</p>
+              <p><strong>TransactionID:</strong> {userDetails.transaction}</p>
             </Col>
           </Row>
           <hr />
           <h5>Car Details</h5>
           <Row>
             <Col md={6}>
-              <p>
-                <strong>Brand:</strong> {car.brand}
-              </p>
-              <p>
-                <strong>Model:</strong> {car.model}
-              </p>
-              <p>
-                <strong>Year:</strong> {car.year}
-              </p>
-              <p>
-                <strong>Mileage:</strong> {car.mileage}
-              </p>
+              <p><strong>Brand:</strong> {car.brand}</p>
+              <p><strong>Model:</strong> {car.model}</p>
+              <p><strong>Year:</strong> {car.year}</p>
+              <p><strong>Mileage:</strong> {car.mileage}</p>
             </Col>
             <Col md={6}>
-              <p>
-                <strong>Condition:</strong> {car.label}
-              </p>
-              <p>
-                <strong>Transmission:</strong> {car.transmission}
-              </p>
-              <p>
-                <strong>Engine:</strong> {car.engine}
-              </p>
-              <p>
-                <strong>Color:</strong> {car.color}
-              </p>
+              <p><strong>Condition:</strong> {car.label}</p>
+              <p><strong>Transmission:</strong> {car.transmission}</p>
+              <p><strong>Engine:</strong> {car.engine}</p>
+              <p><strong>Color:</strong> {car.color}</p>
             </Col>
           </Row>
           <hr />
           <div className="text-center">
-            <p>
-              <strong>Purchase Date:</strong> {new Date().toLocaleDateString()}
-            </p>
+            <p><strong>Purchase Date:</strong> {new Date().toLocaleDateString()}</p>
             <p>We hope you enjoy your new car!</p>
+           
           </div>
         </Card.Body>
       </Card>
