@@ -4,46 +4,20 @@ import { Container, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
 
 function Slip() {
   const location = useLocation();
-  const { carId, number } = location.state || {}; // Retrieve carId and number from state
+  console.log("Location State:", location.state);
+  const { car, user } = location.state || {}; // Retrieve full car and user objects from state
 
-  const [carDetails, setCarDetails] = useState(null);
-  const [bookingDetails, setBookingDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (carId && number) {
-      fetchDetails();
-    } else {
+    if (!car || !user) {
       setErrorMessage("Invalid data received. Please try again.");
       setLoading(false);
-    }
-  }, [carId, number]);
-
-  const fetchDetails = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/api/slip", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ carId, number }),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        setCarDetails(data.carDetails); // Data from Rent_cars
-        setBookingDetails(data.bookingDetails); // Data from Book_car
-        setErrorMessage("");
-      } else {
-        setErrorMessage(data.message || "Failed to fetch data.");
-      }
-    } catch (error) {
-      setErrorMessage("An error occurred while fetching details.");
-    } finally {
+    } else {
       setLoading(false);
     }
-  };
+  }, [car, user]);
 
   if (loading) {
     return (
@@ -66,30 +40,30 @@ function Slip() {
       <h1 className="text-center my-4">Booking Slip</h1>
 
       {/* Car Details Section */}
-      {carDetails && (
+      {car && (
         <Card className="mb-4">
           <Card.Body>
             <h2>Car Details</h2>
             <Row>
               <Col md={6}>
                 <p>
-                  <strong>Brand:</strong> {carDetails.brand}
+                  <strong>Brand:</strong> {car.brand}
                 </p>
                 <p>
-                  <strong>Model:</strong> {carDetails.model}
+                  <strong>Model:</strong> {car.model}
                 </p>
                 <p>
-                  <strong>Year:</strong> {carDetails.year}
+                  <strong>Year:</strong> {car.year}
                 </p>
                 <p>
-                  <strong>Color:</strong> {carDetails.color}
+                  <strong>Color:</strong> {car.color}
                 </p>
               </Col>
               <Col md={6}>
                 <Card.Img
                   variant="top"
-                  src={carDetails.img}
-                  alt={`${carDetails.brand} ${carDetails.model}`}
+                  src={car.img}
+                  alt={`${car.brand} ${car.model}`}
                   className="img-fluid"
                 />
               </Col>
@@ -99,25 +73,24 @@ function Slip() {
       )}
 
       {/* Booking Details Section */}
-      {bookingDetails && (
+      {user && (
         <Card>
           <Card.Body>
             <h2>Booking Details</h2>
             <p>
-              <strong>Name:</strong> {bookingDetails.name}
+              <strong>Name:</strong> {`${user.firstName} ${user.lastName}`}
             </p>
             <p>
-              <strong>Phone Number:</strong> {bookingDetails.number}
+              <strong>Phone Number:</strong> {user.number}
             </p>
             <p>
-              <strong>Pick Up:</strong> {bookingDetails.PickUp}
+              <strong>Pick Up:</strong> {user.PickUp}
             </p>
             <p>
-              <strong>Destination:</strong> {bookingDetails.Where_to_go}
+              <strong>Destination:</strong> {user.Where_to_go}
             </p>
-            <p>
-              <strong>Price:</strong> ${bookingDetails.price}
-            </p>
+            {/* Assuming `car.price` is available and passed */}
+            <p>price will print here</p>
           </Card.Body>
         </Card>
       )}
@@ -126,3 +99,127 @@ function Slip() {
 }
 
 export default Slip;
+
+// import React, { useEffect, useState } from "react";
+// import { useLocation } from "react-router-dom";
+// import { Container, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
+
+// function Slip() {
+//   const location = useLocation();
+//   const { car, user } = location.state || {}; // Retrieve car and user objects from state
+
+//   const [loading, setLoading] = useState(true);
+//   const [errorMessage, setErrorMessage] = useState("");
+//   const [price, setPrice] = useState(null);
+
+//   useEffect(() => {
+//     if (!car || !user) {
+//       setErrorMessage("Invalid data received. Please try again.");
+//       setLoading(false);
+//     } else {
+//       // Send a POST request to the backend to get the booking details and price
+//       fetch("http://localhost:8000/api/book", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ car, user }), // Send car and user data
+//       })
+//         .then((response) => response.json()) // Parse the JSON response
+//         .then((data) => {
+//           if (data.success) {
+//             setPrice(data.data.price); // Set the price received from the backend
+//             setLoading(false);
+//           } else {
+//             setErrorMessage(data.message); // Set error message if not successful
+//             setLoading(false);
+//           }
+//         })
+//         .catch((error) => {
+//           setErrorMessage("Error fetching booking details. Please try again.");
+//           setLoading(false);
+//         });
+//     }
+//   }, [car, user]);
+
+//   if (loading) {
+//     return (
+//       <Container className="d-flex justify-content-center align-items-center vh-100">
+//         <Spinner animation="border" variant="primary" />
+//       </Container>
+//     );
+//   }
+
+//   if (errorMessage) {
+//     return (
+//       <Container className="d-flex justify-content-center align-items-center vh-100">
+//         <Alert variant="danger">{errorMessage}</Alert>
+//       </Container>
+//     );
+//   }
+
+//   return (
+//     <Container>
+//       <h1 className="text-center my-4">Booking Slip</h1>
+
+//       {/* Car Details Section */}
+//       {car && (
+//         <Card className="mb-4">
+//           <Card.Body>
+//             <h2>Car Details</h2>
+//             <Row>
+//               <Col md={6}>
+//                 <p>
+//                   <strong>Brand:</strong> {car.brand}
+//                 </p>
+//                 <p>
+//                   <strong>Model:</strong> {car.model}
+//                 </p>
+//                 <p>
+//                   <strong>Year:</strong> {car.year}
+//                 </p>
+//                 <p>
+//                   <strong>Color:</strong> {car.color}
+//                 </p>
+//               </Col>
+//               <Col md={6}>
+//                 <Card.Img
+//                   variant="top"
+//                   src={car.img}
+//                   alt={`${car.brand} ${car.model}`}
+//                   className="img-fluid"
+//                 />
+//               </Col>
+//             </Row>
+//           </Card.Body>
+//         </Card>
+//       )}
+
+//       {/* Booking Details Section */}
+//       {user && (
+//         <Card>
+//           <Card.Body>
+//             <h2>Booking Details</h2>
+//             <p>
+//               <strong>Name:</strong> {`${user.firstName} ${user.lastName}`}
+//             </p>
+//             <p>
+//               <strong>Phone Number:</strong> {user.number}
+//             </p>
+//             <p>
+//               <strong>Pick Up:</strong> {user.PickUp}
+//             </p>
+//             <p>
+//               <strong>Destination:</strong> {user.Where_to_go}
+//             </p>
+//             <p>
+//               <strong>Price:</strong> ${price !== null ? price : "Loading..."}
+//             </p>
+//           </Card.Body>
+//         </Card>
+//       )}
+//     </Container>
+//   );
+// }
+
+// export default Slip;

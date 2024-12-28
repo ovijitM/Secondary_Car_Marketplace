@@ -3,7 +3,7 @@ import userRoutes from "./createuser/createuser.js";
 import checkUser from "./validateuser/logincheck.js";
 import rentCar from "./Rent_cars/rent.js";
 import book from "./Booking_car/book_c.js";
-import slip from "./Rent_cars/slip.js";
+import p from "./Rent_cars/slip.js";
 
 const port = 8000;
 const app = Express();
@@ -20,7 +20,7 @@ app.use("/api", userRoutes);
 app.use("/api", checkUser);
 app.use("/api", rentCar);
 app.use("/api", book);
-app.use("/api", slip);
+app.use("/api", p);
 
 app.use((req, res) => {
   res.send("Hello World!");

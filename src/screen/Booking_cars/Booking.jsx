@@ -36,6 +36,16 @@ function Signup() {
     setErrorMessage("");
   };
 
+  const handleViewDetails = (car, userInfo) => {
+    console.log("Navigating to book page with car and user details:", {
+      car,
+      userInfo,
+    });
+    console.log("Car Data:", car);
+    console.log("User Data:", userInfo);
+    navigate("/p", { state: { car, user: userInfo } });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -77,9 +87,14 @@ function Signup() {
             PickUp: "",
             Where_to_go: "",
           });
-          // Navigate to the slip page with car details and user info in state
-          navigate("/slip", {
-            state: { car, number: info.number },
+
+          // Call handleViewDetails after a successful booking
+          handleViewDetails(car, {
+            firstName: info.firstName,
+            lastName: info.lastName,
+            number: info.number,
+            PickUp: info.PickUp,
+            Where_to_go: info.Where_to_go,
           });
         }
       } catch (error) {
@@ -224,7 +239,7 @@ function Signup() {
 
                   <div className="d-grid gap-2">
                     <Button variant="primary" type="submit">
-                      Book Now
+                      Book Confirm
                     </Button>
                     {errorMessage && (
                       <div className="alert alert-danger" role="alert">

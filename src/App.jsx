@@ -8,6 +8,7 @@ import Rent from "./screen/Rentcars/RentPage";
 import Repair from "./screen/Repair/RepairPage";
 import Post from "./screen/BuyCars/Postcar";
 import Book from "./screen/Booking_cars/Booking";
+import Slip from "./screen/Rentcars/slip";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -27,6 +28,7 @@ function App() {
 
           <Route path="/repair" element={<Repair />} />
           <Route path="/post" element={<Post />} />
+          <Route path="/p" element={<Slip />} />
         </Routes>
       </div>
     </Router>
