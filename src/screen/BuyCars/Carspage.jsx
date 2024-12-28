@@ -1,4 +1,3 @@
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import Customnavbar from "../../components/Customnavbar/Customnavbar";
 import Footer from "../../components/Footer/Footer";
@@ -14,20 +13,13 @@ import car2 from "../../assets/mainscreen/brombrom.jpg";
 
 
 export default function Home() {
-  // const [searchCriteria, setSearchCriteria] = useState({});
-  // const [New_cars, setNew_cars] = useState([]);
-  // const [Used_cars, setUsed_cars] = useState([]);
-  // const [visibleCount, setVisibleCount] = useState(8);// Initial number of cars to show
+
 
   const [AllCars, setAllCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 12; 
   const navigate = useNavigate();
   
-
-
-
-
   const loadData = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/displaydata", {
@@ -42,10 +34,7 @@ export default function Home() {
       if (data.success) {
         const mergedCars = [...data.new_cars, ...data.used_cars];
         setAllCars(mergedCars);
-        
-        // setNew_cars(data.new_cars);
-        // setUsed_cars(data.used_cars);
-        // console.log(New_cars);
+
       } else {
         console.log("Error fetching data:", data.message);
       }
@@ -61,32 +50,6 @@ export default function Home() {
 
 
 
-  // const filteredCars = AllCars.filter(
-  //   (car) =>
-  //     car.brand.toLowerCase().includes(search.toLowerCase()) ||
-  //     car.model.toLowerCase().includes(search.toLowerCase())
-  // );
-
-  // const handleFilter = (criteria) => {
-  //   setSearchCriteria(criteria);
-  // };
-
-
-
-  // const filteredCars = AllCars.filter((car) => {
-  //   return (
-  //     (searchCriteria.selectedBrand === "All" ||
-  //       car.brand === searchCriteria.selectedBrand) &&
-  //     (searchCriteria.selectedModel === "All" ||
-  //       car.model === searchCriteria.selectedModel) &&
-  //     (searchCriteria.selectedCity === "All" ||
-  //       car.city === searchCriteria.selectedCity) &&
-  //     (searchCriteria.selectedCondition === "All" ||
-  //       car.condition === searchCriteria.selectedCondition) &&
-  //     car.price >= searchCriteria.priceRange[0] &&
-  //     car.price <= searchCriteria.priceRange[1]
-  //   );
-  // });
 
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
@@ -95,7 +58,7 @@ export default function Home() {
   const totalPages = Math.ceil(AllCars.length / carsPerPage);
 
   const handleViewDetails = (car) => {
-    // console.log("Navigating with car:", car);
+
     navigate("/CarDetails", { state: { car } });
   };
 
