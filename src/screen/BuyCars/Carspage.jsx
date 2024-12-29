@@ -79,7 +79,7 @@ export default function CarsPage() {
   return (
     <>
       <Customnavbar />
-      {/* -----------------------Carousel----------------------- */}
+     
       <div style={{ position: "relative", overflow: "hidden" }}>
         <Carousel>
           <Carousel.Item>
@@ -94,7 +94,7 @@ export default function CarsPage() {
           </Carousel.Item>
         </Carousel>
 
-        {/* Fixed Search Bar */}
+ 
         <div
           style={{
             position: "absolute",
@@ -103,14 +103,14 @@ export default function CarsPage() {
             transform: "translateX(-50%)",
             width: "100%",
             textAlign: "center",
-            zIndex: 10, // Ensure it's above the carousel
+            zIndex: 10,
           }}
         >
           <Filter onFilterChange={handleFilterChange} />
         </div>
       </div>
 
-      {/* -----------------------Car Brands----------------------- */}
+     
       <Container className="my -4" overflow="hidden">
         <div className={`slider-container`}>
           <div className="cars" style={{ margin: "5px 10px 50px 10px", paddingBottom: "50px" }}>
