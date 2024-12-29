@@ -71,6 +71,15 @@ const RentCars = () => {
             Open Calculator
           </Button>
         </Col>
+        <Col xs="auto">
+          <Button
+            variant="primary"
+            onClick={() => navigate("/admin_booking")}
+            className="calculator-button"
+          >
+            Open admin
+          </Button>
+        </Col>
       </Row>
 
       {loading ? (

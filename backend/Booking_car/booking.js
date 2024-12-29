@@ -14,6 +14,7 @@ export default async function addUser({
   carSit,
   carDetails,
   carImg,
+  status = "pending",
 }) {
   try {
     const db = await connectToDatabase();
@@ -45,6 +46,7 @@ export default async function addUser({
       createdAt: new Date(),
       updatedAt: new Date(),
       isActive: true,
+      status,
     };
 
     const result = await collection.insertOne(newUser);

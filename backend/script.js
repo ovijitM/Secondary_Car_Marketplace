@@ -10,6 +10,7 @@ import user_history from "./userhistory.js";
 import rentCar from "./Rent_cars/rent.js";
 import book from "./Booking_car/book_c.js";
 import p from "./Rent_cars/slip.js";
+import admin_booking from "./Rent_cars/bookcon.js";
 
 const port = 8000;
 const app = Express();
@@ -32,6 +33,7 @@ app.use("/api", user_history);
 app.use("/api", rentCar);
 app.use("/api", book);
 app.use("/api", p);
+app.use("/api", admin_booking);
 
 app.use((req, res) => {
   res.send("Hello World!");

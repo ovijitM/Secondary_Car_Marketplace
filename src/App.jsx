@@ -15,6 +15,7 @@ import Receipt from "./screen/Transaction/Reciept";
 import Book from "./screen/Booking_cars/Booking";
 import Slip from "./screen/Rentcars/slip";
 import RentCalculator from "./screen/Rentcars/calculator";
+import Booking from "./screen/Rentcars/book_con";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/post" element={<Post />} />
           <Route path="/p" element={<Slip />} />
           <Route path="/cal" element={<RentCalculator />} />
+          <Route path="/admin_booking" element={<Booking />} />
         </Routes>
       </div>
     </Router>
