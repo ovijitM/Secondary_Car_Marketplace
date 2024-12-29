@@ -1,8 +1,122 @@
+// import express from "express";
+// import addUser from "./booking.js";
+// import connectToDatabase from "../database.js";
+
+// const distination = [
+//   { to: "Dhaka", from: "Khulna", distance: 150 },
+//   { to: "Dhaka", from: "Cox Bazar", distance: 300 },
+//   { to: "Dhaka", from: "Sylhet", distance: 250 },
+//   { to: "Dhaka", from: "Rajshahi", distance: 200 },
+//   { to: "Dhaka", from: "Barishal", distance: 180 },
+//   { to: "Dhaka", from: "Rangpur", distance: 220 },
+//   { to: "Dhaka", from: "Mymensingh", distance: 160 },
+//   { to: "Dhaka", from: "Jessore", distance: 170 },
+//   { to: "Dhaka", from: "Comilla", distance: 190 },
+//   { to: "Dhaka", from: "Narayanganj", distance: 140 },
+//   { to: "Dhaka", from: "Bogra", distance: 210 },
+//   { to: "Dhaka", from: "Dinajpur", distance: 230 },
+//   { to: "Dhaka", from: "Feni", distance: 240 },
+//   { to: "a", from: "b", distance: 260 },
+// ];
+
+// const router = express.Router();
+
+// router.post("/book", async (req, res) => {
+//   console.log("Request Body:", req.body);
+//   const {
+//     name,
+//     number,
+//     PickUp,
+//     Where_to_go,
+//     price,
+//     carId,
+//     carBrand,
+//     carModel,
+//     carYear,
+//     carColor,
+//     carSit,
+//     carDetails,
+//     carImg,
+//   } = req.body;
+
+//   try {
+//     // Find the matching route
+//     const route = distination.find(
+//       (d) => d.to === PickUp && d.from === Where_to_go
+//     );
+
+//     if (!route) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Invalid route",
+//       });
+//     }
+
+//     // Calculate the price
+//     if car.sit is more the 4 then price is 8tk per km
+//     else price is 5tk per km
+//     const price = route.distance * 5;
+
+//     if (!carId) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Car ID is missing.",
+//       });
+//     }
+//     const car = carId;
+//     // Connect to the database
+//     const db = await connectToDatabase();
+//     const collection = db.collection("Book_car");
+
+//     // Check if the user already exists
+//     const existingUser = await collection.findOne({ number });
+//     if (existingUser) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "User with this phone number already exists",
+//       });
+//     }
+
+//     const result = await addUser({
+//       name,
+//       number,
+//       PickUp,
+//       Where_to_go,
+//       price,
+//       carId,
+//       carBrand,
+//       carModel,
+//       carYear,
+//       carColor,
+//       carSit,
+//       carDetails,
+//       carImg,
+//     });
+
+//     if (result.success) {
+//       return res.status(201).json(result);
+//     } else {
+//       return res.status(500).json({
+//         success: false,
+//         message: result.message || "Failed to add booking",
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error processing request:", error);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Internal server error",
+//     });
+//   }
+// });
+
+// export default router;
+
 import express from "express";
 import addUser from "./booking.js";
 import connectToDatabase from "../database.js";
 
-const distination = [
+const destinations = [
   { to: "Dhaka", from: "Khulna", distance: 150 },
   { to: "Dhaka", from: "Cox Bazar", distance: 300 },
   { to: "Dhaka", from: "Sylhet", distance: 250 },
@@ -28,7 +142,6 @@ router.post("/book", async (req, res) => {
     number,
     PickUp,
     Where_to_go,
-    price,
     carId,
     carBrand,
     carModel,
@@ -40,20 +153,27 @@ router.post("/book", async (req, res) => {
   } = req.body;
 
   try {
+    // Normalize inputs for case-insensitive matching
+    const normalizedPickUp = PickUp.trim().toLowerCase();
+    const normalizedWhereToGo = Where_to_go.trim().toLowerCase();
+
     // Find the matching route
-    const route = distination.find(
-      (d) => d.to === PickUp && d.from === Where_to_go
+    const route = destinations.find(
+      (d) =>
+        d.to.toLowerCase() === normalizedPickUp &&
+        d.from.toLowerCase() === normalizedWhereToGo
     );
 
     if (!route) {
       return res.status(400).json({
         success: false,
-        message: "Invalid route",
+        message: `Invalid route from ${Where_to_go} to ${PickUp}.`,
       });
     }
 
-    // Calculate the price
-    const price = route.distance * 5;
+    // Calculate the price based on seat number
+    const ratePerKm = carSit > 4 ? 8 : 5;
+    const price = route.distance * ratePerKm;
 
     if (!carId) {
       return res.status(400).json({
@@ -61,7 +181,7 @@ router.post("/book", async (req, res) => {
         message: "Car ID is missing.",
       });
     }
-    const car = carId;
+
     // Connect to the database
     const db = await connectToDatabase();
     const collection = db.collection("Book_car");
@@ -75,6 +195,7 @@ router.post("/book", async (req, res) => {
       });
     }
 
+    // Add the user to the database
     const result = await addUser({
       name,
       number,
