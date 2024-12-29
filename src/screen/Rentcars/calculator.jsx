@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import "./calculator.css";
+import CustomNavbar from "../../components/Customnavbar/Customnavbar"; // Import the CSS file
 
 const destinations = [
   { to: "Dhaka", from: "Khulna", distance: 150 },
@@ -52,68 +54,62 @@ const RentCalculator = () => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto", textAlign: "center" }}>
-      <h2>Rent Calculator</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Pick Up:</label>
-          <input
-            type="text"
-            value={pickup}
-            onChange={(e) => setPickup(e.target.value)}
-            placeholder="Enter pick-up location"
-            required
-            style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Destination:</label>
-          <input
-            type="text"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            placeholder="Enter destination"
-            required
-            style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
-        </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Seat Number:</label>
-          <input
-            type="number"
-            value={sit}
-            onChange={(e) => setSit(Number(e.target.value))}
-            placeholder="Enter seat number"
-            required
-            min="4"
-            style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
-          />
-        </div>
-        <button
-          type="submit"
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "blue",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Calculate Rent
-        </button>
-      </form>
+    <>
+      <CustomNavbar />
+      <div className="rent-calculator-container">
+        <h2 className="title">Rent Calculator</h2>
+        <form className="form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="label">Pick Up:</label>
+            <input
+              className="input-field"
+              type="text"
+              value={pickup}
+              onChange={(e) => setPickup(e.target.value)}
+              placeholder="Enter pick-up location"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="label">Destination:</label>
+            <input
+              className="input-field"
+              type="text"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              placeholder="Enter destination"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="label">Seat Number:</label>
+            <input
+              className="input-field"
+              type="number"
+              value={sit}
+              onChange={(e) => setSit(Number(e.target.value))}
+              placeholder="Enter seat number"
+              required
+              min="4"
+            />
+          </div>
+          <button className="submit-button" type="submit">
+            Calculate Rent
+          </button>
+        </form>
 
-      {price !== null && (
-        <div style={{ marginTop: "20px", color: "green" }}>
-          <h3>Total Rent: {price} TK</h3>
-        </div>
-      )}
-      {error && (
-        <div style={{ marginTop: "20px", color: "red" }}>
-          <h3>{error}</h3>
-        </div>
-      )}
-    </div>
+        {price !== null && (
+          <div className="result">
+            <h3>Total Rent: {price} TK</h3>
+          </div>
+        )}
+        {error && (
+          <div className="error">
+            <h3>{error}</h3>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
