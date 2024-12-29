@@ -12,7 +12,7 @@ import car2 from "../../assets/mainscreen/brombrom.jpg";
 
 
 
-export default function Home() {
+export default function CarsPage() {
 
 
   const [AllCars, setAllCars] = useState([]);
