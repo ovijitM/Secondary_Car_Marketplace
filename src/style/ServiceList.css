@@ -1,0 +1,95 @@
+/* Grid Layout for Services and Car Parts, fixed four items per row on larger screens */
+.services-grid, .car-parts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* Four columns on large screens */
+  gap: 20px;
+  padding: 20px;
+  background-color:#FFF; /* Light grey background */
+}
+
+/* Card Styles for both Services and Car Parts */
+.service-card, .car-part-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background:#FFFFFF; /* Light cream background */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  box-sizing: border-box;
+  width: 300px; /* fixed width */
+  height: 200px; /* fixed height */
+  margin: 20px; /* space around the card */
+  overflow: hidden; /* hide overflow */
+  text-overflow: ellipsis; /* add ellipsis if text overflows */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensures spacing inside the card */
+}
+
+/* Hover effect for Service Cards */
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-color: #646cff; /* Highlight color on hover */
+}
+.car-part-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+/* Styles for Car Part Cards - Images */
+
+
+.service-card img, .car-part-card img {
+  width: 100%; /* Full width */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Cover the designated area */
+}
+/* Text styles for Service and Car Part Titles */
+.service-title, .car-part-title {
+  font-size: 16px;
+  color: #333;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+/* Descriptions for both Services and Car Parts */
+.service-description, .car-part-description {
+  font-size: 14px;
+  color: #666;
+  margin: 8px 0;
+}
+/* Button Styles */
+.button {
+  padding: 8px 16px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+  .services-grid, .car-parts-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .services-grid, .car-parts-grid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+  }
+  .service-card, .car-part-card {
+    padding: 10px; /* Reduced padding on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .service-title, .car-part-card h3 {
+    font-size: 16px; /* Smaller title font on very small screens */
+  }
+  .service-description, .car-part-card p {
+    font-size: 12px; /* Smaller description font on very small screens */
+  }
+}
