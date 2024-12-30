@@ -10,11 +10,14 @@ import {
   Button,
   Spinner,
   Alert,
+  Form,
 } from "react-bootstrap";
 
 const RentCars = () => {
   const navigate = useNavigate();
   const [cars, setCars] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
+  const [seatFilter, setSeatFilter] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -32,6 +35,7 @@ const RentCars = () => {
 
       if (data.success) {
         setCars(data.data);
+        setFilteredCars(data.data); // Initially show all cars
         setErrorMessage("");
       } else {
         setErrorMessage(data.message || "Failed to fetch cars.");
@@ -49,10 +53,22 @@ const RentCars = () => {
   // Handle "Book Now" button click
   const handleViewDetails = (car) => {
     console.log("Navigating to book page with car details:", car);
-    // Navigate to the /book page and pass the full car details as state
     navigate("/book", { state: { car } });
   };
 
+  const handleFilterChange = (e) => {
+    const selectedSeat = e.target.value;
+    setSeatFilter(selectedSeat);
+
+    if (selectedSeat === "") {
+      setFilteredCars(cars); // Show all cars if no filter is applied
+    } else {
+      const filtered = cars.filter(
+        (car) => parseInt(car.sit) === parseInt(selectedSeat)
+      ); // Convert both to integers before comparing
+      setFilteredCars(filtered);
+    }
+  };
   useEffect(() => {
     fetchCars();
   }, []);
@@ -61,6 +77,7 @@ const RentCars = () => {
     <>
       <CustomNavbar />
       <Container className="rent-cars-container">
+        {/* Header Row */}
         <Row className="align-items-center mb-4">
           <Col>
             <h1>Available Rental Cars</h1>
@@ -85,6 +102,27 @@ const RentCars = () => {
           </Col>
         </Row>
 
+        {/* Filter Row */}
+        <Row className="mb-4">
+          <Col md={4}>
+            <Form.Group controlId="seatFilter">
+              <Form.Label>Filter by Seat Number</Form.Label>
+              <Form.Control
+                as="select"
+                value={seatFilter}
+                onChange={handleFilterChange}
+              >
+                <option value="">All</option>
+                <option value="4">4 Seats</option>
+                <option value="5">5 Seats</option>
+                <option value="6">6 Seats</option>
+                <option value="7">7 Seats</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        {/* Cars List */}
         {loading ? (
           <div className="text-center">
             <Spinner animation="border" role="status">
@@ -93,9 +131,9 @@ const RentCars = () => {
           </div>
         ) : errorMessage ? (
           <Alert variant="danger">{errorMessage}</Alert>
-        ) : (
+        ) : filteredCars.length > 0 ? (
           <Row className="cars-grid">
-            {cars.map((car) => (
+            {filteredCars.map((car) => (
               <Col key={car._id} md={4} className="mb-4">
                 <Card className="car-card h-100">
                   <Card.Img
@@ -131,6 +169,10 @@ const RentCars = () => {
               </Col>
             ))}
           </Row>
+        ) : (
+          <Alert variant="info">
+            No cars available with the selected seat number.
+          </Alert>
         )}
       </Container>
     </>
