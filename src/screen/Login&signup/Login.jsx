@@ -38,9 +38,18 @@ function Login() {
       body: JSON.stringify(info),
     });
 
+
+
+
+
+
     const data = await response.json();
 
     if (data.success) {
+      localStorage.setItem("authToken", data.authToken); // Save the token in local storage
+      console.log(localStorage.getItem("authToken"));
+      console.log('token') // Check if the token is saved
+      navigate("/"); // Redirect to home page
 
       setSuccessMessage(data.message);
 
@@ -76,7 +85,7 @@ function Login() {
                       required
                     />
                     <Form.Text className="text-muted">
-                      We'll never share your email with anyone else.
+                      We&apos;ll never share your email with anyone else.
                     </Form.Text>
                   </Form.Group>
 

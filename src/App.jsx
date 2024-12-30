@@ -29,7 +29,7 @@ function App() {
           <Route path="/rentcars" element={<Rent />} />
           <Route path="/repair" element={<Repair />} />
           <Route path="/Admin_dashboard" element={<Admin />} />
-          <Route path="/User _dashboard" element={<User />} />
+          <Route path="/User_dashboard" element={<User />} />
           <Route path="/Postcar" element={<Post />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/transaction" element={<Transaction />} />
