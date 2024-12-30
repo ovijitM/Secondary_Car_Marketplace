@@ -13,8 +13,9 @@ function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Retrieve car details and carId from location state
+  // Retrieve car and driver details from location state
   const car = location.state?.car;
+  const driver = location.state?.driver;
 
   const [validated, setValidated] = useState(false);
   const [info, setInfo] = useState({
@@ -36,14 +37,14 @@ function Signup() {
     setErrorMessage("");
   };
 
-  const handleViewDetails = (car, userInfo) => {
-    console.log("Navigating to book page with car and user details:", {
+  const handleViewDetails = (car, userInfo, driver) => {
+    console.log("Navigating to book page with car, user, and driver details:", {
       car,
       userInfo,
+      driver,
     });
-    console.log("Car Data:", car);
-    console.log("User Data:", userInfo);
-    navigate("/p", { state: { car, user: userInfo } });
+
+    navigate("/p", { state: { car, user: userInfo, driver } });
   };
 
   const handleSubmit = async (e) => {
@@ -72,6 +73,10 @@ function Signup() {
             carSit: car.sit,
             carDetails: car.details,
             carImg: car.img,
+            driverId: driver?._id, // Ensure driver info is passed
+            driverName: driver?.name,
+            driverPhone: driver?.phone,
+            driverExperience: driver?.experience_years,
           }),
         });
 
@@ -89,13 +94,17 @@ function Signup() {
           });
 
           // Call handleViewDetails after a successful booking
-          handleViewDetails(car, {
-            firstName: info.firstName,
-            lastName: info.lastName,
-            number: info.number,
-            PickUp: info.PickUp,
-            Where_to_go: info.Where_to_go,
-          });
+          handleViewDetails(
+            car,
+            {
+              firstName: info.firstName,
+              lastName: info.lastName,
+              number: info.number,
+              PickUp: info.PickUp,
+              Where_to_go: info.Where_to_go,
+            },
+            driver
+          );
         }
       } catch (error) {
         setErrorMessage("An error occurred while processing your booking.");
@@ -141,6 +150,20 @@ function Signup() {
                     <strong>Seats:</strong> {car.sit}
                     <br />
                     <strong>Details:</strong> {car.details}
+                  </p>
+                </Card.Body>
+              </Card>
+            )}
+            {driver && (
+              <Card className="shadow-lg p-4 mb-4">
+                <Card.Body>
+                  <h5>Assigned Driver</h5>
+                  <p>
+                    <strong>Name:</strong> {driver.name}
+                    <br />
+                    <strong>Phone:</strong> {driver.phone}
+                    <br />
+                    <strong>Experience:</strong> {driver.experience_years}
                   </p>
                 </Card.Body>
               </Card>

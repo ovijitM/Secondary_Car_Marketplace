@@ -21,7 +21,7 @@ const RentCars = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Fetch cars from the API
+  // Fetch cars with driver info from the API
   const fetchCars = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/rentCar", {
@@ -34,8 +34,18 @@ const RentCars = () => {
       const data = await response.json();
 
       if (data.success) {
-        setCars(data.data);
-        setFilteredCars(data.data); // Initially show all cars
+        // Map driver info into the cars
+        const carsWithDrivers = data.data.map((car) => ({
+          ...car,
+          driver: car.driver || {
+            name: "No driver assigned",
+            phone: "N/A",
+            experience_years: 0,
+            status: "Unavailable",
+          },
+        }));
+        setCars(carsWithDrivers);
+        setFilteredCars(carsWithDrivers); // Initially show all cars
         setErrorMessage("");
       } else {
         setErrorMessage(data.message || "Failed to fetch cars.");
@@ -52,8 +62,8 @@ const RentCars = () => {
 
   // Handle "Book Now" button click
   const handleViewDetails = (car) => {
-    console.log("Navigating to book page with car details:", car);
-    navigate("/book", { state: { car } });
+    console.log("Navigating to book page with car and driver details:", car);
+    navigate("/book", { state: { car, driver: car.driver } });
   };
 
   const handleFilterChange = (e) => {
@@ -69,6 +79,7 @@ const RentCars = () => {
       setFilteredCars(filtered);
     }
   };
+
   useEffect(() => {
     fetchCars();
   }, []);
@@ -97,7 +108,7 @@ const RentCars = () => {
               onClick={() => navigate("/admin_booking")}
               className="calculator-button"
             >
-              Open admin
+              Open Admin
             </Button>
           </Col>
         </Row>
@@ -157,10 +168,12 @@ const RentCars = () => {
                       <strong>Details:</strong> {car.details}
                       <br />
                       <strong>Seat Number:</strong> {car.sit}
+                      <br />
+                      <strong>Driver:</strong> {car.driver.name}
                     </Card.Text>
                     <Button
                       variant="primary"
-                      onClick={() => handleViewDetails(car)} // Pass the full car object
+                      onClick={() => handleViewDetails(car)}
                     >
                       Book Now
                     </Button>

@@ -11,6 +11,7 @@ import rentCar from "./Rent_cars/rent.js";
 import book from "./Booking_car/book_c.js";
 import p from "./Rent_cars/slip.js";
 import admin_booking from "./Rent_cars/bookcon.js";
+import assignDriver from "./Rent_cars/driver_assin.js";
 
 const port = 8000;
 const app = Express();
@@ -34,6 +35,7 @@ app.use("/api", rentCar);
 app.use("/api", book);
 app.use("/api", p);
 app.use("/api", admin_booking);
+app.use("/api", assignDriver);
 
 app.use((req, res) => {
   res.send("Hello World!");
