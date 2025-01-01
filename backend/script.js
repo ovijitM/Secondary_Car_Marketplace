@@ -4,9 +4,11 @@ import Express from "express";
 import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
 import search from './Search/search.js';
-import logout from './validateuser/logoutcheck.js';
+
+
 import displaydata from './displaydata.js';
-import user_history from './userhistory.js'; // Add this line to import user_history
+import user_history from './userhistory.js';
+ // Add this line to import user_history
 
 const port = 8000;
 const app = Express();
@@ -26,9 +28,10 @@ app.use((req, res, next) => {
 app.use('/api', userRoutes); 
 app.use('/api', checkUser);
 app.use('/api', search);
-app.use('/api', logout);
+
 app.use('/api', displaydata);
 app.use('/api', user_history); 
+
 
 
 
