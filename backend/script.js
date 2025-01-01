@@ -9,7 +9,7 @@ import displaydata from "./displaydata.js";
 import user_history from "./userhistory.js";
 import rentCar from "./Rent_cars/rent.js";
 import book from "./Booking_car/book_c.js";
-import p from "./Rent_cars/slip.js";
+import dri from "./Rent_cars/driverinfo.js";
 import admin_booking from "./Rent_cars/bookcon.js";
 import assignDriver from "./Rent_cars/driver_assin.js";
 
@@ -33,7 +33,7 @@ app.use("/api", displaydata);
 app.use("/api", user_history);
 app.use("/api", rentCar);
 app.use("/api", book);
-app.use("/api", p);
+app.use("/api", dri);
 app.use("/api", admin_booking);
 app.use("/api", assignDriver);
 

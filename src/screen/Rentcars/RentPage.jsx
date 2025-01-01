@@ -111,6 +111,15 @@ const RentCars = () => {
               Open Admin
             </Button>
           </Col>
+          <Col xs="auto">
+            <Button
+              variant="primary"
+              onClick={() => navigate("/dri")}
+              className="calculator-button"
+            >
+              Open Driver
+            </Button>
+          </Col>
         </Row>
 
         {/* Filter Row */}
