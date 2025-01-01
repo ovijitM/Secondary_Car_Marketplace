@@ -1,75 +1,70 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Table, Button, Alert, Spinner } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Card,
-  Container,
-  Row,
-  Col,
-  Button,
-  Spinner,
-  Alert,
-} from "react-bootstrap";
 
-const AdminPanel = () => {
-  const navigate = useNavigate();
+const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  // Fetch bookings from the API
+  const API_URL = "http://localhost:8000/api/admin_booking";
+
+  // Fetch bookings from the server
   const fetchBookings = async () => {
+    setLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/api/admin_booking", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
+      const response = await fetch(API_URL);
       const data = await response.json();
-      console.log("Fetched data from API:", data); // Log the response for debugging
 
-      if (data.success) {
-        setBookings(data.data); // Set the bookings
-        setErrorMessage("");
+      if (response.ok && data.success) {
+        setBookings(data.data || []);
+        setError("");
       } else {
-        setErrorMessage(data.message || "Failed to fetch bookings.");
+        setBookings([]);
+        setError(data.message || "Failed to fetch bookings.");
       }
     } catch (error) {
       console.error("Error fetching bookings:", error);
-      setErrorMessage(
-        "An error occurred while fetching bookings. Please try again later."
-      );
+      setError("An error occurred while fetching bookings.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Handle status update for a booking
-  const handleStatusUpdate = async (bookingId, status) => {
+  const updateStatus = async (id, newStatus) => {
+    setLoading(true); // Show loading spinner during API call
+    setError(""); // Clear previous error
+    setSuccessMessage(""); // Clear previous success message
+
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/admin_booking/${bookingId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ status }),
-        }
-      );
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status: newStatus }), // Pass the new status
+      });
 
-      const data = await response.json();
+      const result = await response.json(); // Parse response JSON
 
-      if (data.success) {
-        fetchBookings(); // Refresh bookings after status update
+      if (response.ok && result.success) {
+        setSuccessMessage(result.message); // Show success message
+        fetchBookings(); // Refresh the bookings list to reflect the status update
       } else {
-        setErrorMessage(data.message || "Failed to update booking status.");
+        setError(result.message || "Failed to update booking status.");
       }
     } catch (error) {
-      console.error("Error updating booking status:", error);
-      setErrorMessage("An error occurred while updating the booking status.");
+      console.error("Network or Server Error:", error);
+      setError("An error occurred while updating booking status.");
+    } finally {
+      setLoading(false);
+
+      // Auto-clear messages after 3 seconds
+      setTimeout(() => {
+        setError("");
+        setSuccessMessage("");
+      }, 3000);
     }
   };
 
@@ -78,80 +73,76 @@ const AdminPanel = () => {
   }, []);
 
   return (
-    <Container className="admin-panel-container">
-      <Row className="align-items-center mb-4">
-        <h2>Admin Panel - Manage Bookings</h2>
-      </Row>
+    <div className="container mt-5">
+      <h1>Admin Booking Management</h1>
 
-      {loading ? (
+      {loading && (
         <div className="text-center">
           <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
           </Spinner>
         </div>
-      ) : errorMessage ? (
-        <Alert variant="danger">{errorMessage}</Alert>
-      ) : (
-        <Row className="cars-grid">
-          {bookings.map((booking) => (
-            <Col key={booking._id} md={4} className="mb-4">
-              <Card className="car-card h-100">
-                <Card.Img
-                  variant="top"
-                  src={booking.carImg} // Image URL from the database
-                  alt={`${booking.carBrand} ${booking.carModel}`}
-                  className="car-image"
-                />
-                <Card.Body>
-                  <Card.Title>
-                    {`${booking.carBrand} ${booking.carModel} (${booking.carYear})`}
-                  </Card.Title>
-                  <Card.Text>
-                    <strong>Pick-Up:</strong> {booking.PickUp}
-                    <br />
-                    <strong>Destination:</strong> {booking.Where_to_go}
-                    <br />
-                    <strong>Price:</strong> {booking.price} TK
-                    <br />
-                    <strong>Seats:</strong> {booking.carSit}
-                    <br />
-                    <strong>User Name:</strong> {booking.name}
-                    <br />
-                    <strong>User Phone:</strong> {booking.number}
-                  </Card.Text>
-
-                  <div className="d-flex justify-content-between">
-                    {booking.status === "pending" ? (
-                      <>
-                        <Button
-                          variant="success"
-                          onClick={() =>
-                            handleStatusUpdate(booking._id, "confirmed")
-                          }
-                        >
-                          Confirm
-                        </Button>
-                        <Button
-                          variant="danger"
-                          onClick={() =>
-                            handleStatusUpdate(booking._id, "rejected")
-                          }
-                        >
-                          Reject
-                        </Button>
-                      </>
-                    ) : (
-                      <span>Status: {booking.status}</span>
-                    )}
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
       )}
-    </Container>
+
+      {error && <Alert variant="danger">{error}</Alert>}
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+
+      {!loading && bookings.length > 0 && (
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Pick Up</th>
+              <th>Where to Go</th>
+              <th>Car</th>
+              <th>Seats</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bookings.map((booking, index) => (
+              <tr key={booking._id}>
+                <td>{index + 1}</td>
+                <td>{booking.name}</td>
+                <td>{booking.PickUp}</td>
+                <td>{booking.Where_to_go}</td>
+                <td>{`${booking.carBrand} ${booking.carModel} (${booking.carYear})`}</td>
+                <td>{booking.carSit}</td>
+                <td>${booking.price}</td>
+                <td>{booking.status}</td>
+                <td>
+                  {booking.status === "pending" && (
+                    <>
+                      <Button
+                        variant="success"
+                        className="me-2"
+                        onClick={() => updateStatus(booking._id, "approved")}
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => updateStatus(booking._id, "cancelled")}
+                      >
+                        Cancel
+                      </Button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )}
+
+      {!loading && bookings.length === 0 && (
+        <Alert variant="info">No bookings available.</Alert>
+      )}
+    </div>
   );
 };
 
-export default AdminPanel;
+export default AdminBookings;
