@@ -20,7 +20,7 @@ import Driver from "./screen/Rentcars/driver";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Verify from "./screen/Dashboard/verify";
 import Kyc from "./screen/KycApplication/Kyc";
-import Insurance from "./screen/";
+import Insurance from "./screen/Insurance";
 
 
 

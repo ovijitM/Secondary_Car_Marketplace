@@ -1,14 +1,14 @@
 import Express from "express";
 
-
-import userRoutes from './createuser/createuser.js';
-import checkUser from './validateuser/logincheck.js';
-import search from './Search/search.js';
-import verifyuser from './createuser/verifyuser.js';
+import userRoutes from "./createuser/createuser.js";
+import checkUser from "./validateuser/logincheck.js";
+import search from "./Search/search.js";
+import verifyuser from "./createuser/verifyuser.js";
 import filter from "./Search/filtercar.js";
+import insurance from "./insurance.js";
 
-import displaydata from './displaydata.js';
-import user_history from './userhistory.js';
+import displaydata from "./displaydata.js";
+import user_history from "./userhistory.js";
 import rentCar from "./Rent_cars/rent.js";
 import book from "./Booking_car/book_c.js";
 import dri from "./Rent_cars/driverinfo.js";
@@ -26,8 +26,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
 app.use("/api", userRoutes);
 app.use("/api", checkUser);
 app.use("/api", search);
@@ -39,9 +37,9 @@ app.use("/api", book);
 app.use("/api", dri);
 app.use("/api", admin_booking);
 app.use("/api", assignDriver);
-app.use('/api', verifyuser);
-app.use('/api', admin_data);
-
+app.use("/api", verifyuser);
+app.use("/api", admin_data);
+app.use("/api", insurance);
 
 app.use((req, res) => {
   res.send("Hello World!");
