@@ -1,295 +1,341 @@
-import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, InputGroup, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import "./Postcar.css";
 
 export default function Postcar() {
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
-    make: "",
+    brand: "",
     model: "",
-    year: null,
+    year: "",
+    price: "",
     mileage: "",
     color: "",
-    price: null,
+    transmission: "",
+    label: "",
+    details: "",
     description: "",
-    image: null,
-    transmission: "", // Added transmission
-    usedyear: "", // Added usedyear
+    img: null,
+    purchase_location: "",
     name: "",
     phone: "",
     email: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [brands, setBrands] = useState([]);
+  const [models, setModels] = useState([]);
+
+  const decodeToken = (token) => {
+    try {
+      const payload = token.split(".")[1];
+      return JSON.parse(atob(payload));
+    } catch {
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      const decoded = decodeToken(token);
+      if (decoded) {
+        setFormData((prevData) => ({
+          ...prevData,
+          name: decoded.name || "",
+          email: decoded.email || "",
+          purchase_location: decoded.location || "",
+        }));
+      }
+    }
+  }, []);
+
+  const loadBrands = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/brands");
+      const data = await response.json();
+      if (data.success) {
+        setBrands(data.brands);
+      } else {
+        console.error("Error fetching brands:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching brands:", error);
+    }
+  };
+
+  const loadModels = async (brand) => {
+    if (!brand) {
+      setModels([]);
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/models?brand=${brand}`);
+      const data = await response.json();
+      if (data.success) {
+        setModels(data.models);
+      } else {
+        console.error("Error fetching models:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching models:", error);
+    }
+  };
+
+  useEffect(() => {
+    loadBrands();
+  }, []);
+
+  useEffect(() => {
+    if (formData.brand) {
+      loadModels(formData.brand);
+    }
+  }, [formData.brand]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    setErrorMessage('');
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      image: e.target.files[0],
-    });
+    setFormData((prevData) => ({ ...prevData, img: e.target.files[0] }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.currentTarget;
 
-    if (form.checkValidity() === false) {
-      e.stopPropagation();
-    } else {
-      const formDataToSend = new FormData();
-      formDataToSend.append("brand", formData.make);
-      formDataToSend.append("model", formData.model);
-      formDataToSend.append("year", formData.year);
-      formDataToSend.append("mileage", formData.mileage);
-      formDataToSend.append("color", formData.color);
-      formDataToSend.append("price", formData.price);
-      formDataToSend.append("description", formData.description);
-      formDataToSend.append("transmission", formData.transmission);
-      formDataToSend.append("usedyear", formData.usedyear);
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("phone", formData.phone);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("img", formData.image); // Add image file to form data
+    const formDataObj = new FormData();
+    Object.keys(formData).forEach((key) => {
+      formDataObj.append(key, formData[key]);
+    });
 
-      try {
-        // Sending form data to backend API
-        const response = await fetch("http://your-backend-url.com/post", {
-          method: "POST",
-          body: formDataToSend,
+    try {
+      const response = await fetch("http://localhost:8000/api/uploadcars", {
+        method: "POST",
+        body: formDataObj,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert("Car posted successfully!");
+        setFormData({
+          brand: "",
+          model: "",
+          year: "",
+          price: "",
+          mileage: "",
+          color: "",
+          transmission: "",
+          label: "",
+          details: "",
+          description: "",
+          img: null,
+          purchase_location: formData.purchase_location,
+          name: formData.name,
+          phone: "",
+          email: formData.email,
         });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          alert("Car posted successfully!");
-        } else {
-          setErrorMessage(result.message || "Error posting car.");
-        }
-      } catch (error) {
-        setErrorMessage("Error posting car. Please try again.");
-        console.error(error);
+      } else {
+        alert("Failed to post the car. " + result.message);
       }
+    } catch (error) {
+      console.error("Error posting car:", error);
+      alert("An error occurred while posting the car.");
     }
-
-    setValidated(true);
   };
 
   return (
-    <><div>
-      <CustomNavbar /></div>
-      <Container className="d-flex justify-content-center align-items-center vh-100 mt-5 mb-5">
-        <Card className="shadow-lg p-4" style={{ maxWidth: "800px", width: "100%" }}>
-          <Card.Body>
-            <Card.Title className="text-center mb-4">Post a Car</Card.Title>
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
-              {/* Car Information */}
-              <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="validationMake">
-                  <Form.Label>Brand</Form.Label>
-                  <Form.Select
-                    required
-                    name="make"
-                    value={formData.make}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Brand</option>
-                    <option value="Toyota">Toyota</option>
-                    <option value="Honda">Honda</option>
-                    <option value="Ford">Ford</option>
-                    <option value="BMW">Nissan</option>
-                    <option value="Audi">Audi</option>
-                  </Form.Select>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="6" controlId="validationModel">
-                  <Form.Label>Model</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="Model"
-                    name="model"
-                    value={formData.model}
-                    onChange={handleChange}
-                  />
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Row>
+   <>
+   <CustomNavbar />
+    <div className="car-form-container">
+      <h1 className="form-title"> Post a Car</h1>
+      <form id="car-form" onSubmit={handleSubmit}>
+        <div className="form-grid">
+          <div>
+            <label htmlFor="brand" className="form-label">
+              Brand:
+            </label>
+            <select
+              id="brand"
+              name="brand"
+              value={formData.brand}
+              onChange={handleChange}
+              required
+              className="form-input"
+            >
+              <option value="">Select a Brand</option>
+              {brands.map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              {/* Other car details */}
-              <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="validationYear">
-                  <Form.Label>Year</Form.Label>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder="Year"
-                    name="year"
-                    value={formData.year}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md="6" controlId="validationMileage">
-                  <Form.Label>Mileage</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="Mileage"
-                    name="mileage"
-                    value={formData.mileage}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </Row>
+          <div>
+            <label htmlFor="model" className="form-label">
+              Model:
+            </label>
+            <select
+              id="model"
+              name="model"
+              value={formData.model}
+              onChange={handleChange}
+              required
+              className="form-input"
+              disabled={!formData.brand}
+            >
+              <option value="">Select a Model</option>
+              {models.map((model) => (
+                <option key={model} value={model}>
+                  {model}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="validationColor">
-                  <Form.Label>Color</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="Color"
-                    name="color"
-                    value={formData.color}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md="6" controlId="validationPrice">
-                  <Form.Label>Price</Form.Label>
-                  <Form.Control
-                    required
-                    type="number"
-                    placeholder="Price"
-                    name="price"
-                    value={formData.price}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </Row>
+          <div>
+            <label htmlFor="year" className="form-label">
+              Year:
+            </label>
+            <input
+              type="number"
+              id="year"
+              name="year"
+              value={formData.year}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
-              {/* Transmission */}
-              <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="validationTransmission">
-                  <Form.Label>Transmission</Form.Label>
-                  <Form.Select
-                    required
-                    name="transmission"
-                    value={formData.transmission}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select Transmission</option>
-                    <option value="Automatic">Automatic</option>
-                    <option value="Manual">Manual</option>
-                  </Form.Select>
-                </Form.Group>
-                <Form.Group as={Col} md="6" controlId="validationUsedYear">
-                  <Form.Label>Used for</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="e.g., 2 years"
-                    name="usedyear"
-                    value={formData.usedyear}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </Row>
+          <div>
+            <label htmlFor="mileage" className="form-label">
+              Mileage:
+            </label>
+            <input
+              type="text"
+              id="mileage"
+              name="mileage"
+              value={formData.mileage}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
-              {/* Description */}
-              <Row className="mb-3">
-                <Form.Group as={Col} md="12" controlId="validationDescription">
-                  <Form.Label>Description</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Enter a brief description"
-                  />
-                </Form.Group>
-              </Row>
+          <div>
+            <label htmlFor="color" className="form-label">
+              Color:
+            </label>
+            <input
+              type="text"
+              id="color"
+              name="color"
+              value={formData.color}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
-              {/* Image Upload */}
-              <Row className="mb-3">
-                <Form.Group as={Col} md="12" controlId="validationImage">
-                  <Form.Label>Image Upload</Form.Label>
-                  <Form.Control
-                    type="file"
-                    name="image"
-                    onChange={handleFileChange}
-                    required
-                  />
-                </Form.Group>
-              </Row>
+          <div>
+            <label htmlFor="price" className="form-label">
+              Price:
+            </label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
 
-              {/* Contact Information */}
-              <h3 className="text-center mt-4">Contact Information</h3>
-              <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="validationName">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="Your name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} md="6" controlId="validationPhone">
-                  <Form.Label>Phone Number</Form.Label>
-                  <Form.Control
-                    required
-                    type="tel"
-                    placeholder="Phone Number"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              </Row>
+          <div>
+            <label htmlFor="description" className="form-label">
+              Description:
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="form-textarea"
+            ></textarea>
+          </div>
 
-              <Row className="mb-3">
-                <Form.Group as={Col} md="12" controlId="validationEmail">
-                  <Form.Label>Email Address</Form.Label>
-                  <InputGroup hasValidation>
-                    <Form.Control
-                      type="email"
-                      placeholder="Email Address"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </InputGroup>
-                </Form.Group>
-              </Row>
+          <div>
+            <label htmlFor="img" className="form-label">
+              Image Upload:
+            </label>
+            <input
+              type="file"
+              id="img"
+              name="img"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="form-input"
+            />
+          </div>
 
-              {/* Submit Button */}
-              <div className="d-grid gap-2">
-                <Button variant="primary" type="submit">
-                  Post Car
-                </Button>
-                {errorMessage && (
-                  <div className="alert alert-danger" role="alert">
-                    {errorMessage}
-                  </div>
-                )}
-              </div>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Container>
+          <h2 className="section-title">Contact Information</h2>
+
+          <div>
+            <label htmlFor="name" className="form-label">
+              Name:
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="phone" className="form-label">
+              Phone Number:
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="form-label">
+              Email Address:
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+          </div>
+        </div>
+
+        <button type="submit" className="submit-button">
+          Post Car
+        </button>
+      </form>
+    </div>
     </>
+
   );
 }

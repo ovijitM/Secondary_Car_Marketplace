@@ -12,8 +12,6 @@ import Customnavbar from "../../components/Customnavbar/Customnavbar";
 function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Retrieve car and driver details from location state
   const car = location.state?.car;
   const driver = location.state?.driver;
 
@@ -73,7 +71,7 @@ function Signup() {
             carSit: car.sit,
             carDetails: car.details,
             carImg: car.img,
-            driverId: driver?._id, // Ensure driver info is passed
+            driverId: driver?._id,
             driverName: driver?.name,
             driverPhone: driver?.phone,
             driverExperience: driver?.experience_years,
@@ -92,8 +90,6 @@ function Signup() {
             PickUp: "",
             Where_to_go: "",
           });
-
-          // Call handleViewDetails after a successful booking
           handleViewDetails(
             car,
             {

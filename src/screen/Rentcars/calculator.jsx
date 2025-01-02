@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./calculator.css";
-import CustomNavbar from "../../components/Customnavbar/Customnavbar"; // Import the CSS file
+import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 
 const destinations = [
   { to: "Dhaka", from: "Khulna", distance: 150 },
@@ -22,20 +22,18 @@ const destinations = [
 const RentCalculator = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
-  const [sit, setSit] = useState(4);
+  const [sit, setSit] = useState(null);
   const [price, setPrice] = useState(null);
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(""); // Reset error
-    setPrice(null); // Reset price
+    setError("");
+    setPrice(null);
 
-    // Normalize inputs to lowercase and trim
     const normalizedPickup = pickup.trim().toLowerCase();
     const normalizedDestination = destination.trim().toLowerCase();
 
-    // Find the matching route
     const route = destinations.find(
       (d) =>
         d.from.toLowerCase() === normalizedDestination &&
@@ -47,8 +45,7 @@ const RentCalculator = () => {
       return;
     }
 
-    // Calculate the price based on seat number
-    const ratePerKm = sit > 4 ? 10 : 5; // Corrected rate logic
+    const ratePerKm = sit > 4 ? 10 : 5;
     const calculatedPrice = route.distance * ratePerKm;
     setPrice(calculatedPrice);
   };
