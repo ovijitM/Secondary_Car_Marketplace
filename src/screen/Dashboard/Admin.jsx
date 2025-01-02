@@ -22,7 +22,7 @@ export default function Admin() {
       return null;
     }
   };
-
+  console.log("Admin Dashboard");
   const fetchData = async () => {
     const token = localStorage.getItem("authToken");
     console.log(token);
