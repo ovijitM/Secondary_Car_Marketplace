@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import Footer from "../../components/Footer/Footer";
 import "./admin.css";
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [userinfo, setUserinfo] = useState({});
   const [users, setUsers] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -58,6 +60,10 @@ export default function Admin() {
     fetchData();
   }, []);
 
+  const handleKycNavigation = () => {
+    navigate("/kyc");
+  };
+
   return (
     <>
       <CustomNavbar />
@@ -92,12 +98,10 @@ export default function Admin() {
             </div>
             <div className="stat-card">
               <h2>KYC Applications</h2>
-              <div className="kyc-applications">
-                <div class="container-center">
-                  <Link to="/kyc_applications">
-                    <button className="btn btn-primary">Kyc applications</button>
-                  </Link>
-                </div>
+              <div className="container-center">
+                <button
+                  className="btn btn-primary"
+                  onClick={handleKycNavigation}>KYC Applications</button>
               </div>
             </div>
             <div className="stat-card">
