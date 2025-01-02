@@ -26,7 +26,7 @@ router.post('/verify', upload.single('image'), async (req, res) => {
                 { email }, // Find the user by email
                 {
                     $set: {
-                        verified: true,   // Mark the user as verified
+                        verified: false,   // Mark the user as verified
                         nid: nid,         // Add or update NID
                         img: img,         // Add or update image
                         submit: true     // Reset the submit status
