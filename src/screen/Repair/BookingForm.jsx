@@ -10,7 +10,7 @@ const BookingForm = () => {
     carModel: '',
     carNumber: '',
     services: [],
-    notes: ''
+    notes: '',
   });
 
   const handleChange = (e) => {
@@ -19,7 +19,7 @@ const BookingForm = () => {
       // Toggle selection in an array for multi-select
       let servicesArray = [...formData.services];
       if (servicesArray.includes(value)) {
-        servicesArray = servicesArray.filter(service => service !== value);
+        servicesArray = servicesArray.filter((service) => service !== value);
       } else {
         servicesArray.push(value);
       }
@@ -32,27 +32,120 @@ const BookingForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+
+    // Here you can send formData to the backend API
+    alert('Booking submitted successfully!');
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px', padding: '20px', backgroundColor: 'white', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-      <input type="text" name="name" placeholder="Name *" required onChange={handleChange} />
-      <input type="email" name="email" placeholder="Email" onChange={handleChange} />
-      <input type="text" name="phone" placeholder="Phone *" required onChange={handleChange} />
-      <input type="date" name="date" required onChange={handleChange} />
-      <input type="text" name="carBrand" placeholder="Car Brand *" required onChange={handleChange} />
-      <input type="text" name="carModel" placeholder="Car Model *" required onChange={handleChange} />
-      <input type="text" name="carNumber" placeholder="Car Number *" required onChange={handleChange} />
-      <select name="services" multiple onChange={handleChange} style={{ height: '100px' }}>
-        <option value="Emergency Service">Emergency Service</option>
-        <option value="Wheel Alignment">Wheel Alignment</option>
-        <option value="Brake Service">Brake Service</option>
-        <option value="Car AC Service">Car AC Service</option>
-      </select>
-      <textarea name="notes" placeholder="Additional Notes" onChange={handleChange} />
-      <button type="submit" style={{ background: 'skyblue', color: 'white', padding: '10px', borderRadius: '8px' }}>Submit</button>
-    </form>
+    <div style={{ maxWidth: '600px', margin: 'auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)', backgroundColor: 'white' }}>
+      <h2 style={{ textAlign: 'center', marginBottom: '20px', color: '#007BFF' }}>Book a Repair Service</h2>
+      <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '15px' }}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Name *"
+          value={formData.name}
+          required
+          onChange={handleChange}
+          style={inputStyle}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          name="phone"
+          placeholder="Phone *"
+          value={formData.phone}
+          required
+          onChange={handleChange}
+          style={inputStyle}
+        />
+        <input
+          type="date"
+          name="date"
+          value={formData.date}
+          required
+          onChange={handleChange}
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          name="carBrand"
+          placeholder="Car Brand *"
+          value={formData.carBrand}
+          required
+          onChange={handleChange}
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          name="carModel"
+          placeholder="Car Model *"
+          value={formData.carModel}
+          required
+          onChange={handleChange}
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          name="carNumber"
+          placeholder="Car Number *"
+          value={formData.carNumber}
+          required
+          onChange={handleChange}
+          style={inputStyle}
+        />
+        <select
+          name="services"
+          multiple
+          onChange={handleChange}
+          style={{ ...inputStyle, height: '120px' }}
+        >
+          <option value="Emergency Service">Emergency Service</option>
+          <option value="Wheel Alignment">Wheel Alignment</option>
+          <option value="Brake Service">Brake Service</option>
+          <option value="Car AC Service">Car AC Service</option>
+        </select>
+        <textarea
+          name="notes"
+          placeholder="Additional Notes"
+          value={formData.notes}
+          onChange={handleChange}
+          style={{ ...inputStyle, height: '80px' }}
+        />
+        <button
+          type="submit"
+          style={{
+            background: '#007BFF',
+            color: 'white',
+            padding: '12px',
+            fontSize: '1rem',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            border: 'none',
+            transition: 'background 0.3s ease',
+          }}
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
+};
+
+// Input styling for consistency
+const inputStyle = {
+  padding: '10px',
+  border: '1px solid #ccc',
+  borderRadius: '5px',
+  fontSize: '1rem',
 };
 
 export default BookingForm;

@@ -7,8 +7,10 @@ db();
 
 const seedServices = async () => {
   const newServices = [
-    { name: 'New Service 1', price: 99.99, description: 'Description for new service 1.' },
-    { name: 'New Service 2', price: 89.99, description: 'Description for new service 2.' }
+    { name: 'Suspension Check', price: 45.99, description: 'Complete check and adjustment of the suspension system.' },
+    { name: 'AC Service', price: 89.99, description: 'Air conditioning refill and filter check.' },
+    { name: 'Wheel Alignment', price: 59.99, description: 'Alignment of wheels for optimal driving and tire wear.' }
+
   ];
 
   try {

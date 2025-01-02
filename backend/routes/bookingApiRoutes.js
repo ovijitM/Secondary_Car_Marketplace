@@ -1,59 +1,65 @@
 import express from 'express';
-import Booking from '../dataModels/BookingModel.js'; // Update the path as needed
+import nodemailer from 'nodemailer';
+import Booking from '../dataModels/BookingModel.js';
 
 const router = express.Router();
 
-// Get all bookings
-router.get('/', async (req, res) => {
-  try {
-    const bookings = await Booking.find();
-    res.json(bookings);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch bookings' });
-  }
-});
-
-// Get a specific booking by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const booking = await Booking.findById(req.params.id);
-    if (!booking) return res.status(404).json({ error: 'Booking not found' });
-    res.json(booking);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch booking' });
-  }
-});
-
-// Create a new booking
+// POST route for creating a booking
 router.post('/', async (req, res) => {
+  const { name, email, phone, date, carBrand, carModel, carNumber, services, notes } = req.body;
+
   try {
-    const newBooking = new Booking(req.body);
+    // 1. Save booking to the database
+    const newBooking = new Booking({
+      name,
+      email,
+      phone,
+      date,
+      carBrand,
+      carModel,
+      carNumber,
+      services,
+      notes,
+    });
+
     await newBooking.save();
-    res.status(201).json(newBooking);
-  } catch (err) {
-    res.status(400).json({ error: 'Failed to create booking' });
-  }
-});
 
-// Update a booking
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedBooking = await Booking.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedBooking) return res.status(404).json({ error: 'Booking not found' });
-    res.json(updatedBooking);
-  } catch (err) {
-    res.status(400).json({ error: 'Failed to update booking' });
-  }
-});
+    // 2. Send confirmation email using NodeMailer
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail', // Use your email service
+      auth: {
+        user: 'your-email@gmail.com', // Replace with your email
+        pass: 'your-email-password', // Replace with your email password
+      },
+    });
 
-// Delete a booking
-router.delete('/:id', async (req, res) => {
-  try {
-    const deletedBooking = await Booking.findByIdAndDelete(req.params.id);
-    if (!deletedBooking) return res.status(404).json({ error: 'Booking not found' });
-    res.json(deletedBooking);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete booking' });
+    const mailOptions = {
+      from: 'your-email@gmail.com', // Sender address
+      to: email, // User's email address
+      subject: 'Booking Confirmation',
+      html: `
+        <h1>Booking Confirmation</h1>
+        <p>Dear ${name},</p>
+        <p>Thank you for booking with us! Here are the details of your booking:</p>
+        <ul>
+          <li><strong>Date:</strong> ${new Date(date).toLocaleDateString()}</li>
+          <li><strong>Car Brand:</strong> ${carBrand}</li>
+          <li><strong>Car Model:</strong> ${carModel}</li>
+          <li><strong>Car Number:</strong> ${carNumber}</li>
+          <li><strong>Services:</strong> ${services.join(', ')}</li>
+          <li><strong>Notes:</strong> ${notes || 'No additional notes'}</li>
+        </ul>
+        <p>We look forward to serving you!</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    // 3. Respond to the client
+    res.status(201).json({ message: 'Booking successful! Confirmation email sent.' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Failed to create booking and send email.' });
   }
 });
 
