@@ -1,4 +1,3 @@
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import Customnavbar from "../../components/Customnavbar/Customnavbar";
 import Footer from "../../components/Footer/Footer";
@@ -21,10 +20,6 @@ export default function Home() {
   const carsPerPage = 12; 
   const navigate = useNavigate();
   
-
-
-
-
   const loadData = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/displaydata", {
@@ -63,7 +58,7 @@ export default function Home() {
   const totalPages = Math.ceil(AllCars.length / carsPerPage);
 
   const handleViewDetails = (car) => {
-   
+
     navigate("/CarDetails", { state: { car } });
   };
 
