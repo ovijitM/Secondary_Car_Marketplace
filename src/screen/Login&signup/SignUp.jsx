@@ -1,4 +1,5 @@
 import  { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
@@ -10,6 +11,7 @@ import Customnavbar from '../../components/Customnavbar/Customnavbar';
 
 function Signup() {
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
   const [info, setInfo] = useState({
     firstName: '',
     lastName: '',
@@ -57,8 +59,13 @@ function Signup() {
       if (!data.success) {
         setErrorMessage(data.message); 
       } else {
-       
-        setErrorMessage(''); 
+        alert('User created successfully!');
+        navigate('/login');
+        setErrorMessage('');
+        
+        
+          
+    
       }
     }
 

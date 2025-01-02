@@ -75,7 +75,6 @@ export default function Home() {
   //     car.model.toLowerCase().includes(search.toLowerCase())
   // );
   const handleViewDetails = (car) => {
-    // console.log("Navigating with car:", car);
     navigate("/CarDetails", { state: { car } });
   };
   return (

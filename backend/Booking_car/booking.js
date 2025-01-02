@@ -20,7 +20,6 @@ export default async function addUser({
     const db = await connectToDatabase();
     const collection = db.collection("Book_car");
 
-    // Generate a new user ID
     const lastUser = await collection
       .find()
       .sort({ id: -1 })

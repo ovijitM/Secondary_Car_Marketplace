@@ -103,7 +103,7 @@ function TransactionPage() {
                 <Card.Subtitle className="mb-2 text-muted">
                   Model Year: {car.year}
                 </Card.Subtitle>
-                <Card.Text>Price: ${car.price}</Card.Text>
+                <Card.Text>Price: ${car.price} +5%</Card.Text>
                 <Card.Text> {car.offer_price}</Card.Text>
                 <Card.Text>Condition: {car.label}</Card.Text>
                 <Card.Text>Location: {car.purchase_location}</Card.Text>
@@ -118,6 +118,8 @@ function TransactionPage() {
               <Card.Body>
                 <h4>Confirm Your Details</h4>
                 <h6>*You Need to atleast pay the half for booking</h6>
+                <h6>*5% will be included as charge</h6>
+
                 <Form>
                   <Form.Group className="mb-3" controlId="formName">
                     <Form.Label>Full Name</Form.Label>
