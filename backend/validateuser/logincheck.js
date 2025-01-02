@@ -23,9 +23,11 @@ router.post('/login', async (req, res) => {
         } 
        
         const token = jwt.sign(
-            { email: existingUser.email, role: existingUser.role, name:existingUser.name, country:existingUser.country},  
-            JWT_SECRET_KEY,  
-            { expiresIn: '1h' }  
+
+            { email: existingUser.email, role: existingUser.role, name:existingUser.name, country:existingUser.country, nid:existingUser.nid, img:existingUser.img, verified: existingUser.verified},  // Payload (user info)
+            JWT_SECRET_KEY,  // Secret key
+            { expiresIn: '1h' }  // Token expiration time (1 hour)
+
         );
 
            
