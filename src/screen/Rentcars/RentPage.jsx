@@ -178,7 +178,7 @@ const RentCars = () => {
                       <br />
                       <strong>Seat Number:</strong> {car.sit}
                       <br />
-                      <strong>Driver:</strong> {car.driver.name}
+                      {/* <strong>Driver:</strong> {car.driver.name} */}
                     </Card.Text>
                     <Button
                       variant="primary"
