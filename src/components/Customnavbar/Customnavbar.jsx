@@ -1,9 +1,11 @@
 
+
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import "../Customnavbar/Components.css";
+
 
 
 function CustomNavbar() {
@@ -37,6 +39,7 @@ function CustomNavbar() {
           </Navbar.Brand>
           <Nav className="mx-auto">
             <Nav.Link as={Link} to="/buycars" className="px-4 nav-link">
+
               Cars
             </Nav.Link>
             <Nav.Link as={Link} to="/rentcars" className="px-4 nav-link">
@@ -48,9 +51,15 @@ function CustomNavbar() {
             <Nav.Link as={Link} to="/" className="px-4 nav-link">
               Insurance
             </Nav.Link>
+
             <Nav.Link as={Link} to="/compare" className="px-4 nav-link">
               Compare
             </Nav.Link>
+
+            <Nav.Link as={Link} to="/" className="px-4 nav-link">
+              Loan
+            </Nav.Link>
+
           </Nav>
 
 

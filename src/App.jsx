@@ -12,9 +12,13 @@ import User from "./screen/Dashboard/User";
 import Compare from "./screen/CarCompare/CarComparison";
 import Transaction from "./screen/Transaction/Transaction";
 import Receipt from "./screen/Transaction/Reciept";
+import Book from "./screen/Booking_cars/Booking";
+import Slip from "./screen/Rentcars/slip";
+import RentCalculator from "./screen/Rentcars/calculator";
+import Booking from "./screen/Rentcars/book_con";
+import Driver from "./screen/Rentcars/driver";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Verify from "./screen/Dashboard/verify";
-
 
 
 function App() {
@@ -26,8 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/buycars" element={<Cars />} />
-
-          <Route path="/CarDetails" element={<CarDetails />} />
+          <Route path="/CarDetails" element={<CarDetails />} />           
           <Route path="/rentcars" element={<Rent />} />
           <Route path="/repair" element={<Repair />} />
           <Route path="/Admin_dashboard" element={<Admin />} />
@@ -36,12 +39,14 @@ function App() {
           <Route path="/compare" element={<Compare />} />
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/reciept" element={<Receipt />} />
+          <Route path="/RentCars" element={<Rent />} />
+          <Route path="/book" element={<Book />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/p" element={<Slip />} />
+          <Route path="/cal" element={<RentCalculator />} />
+          <Route path="/admin_booking" element={<Booking />} />
+          <Route path="/dri" element={<Driver />} />
           <Route path="/verify" element={<Verify />} />
-
-    
-
-
-
 
         </Routes>
       </div>
