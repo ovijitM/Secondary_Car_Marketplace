@@ -4,46 +4,62 @@ import { Container, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
 
 function Slip() {
   const location = useLocation();
-  const { carId, number } = location.state || {}; // Retrieve carId and number from state
+  const { car, user, driver } = location.state || {}; // Retrieve car, user, and driver objects from state
 
-  const [carDetails, setCarDetails] = useState(null);
-  const [bookingDetails, setBookingDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [price, setPrice] = useState(null);
 
+  const destinations = [
+    { to: "Dhaka", from: "Khulna", distance: 150 },
+    { to: "Dhaka", from: "Cox Bazar", distance: 300 },
+    { to: "Dhaka", from: "Sylhet", distance: 250 },
+    { to: "Dhaka", from: "Rajshahi", distance: 200 },
+    { to: "Dhaka", from: "Barishal", distance: 180 },
+    { to: "Dhaka", from: "Rangpur", distance: 220 },
+    { to: "Dhaka", from: "Mymensingh", distance: 160 },
+    { to: "Dhaka", from: "Jessore", distance: 170 },
+    { to: "Dhaka", from: "Comilla", distance: 190 },
+    { to: "Dhaka", from: "Narayanganj", distance: 140 },
+    { to: "Dhaka", from: "Bogra", distance: 210 },
+    { to: "Dhaka", from: "Dinajpur", distance: 230 },
+    { to: "Dhaka", from: "Feni", distance: 240 },
+    { to: "a", from: "b", distance: 260 },
+  ];
+  console.log(car, user, driver);
   useEffect(() => {
-    if (carId && number) {
-      fetchDetails();
-    } else {
+    if (!car || !user || !driver) {
       setErrorMessage("Invalid data received. Please try again.");
       setLoading(false);
+      return;
     }
-  }, [carId, number]);
 
-  const fetchDetails = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/api/slip", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ carId, number }),
-      });
+    const calculatePrice = () => {
+      const normalizedPickup = user.PickUp.trim().toLowerCase();
+      const normalizedDestination = user.Where_to_go.trim().toLowerCase();
 
-      const data = await response.json();
-      if (data.success) {
-        setCarDetails(data.carDetails); // Data from Rent_cars
-        setBookingDetails(data.bookingDetails); // Data from Book_car
-        setErrorMessage("");
-      } else {
-        setErrorMessage(data.message || "Failed to fetch data.");
+      const route = destinations.find(
+        (d) =>
+          d.to.toLowerCase() === normalizedPickup &&
+          d.from.toLowerCase() === normalizedDestination
+      );
+
+      if (!route) {
+        setErrorMessage(
+          `Invalid route from ${user.PickUp} to ${user.Where_to_go}.`
+        );
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      setErrorMessage("An error occurred while fetching details.");
-    } finally {
+
+      const ratePerKm = car.sit > 4 ? 8 : 5;
+      const calculatedPrice = route.distance * ratePerKm;
+      setPrice(calculatedPrice);
       setLoading(false);
-    }
-  };
+    };
+
+    calculatePrice();
+  }, [car, user, driver, destinations]);
 
   if (loading) {
     return (
@@ -65,31 +81,34 @@ function Slip() {
     <Container>
       <h1 className="text-center my-4">Booking Slip</h1>
 
-      {/* Car Details Section */}
-      {carDetails && (
+      {/* Car Details */}
+      {car && (
         <Card className="mb-4">
           <Card.Body>
             <h2>Car Details</h2>
             <Row>
               <Col md={6}>
                 <p>
-                  <strong>Brand:</strong> {carDetails.brand}
+                  <strong>Brand:</strong> {car.brand}
                 </p>
                 <p>
-                  <strong>Model:</strong> {carDetails.model}
+                  <strong>Model:</strong> {car.model}
                 </p>
                 <p>
-                  <strong>Year:</strong> {carDetails.year}
+                  <strong>Year:</strong> {car.year}
                 </p>
                 <p>
-                  <strong>Color:</strong> {carDetails.color}
+                  <strong>Color:</strong> {car.color}
+                </p>
+                <p>
+                  <strong>Seats:</strong> {car.sit}
                 </p>
               </Col>
               <Col md={6}>
                 <Card.Img
                   variant="top"
-                  src={carDetails.img}
-                  alt={`${carDetails.brand} ${carDetails.model}`}
+                  src={car.img}
+                  alt={`${car.brand} ${car.model}`}
                   className="img-fluid"
                 />
               </Col>
@@ -98,25 +117,43 @@ function Slip() {
         </Card>
       )}
 
-      {/* Booking Details Section */}
-      {bookingDetails && (
-        <Card>
+      {/* Booking Details */}
+      {user && (
+        <Card className="mb-4">
           <Card.Body>
             <h2>Booking Details</h2>
             <p>
-              <strong>Name:</strong> {bookingDetails.name}
+              <strong>Name:</strong> {`${user.firstName} ${user.lastName}`}
             </p>
             <p>
-              <strong>Phone Number:</strong> {bookingDetails.number}
+              <strong>Phone:</strong> {user.number}
             </p>
             <p>
-              <strong>Pick Up:</strong> {bookingDetails.PickUp}
+              <strong>Pick Up:</strong> {user.PickUp}
             </p>
             <p>
-              <strong>Destination:</strong> {bookingDetails.Where_to_go}
+              <strong>Destination:</strong> {user.Where_to_go}
             </p>
             <p>
-              <strong>Price:</strong> ${bookingDetails.price}
+              <strong>Price:</strong> {price ? `${price} TK` : "Calculating..."}
+            </p>
+          </Card.Body>
+        </Card>
+      )}
+
+      {/* Driver Details */}
+      {driver && (
+        <Card className="mb-4">
+          <Card.Body>
+            <h2>Driver Details</h2>
+            <p>
+              <strong>Name:</strong> {driver.name}
+            </p>
+            <p>
+              <strong>Experience:</strong> {driver.experience_years} years
+            </p>
+            <p>
+              <strong>Contact:</strong> {driver.phone}
             </p>
           </Card.Body>
         </Card>
