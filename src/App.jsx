@@ -18,6 +18,8 @@ import RentCalculator from "./screen/Rentcars/calculator";
 import Booking from "./screen/Rentcars/book_con";
 import Driver from "./screen/Rentcars/driver";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Verify from "./screen/Dashboard/verify";
+
 
 function App() {
   return (
@@ -28,11 +30,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/buycars" element={<Cars />} />
-          <Route path="/CarDetails" element={<CarDetails />} />
-          // <Route path="/rentcars" element={<Rent />} />
+          <Route path="/CarDetails" element={<CarDetails />} />           
+          <Route path="/rentcars" element={<Rent />} />
           <Route path="/repair" element={<Repair />} />
           <Route path="/Admin_dashboard" element={<Admin />} />
-          <Route path="/User _dashboard" element={<User />} />
+          <Route path="/User_dashboard" element={<User />} />
           <Route path="/Postcar" element={<Post />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/transaction" element={<Transaction />} />
@@ -44,6 +46,8 @@ function App() {
           <Route path="/cal" element={<RentCalculator />} />
           <Route path="/admin_booking" element={<Booking />} />
           <Route path="/dri" element={<Driver />} />
+          <Route path="/verify" element={<Verify />} />
+
         </Routes>
       </div>
     </Router>

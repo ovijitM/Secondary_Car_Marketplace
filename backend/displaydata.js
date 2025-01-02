@@ -24,8 +24,7 @@ router.post('/displaydata', async (req, res) => {
 
 
     
-    // const Transaction_history_Collection=cars.collection('Transaction_history');
-    // const Transaction_history = await Transaction_history_Collection.find({}).toArray();
+
    
 
     
@@ -39,7 +38,7 @@ router.post('/displaydata', async (req, res) => {
       // console.log(New_cars);
       // console.log(Rent_Cars);
       // console.log('------------------------------------------------------------------')
-      res.status(200).json({success: true, new_cars : New_cars , used_cars: Used_cars, rent_cars: Rent_Cars});
+      res.status(200).json({success: true, new_cars : New_cars , used_cars: Used_cars, rent_cars: Rent_Cars, verify: Verify});
     }
 
     
