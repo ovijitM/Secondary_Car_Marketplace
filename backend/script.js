@@ -4,6 +4,7 @@ import Express from "express";
 import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
 import search from './Search/search.js';
+import verifyuser from './createuser/verifyuser.js';
 
 
 import displaydata from './displaydata.js';
@@ -31,13 +32,16 @@ app.use('/api', search);
 
 app.use('/api', displaydata);
 app.use('/api', user_history); 
+ 
+app.use('/api', verifyuser); 
 
 
 
 
-app.use((req, res) => {
-  res.send("Hello World!");
-});
+
+// app.use((req, res) => {
+//   res.send();
+// });
 
 
 app.listen(port, () => {
