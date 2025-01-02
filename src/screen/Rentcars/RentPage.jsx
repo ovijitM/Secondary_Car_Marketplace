@@ -21,7 +21,7 @@ const RentCars = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Fetch cars with driver info from the API
+  
   const fetchCars = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/rentCar", {

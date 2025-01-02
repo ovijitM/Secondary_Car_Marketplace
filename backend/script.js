@@ -13,8 +13,7 @@ import book from "./Booking_car/book_c.js";
 import dri from "./Rent_cars/driverinfo.js";
 import admin_booking from "./Rent_cars/bookcon.js";
 import assignDriver from "./Rent_cars/driver_assin.js";
-import admin from "./validateuser/Admin_data.js";
-
+import admin_data from "./validateuser/admin_data.js";
 const port = 8000;
 const app = Express();
 app.use(Express.json());
@@ -38,7 +37,7 @@ app.use("/api", dri);
 app.use("/api", admin_booking);
 app.use("/api", assignDriver);
 app.use('/api', verifyuser);
-app.use('/api', admin);
+app.use('/api', admin_data);
 
 
 app.use((req, res) => {
