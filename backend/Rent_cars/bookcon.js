@@ -30,9 +30,8 @@ router.put("/admin_booking/:id", async (req, res) => {
 
   try {
     const db = await connectToDatabase();
-    const bookCarCollection = db.collection("Book_car"); // Ensure collection name is correct
+    const bookCarCollection = db.collection("Book_car");
 
-    // Ensure the ID is a valid MongoDB ObjectId
     if (!ObjectId.isValid(bookingId)) {
       return res.status(400).json({
         success: false,
@@ -40,7 +39,6 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Fetch the booking to check its current status
     const booking = await bookCarCollection.findOne({
       _id: new ObjectId(bookingId),
     });
@@ -52,7 +50,6 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Ensure the status provided is valid
     const validStatuses = ["approved", "cancelled"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
@@ -61,7 +58,6 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Check if the booking is in 'pending' status
     if (booking.status !== "pending") {
       return res.status(400).json({
         success: false,
