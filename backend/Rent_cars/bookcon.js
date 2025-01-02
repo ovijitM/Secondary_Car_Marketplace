@@ -65,10 +65,9 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Update the booking's status to the new status (approved/cancelled)
     const result = await bookCarCollection.updateOne(
-      { _id: new ObjectId(bookingId) }, // Match the booking by its `_id`
-      { $set: { status } } // Update the `status` field
+      { _id: new ObjectId(bookingId) },
+      { $set: { status } }
     );
 
     if (result.modifiedCount > 0) {
