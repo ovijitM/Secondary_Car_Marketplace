@@ -1,16 +1,14 @@
 import express from "express";
-import { ObjectId } from "mongodb"; // To handle MongoDB ObjectId
-import connectToDatabase from "../database.js"; // Ensure this path is correct
+import { ObjectId } from "mongodb";
+import connectToDatabase from "../database.js";
 
 const router = express.Router();
 
-// Fetch all active bookings
 router.get("/admin_booking", async (req, res) => {
   try {
     const db = await connectToDatabase();
-    const bookCarCollection = db.collection("Book_car"); // Ensure collection name is correct
+    const bookCarCollection = db.collection("Book_car");
 
-    // Fetch all bookings (you may want to remove `isActive` filtering if all bookings should be shown)
     const bookings = await bookCarCollection.find().toArray();
 
     res.status(200).json({
@@ -26,16 +24,14 @@ router.get("/admin_booking", async (req, res) => {
   }
 });
 
-// Update booking status
 router.put("/admin_booking/:id", async (req, res) => {
-  const bookingId = req.params.id; // Booking ID from the URL
-  const { status } = req.body; // New status from the request body
+  const bookingId = req.params.id;
+  const { status } = req.body;
 
   try {
     const db = await connectToDatabase();
-    const bookCarCollection = db.collection("Book_car"); // Ensure collection name is correct
+    const bookCarCollection = db.collection("Book_car");
 
-    // Ensure the ID is a valid MongoDB ObjectId
     if (!ObjectId.isValid(bookingId)) {
       return res.status(400).json({
         success: false,
@@ -43,7 +39,6 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Fetch the booking to check its current status
     const booking = await bookCarCollection.findOne({
       _id: new ObjectId(bookingId),
     });
@@ -55,7 +50,6 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Ensure the status provided is valid
     const validStatuses = ["approved", "cancelled"];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
@@ -64,7 +58,6 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Check if the booking is in 'pending' status
     if (booking.status !== "pending") {
       return res.status(400).json({
         success: false,
@@ -72,10 +65,9 @@ router.put("/admin_booking/:id", async (req, res) => {
       });
     }
 
-    // Update the booking's status to the new status (approved/cancelled)
     const result = await bookCarCollection.updateOne(
-      { _id: new ObjectId(bookingId) }, // Match the booking by its `_id`
-      { $set: { status } } // Update the `status` field
+      { _id: new ObjectId(bookingId) },
+      { $set: { status } }
     );
 
     if (result.modifiedCount > 0) {

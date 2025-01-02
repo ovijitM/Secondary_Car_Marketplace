@@ -1,14 +1,13 @@
 import express from "express";
 const router = express.Router();
-import connectToDatabase from "../database.js"; // Ensure your database connection module is properly configured
+import connectToDatabase from "../database.js";
 
 router.post("/assignDriver", async (req, res) => {
   let db = null;
   try {
-    db = await connectToDatabase(); // Connect to the database
+    db = await connectToDatabase();
     const driverCollection = db.collection("Driver");
 
-    // Find available drivers with status: true
     const availableDrivers = await driverCollection
       .find({ status: true })
       .toArray();
@@ -18,17 +17,14 @@ router.post("/assignDriver", async (req, res) => {
         .json({ success: false, message: "No drivers available." });
     }
 
-    // Randomly select a driver
     const assignedDriver =
       availableDrivers[Math.floor(Math.random() * availableDrivers.length)];
 
-    // Update the driver's status to false
     await driverCollection.updateOne(
       { _id: assignedDriver._id },
       { $set: { status: false } }
     );
 
-    // Return the assigned driver details
     res.json({ success: true, driver: assignedDriver });
   } catch (error) {
     console.error("Error assigning driver:", error);
