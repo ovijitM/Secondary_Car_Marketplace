@@ -13,6 +13,8 @@ import Compare from "./screen/CarCompare/CarComparison";
 import Transaction from "./screen/Transaction/Transaction";
 import Receipt from "./screen/Transaction/Reciept";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Verify from "./screen/Dashboard/verify";
+
 
 
 function App() {
@@ -29,11 +31,16 @@ function App() {
           <Route path="/rentcars" element={<Rent />} />
           <Route path="/repair" element={<Repair />} />
           <Route path="/Admin_dashboard" element={<Admin />} />
-          <Route path="/User _dashboard" element={<User />} />
+          <Route path="/User_dashboard" element={<User />} />
           <Route path="/Postcar" element={<Post />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/reciept" element={<Receipt />} />
+          <Route path="/verify" element={<Verify />} />
+
+    
+
+
 
 
         </Routes>

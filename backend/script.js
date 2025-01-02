@@ -4,10 +4,12 @@ import Express from "express";
 import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
 import search from './Search/search.js';
+import verifyuser from './createuser/verifyuser.js';
 import logout from './validateuser/logoutcheck.js';
 import filter from "./Search/filtercar.js";
 import displaydata from './displaydata.js';
-import user_history from './userhistory.js'; // Add this line to import user_history
+import user_history from './userhistory.js';
+ // Add this line to import user_history
 
 
 const port = 8000;
@@ -32,6 +34,9 @@ app.use('/api', logout);
 app.use('/api', filter);
 app.use('/api', displaydata);
 app.use('/api', user_history); 
+ 
+app.use('/api', verifyuser); 
+
 
 
 
