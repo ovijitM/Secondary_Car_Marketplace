@@ -15,6 +15,7 @@ export default function CarsPage() {
   const [filteredCars, setFilteredCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 12; 
+
   const navigate = useNavigate();
   
   const loadData = async () => {
@@ -36,9 +37,7 @@ export default function CarsPage() {
       }
     } catch (error) {
       console.log("Error fetching data:", error);
-    } finally {
-      setLoading(false); 
-    }
+    } 
   };
 
   useEffect(() => {
@@ -70,7 +69,6 @@ export default function CarsPage() {
     setFilteredCars(filtered);
     setCurrentPage(1); 
   };
-
 
   return (
     <>

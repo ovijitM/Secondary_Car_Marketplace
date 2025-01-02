@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import "./Postcar.css";
 
 export default function Postcar() {
+  const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -101,6 +103,7 @@ export default function Postcar() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formDataObj = new FormData();
     Object.keys(formData).forEach((key) => {
       formDataObj.append(key, formData[key]);
@@ -116,7 +119,6 @@ export default function Postcar() {
 
       if (result.success) {
         alert("Car posted successfully!");
-        // Reset form data after successful submission
         setFormData({
           brand: "",
           model: "",
@@ -144,6 +146,8 @@ export default function Postcar() {
   };
 
   return (
+   <>
+   <CustomNavbar />
     <div className="car-form-container">
       <h1 className="form-title"> Post a Car</h1>
       <form id="car-form" onSubmit={handleSubmit}>
@@ -331,5 +335,7 @@ export default function Postcar() {
         </button>
       </form>
     </div>
+    </>
+
   );
 }

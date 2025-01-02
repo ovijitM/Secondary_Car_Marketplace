@@ -81,6 +81,7 @@ function ReceiptPage() {
               <h5>Payment Details</h5>
               <p><strong>Payment Method:</strong> {paymentMethod}</p>
               <p><strong>Amount Paid:</strong> ${car.price}</p>
+              <p><strong>A Certain charge will be included</strong> 5%</p>
               <p><strong>Discount:</strong> {car.offer_price}</p>
               <p><strong>TransactionID:</strong> {userDetails.transaction}</p>
             </Col>
