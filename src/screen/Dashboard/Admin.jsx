@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import Footer from "../../components/Footer/Footer";
@@ -101,12 +103,14 @@ export default function Admin() {
             </div>
             <div className="stat-card">
               <h2>KYC Applications</h2>
+
               <button
                 className="btn btn-primary"
                 onClick={() => handleNavigation("/kyc")}
               >
                 KYC Applications
               </button>
+
             </div>
             <div className="stat-card">
               <h2>Rent Service</h2>
