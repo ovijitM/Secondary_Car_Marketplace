@@ -21,6 +21,7 @@ function Signup() {
     nid: '',
     img: null, // For image upload
     verified: false,
+    submit: false,
   });
 
   const [errorMessage, setErrorMessage] = useState('');
