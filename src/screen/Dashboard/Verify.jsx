@@ -88,7 +88,8 @@ function Signup() {
           setErrorMessage(data.message);
         } else {
           setErrorMessage('');
-          // Redirect or show success message
+          
+          
         }
       } catch (error) {
         console.error('Error during registration:', error);
