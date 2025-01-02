@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
         } 
         // Generate a JWT token upon successful login
         const token = jwt.sign(
-            { email: existingUser.email, role: existingUser.role, name:existingUser.name, country:existingUser.country},  // Payload (user info)
+            { email: existingUser.email, role: existingUser.role, name:existingUser.name, country:existingUser.country, nid:existingUser.nid, img:existingUser.img, verified: existingUser.verified},  // Payload (user info)
             JWT_SECRET_KEY,  // Secret key
             { expiresIn: '1h' }  // Token expiration time (1 hour)
         );

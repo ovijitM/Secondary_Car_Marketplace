@@ -9,7 +9,7 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' }); // Configure where the uploaded files will go (this can be changed)
 
 router.post('/verify', upload.single('image'), async (req, res) => {
-    const { name, email, password, country, state, nid } = req.body;
+    const { name, email, password, country, state, nid, verified } = req.body;
     const img = req.file ? req.file.path : null; // Get the file path if uploaded
 
     try {
@@ -18,6 +18,7 @@ router.post('/verify', upload.single('image'), async (req, res) => {
 
         // Check if the user already exists by email
         const existingUser = await collection.findOne({ email });
+        console.log(existingUser);
 
         if (existingUser) {
             // If the user exists, update the verified status, nid, and img
@@ -49,7 +50,7 @@ router.post('/verify', upload.single('image'), async (req, res) => {
                 state,
                 nid,
                 img,
-                verify: false // Initially set verify to false
+                verified: false// Initially set verify to false
             });
 
             if (result.success) {

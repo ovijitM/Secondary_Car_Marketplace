@@ -5,6 +5,7 @@ import userRoutes from './createuser/createuser.js';
 import checkUser from './validateuser/logincheck.js';
 import search from './Search/search.js';
 import verifyuser from './createuser/verifyuser.js';
+import authdecode from './authdecode.js';
 
 
 import displaydata from './displaydata.js';
@@ -32,7 +33,7 @@ app.use('/api', search);
 
 app.use('/api', displaydata);
 app.use('/api', user_history); 
- 
+app.use('/api', authdecode); 
 app.use('/api', verifyuser); 
 
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, Form, Card, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import CustomNavbar from '../../components/Customnavbar/Customnavbar';
 
 function Login() {
   const [info, setInfo] = useState({
@@ -48,6 +49,9 @@ function Login() {
   };
 
   return (
+<div>
+  <CustomNavbar/>
+
     <Container className="d-flex justify-content-center align-items-center vh-100">
       <Row>
         <Col md={12}>
@@ -98,7 +102,7 @@ function Login() {
           </Card>
         </Col>
       </Row>
-    </Container>
+    </Container></div>
   );
 }
 

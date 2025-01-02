@@ -13,9 +13,13 @@ export default function UserProfile() {
   // Function to decode JWT token
   const decodeToken = (token) => {
     try {
-      const payload = token.split(".")[1]; // Extract the payload part of the JWT
-      const decoded = JSON.parse(atob(payload)); // Decode Base64 to a JSON object
-      return decoded;
+      const parts = token.split(".");
+      if (parts.length === 3) {
+        const payload = parts[1]; // Extract the payload part of the JWT
+        const decoded = JSON.parse(atob(payload)); // Decode Base64 to a JSON object
+        return decoded;
+      }
+      return null;
     } catch (error) {
       console.error("Error decoding token:", error);
       return null;
@@ -27,7 +31,8 @@ export default function UserProfile() {
     const token = localStorage.getItem("authToken"); // Get the token from localStorage
     if (token) {
       const decoded = decodeToken(token); // Decode the token
-      setUserInfo(decoded); // Store the decoded data in state
+      setUserInfo(decoded);
+
     }
   }, []);
 
@@ -36,35 +41,7 @@ export default function UserProfile() {
     navigate("/verify", { state: { userInfo } }); // Pass the userInfo correctly here
   };
 
-
-
-  const loadData = async () => {
-    try {
-      const response = await fetch("http://localhost:8000/api/displaydata", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (data.success) {
-        setVerify(data.verify);
-      
-
-      } else {
-        console.log("Error fetching data:", data.message);
-      }
-    } catch {
-      console.log("Error fetching data:");
-    }
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
+console.log(userInfo)
   return (
     <>
       <div>
@@ -92,9 +69,10 @@ export default function UserProfile() {
                 </div>
                 <div className="right-section">
                   <div className="role-badge">{userInfo.role}</div>
+                  <div className="role-badge">{userInfo.nid}</div>
                   <div className="revenue-section">
                     <h3>Revenue</h3>
-                    <p className="revenue-amount">${userInfo.revenue}</p>
+                    <p className="revenue-amount">$</p>
                   </div>
                 </div>
               </div>
@@ -130,3 +108,4 @@ export default function UserProfile() {
     </>
   );
 }
+
