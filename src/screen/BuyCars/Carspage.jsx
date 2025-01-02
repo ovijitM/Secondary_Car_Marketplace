@@ -183,8 +183,6 @@ export default function CarsPage() {
               ))}
             </div>
           </div>
-
-          {/* Pagination Controls */}
           <div className="d-flex justify-content-center my-4">
             {Array.from({ length: totalPages }, (_, i) => (
               <Button
