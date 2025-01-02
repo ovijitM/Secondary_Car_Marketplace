@@ -39,11 +39,9 @@ router.post("/book", async (req, res) => {
   } = req.body;
 
   try {
-    // Normalize inputs for case-insensitive matching
     const normalizedPickUp = PickUp.trim().toLowerCase();
     const normalizedWhereToGo = Where_to_go.trim().toLowerCase();
 
-    // Find the matching route
     const route = destinations.find(
       (d) =>
         d.to.toLowerCase() === normalizedPickUp &&
@@ -57,7 +55,6 @@ router.post("/book", async (req, res) => {
       });
     }
 
-    // Calculate the price based on seat number
     const ratePerKm = carSit > 4 ? 8 : 5;
     const price = route.distance * ratePerKm;
 
@@ -68,11 +65,9 @@ router.post("/book", async (req, res) => {
       });
     }
 
-    // Connect to the database
     const db = await connectToDatabase();
     const collection = db.collection("Book_car");
 
-    // Check if the user already exists
     const existingUser = await collection.findOne({ number });
     if (existingUser) {
       return res.status(400).json({
@@ -81,7 +76,6 @@ router.post("/book", async (req, res) => {
       });
     }
 
-    // Add the user to the database
     const result = await addUser({
       name,
       number,
