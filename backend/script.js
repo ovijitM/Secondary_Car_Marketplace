@@ -9,13 +9,12 @@ import filter from "./Search/filtercar.js";
 
 import displaydata from './displaydata.js';
 import user_history from './userhistory.js';
- // Add this line to import user_history
 import rentCar from "./Rent_cars/rent.js";
 import book from "./Booking_car/book_c.js";
 import dri from "./Rent_cars/driverinfo.js";
 import admin_booking from "./Rent_cars/bookcon.js";
 import assignDriver from "./Rent_cars/driver_assin.js";
-
+import admin_data from "./validateuser/admin_data.js";
 const port = 8000;
 const app = Express();
 app.use(Express.json());
@@ -32,7 +31,6 @@ app.use((req, res, next) => {
 app.use("/api", userRoutes);
 app.use("/api", checkUser);
 app.use("/api", search);
-app.use("/api", logout);
 app.use("/api", filter);
 app.use("/api", displaydata);
 app.use("/api", user_history);
@@ -41,9 +39,8 @@ app.use("/api", book);
 app.use("/api", dri);
 app.use("/api", admin_booking);
 app.use("/api", assignDriver);
-app.use("/api", slip);
-app.use('/api', verifyuser); 
-
+app.use('/api', verifyuser);
+app.use('/api', admin_data);
 
 
 app.use((req, res) => {

@@ -19,9 +19,7 @@ export default async function addUser ({ name, email, password, country, state }
       updatedAt: new Date(), 
       verified: false,
       nid: null,
-
-
-
+      submit: false,
     };
 
     const result = await collection.insertOne(newUser);

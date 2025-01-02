@@ -90,6 +90,7 @@ function Signup() {
           setErrorMessage(data.message);
         } else {
           setErrorMessage('');
+
           // Store the authentication token or user data in localStorage
           if (data.token) {
             localStorage.setItem('authToken', data.token);  // Store token in localStorage
