@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./calculator.css";
-import CustomNavbar from "../../components/Customnavbar/Customnavbar"; // Import the CSS file
+import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 
 const destinations = [
   { to: "Dhaka", from: "Khulna", distance: 150 },
