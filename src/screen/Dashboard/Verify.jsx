@@ -20,10 +20,12 @@ function Signup() {
     state: '',
     nid: '',
     img: null, // For image upload
+    verified: false,
+    submit: false,
   });
 
   const [errorMessage, setErrorMessage] = useState('');
-  
+  const navigate = useNavigate(); // Hook for navigating to another route
   const location = useLocation();
   const userInfo = location.state?.userInfo; // Getting userInfo passed from navigate
 
@@ -73,7 +75,8 @@ function Signup() {
       formData.append('country', info.country);
       formData.append('state', info.state);
       formData.append('nid', info.nid);
-      formData.append('image', info.image); // Append image file
+      // formData.append('verified', info.verified);
+      formData.append('image', info.img); // Append image file
 
       try {
         const response = await fetch('http://localhost:8000/api/verify', {
@@ -88,7 +91,15 @@ function Signup() {
           setErrorMessage(data.message);
         } else {
           setErrorMessage('');
-          // Redirect or show success message
+
+          // Store the authentication token or user data in localStorage
+          if (data.token) {
+            localStorage.setItem('authToken', data.token);  // Store token in localStorage
+            localStorage.setItem('userInfo', JSON.stringify(data.user)); // Store user info if needed
+          }
+          // Navigate to the dashboard after successful verification
+          alert('User verified successfully Need to login again');
+          navigate('/login');
         }
       } catch (error) {
         console.error('Error during registration:', error);
@@ -155,8 +166,8 @@ function Signup() {
                 </Form.Group>
               </Row>
 
-              {/* Password field
-              <Row className="mb-3">
+              {/* Password field (commented out but available if needed) */}
+              {/* <Row className="mb-3">
                 <Form.Group as={Col} md="12" controlId="validationCustomPassword">
                   <Form.Label>Password</Form.Label>
                   <InputGroup hasValidation>
@@ -204,8 +215,6 @@ function Signup() {
                   />
                 </Form.Group>
               </Row>
-
-            
 
               {/* Terms and Conditions */}
               <Form.Group className="mb-3">

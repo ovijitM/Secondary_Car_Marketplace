@@ -19,6 +19,8 @@ import Booking from "./screen/Rentcars/book_con";
 import Driver from "./screen/Rentcars/driver";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Verify from "./screen/Dashboard/verify";
+import Kyc from "./screen/KycApplication/Kyc";
+
 
 
 function App() {
@@ -47,7 +49,7 @@ function App() {
           <Route path="/admin_booking" element={<Booking />} />
           <Route path="/dri" element={<Driver />} />
           <Route path="/verify" element={<Verify />} />
-
+          <Route path= '/kyc_applications' ekelement={<Kyc />} />
         </Routes>
       </div>
     </Router>
