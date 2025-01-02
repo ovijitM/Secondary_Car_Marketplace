@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { Link } from "react-router-dom";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import Footer from "../../components/Footer/Footer";
+import { Row, Col, Button } from "react-bootstrap";
 import "./admin.css";
 
 export default function Admin() {
+  const navigate = useNavigate();
   const [userinfo, setUserinfo] = useState({});
   const [users, setUsers] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
@@ -25,8 +29,8 @@ export default function Admin() {
   console.log("Admin Dashboard");
   const fetchData = async () => {
     const token = localStorage.getItem("authToken");
-    console.log(token);
     if (!token) {
+      console.error("No token found.");
       return;
     }
 
@@ -35,20 +39,20 @@ export default function Admin() {
 
     try {
       const response = await fetch("http://localhost:8000/api/admin", {
-        method: "Post",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
       const data = await response.json();
-      console.log(data);
-
       if (data.success) {
         setUsers(data.users);
         setTotalCar(data.totalCar);
         setTotalRevenue(data.totalRevenue);
         setTotalKYC(data.totalKYC);
+      } else {
+        console.error("Failed to fetch admin data");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -59,24 +63,30 @@ export default function Admin() {
     fetchData();
   }, []);
 
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   return (
     <>
       <CustomNavbar />
       <div className="admin-dashboard">
         <div className="admin-container">
           <h1 className="admin-title">Admin Dashboard</h1>
+
           <h2>Admin Information</h2>
           <div className="admin-info">
             <p>
-              <strong>Email:</strong> {userinfo.email}
+              <strong>Email:</strong> {userinfo.email || "N/A"}
             </p>
             <p>
-              <strong>Name:</strong> {userinfo.name}
+              <strong>Name:</strong> {userinfo.name || "N/A"}
             </p>
             <p>
-              <strong>Role:</strong> {userinfo.role}
+              <strong>Role:</strong> {userinfo.role || "N/A"}
             </p>
           </div>
+
           <h1>Admin Stats</h1>
           <div className="admin-stats">
             <div className="stat-card">
@@ -93,31 +103,49 @@ export default function Admin() {
             </div>
             <div className="stat-card">
               <h2>KYC Applications</h2>
-              <div className="kyc-applications">
-                <div class="container-center">
-                  <Link to="/kyc_applications">
-                    <button className="btn btn-primary">
-                      Kyc applications
-                    </button>
-                  </Link>
-                </div>
-              </div>
+
+              <button
+                className="btn btn-primary"
+                onClick={() => handleNavigation("/kyc")}
+              >
+                KYC Applications
+              </button>
+
             </div>
             <div className="stat-card">
               <h2>Rent Service</h2>
-              <div class="container-center">
-                <Link to="/Rent_service">
-                  <button className="btn btn-primary">Rent Portal</button>
-                </Link>
-              </div>
+              <Row className="align-items-center">
+                {/* <Col>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleNavigation("/cal")}
+                  >
+                    Open Calculator
+                  </Button>
+                </Col> */}
+                <Col>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleNavigation("/admin_booking")}
+                  >
+                    Open Admin
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    variant="primary"
+                    onClick={() => handleNavigation("/dri")}
+                  >
+                    Open Driver
+                  </Button>
+                </Col>
+              </Row>
             </div>
             <div className="stat-card">
               <h2>Repair Service</h2>
-              <div class="container-center">
-                <Link to="/Repair_service">
-                  <button className="btn btn-primary">Repair Portal</button>
-                </Link>
-              </div>
+              <Link to="/Repair_service">
+                <button className="btn btn-primary">Repair Portal</button>
+              </Link>
             </div>
           </div>
 
@@ -155,9 +183,7 @@ export default function Admin() {
           </div>
         </div>
       </div>
-      <div className="footer">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }

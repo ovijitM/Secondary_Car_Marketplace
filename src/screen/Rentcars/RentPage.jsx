@@ -21,7 +21,6 @@ const RentCars = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  
   const fetchCars = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/rentCar", {
@@ -102,7 +101,7 @@ const RentCars = () => {
               Open Calculator
             </Button>
           </Col>
-          <Col xs="auto">
+          {/* <Col xs="auto">
             <Button
               variant="primary"
               onClick={() => navigate("/admin_booking")}
@@ -119,7 +118,7 @@ const RentCars = () => {
             >
               Open Driver
             </Button>
-          </Col>
+          </Col> */}
         </Row>
 
         {/* Filter Row */}
