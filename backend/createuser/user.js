@@ -17,7 +17,7 @@ export default async function addUser ({ name, email, password, country, state }
       role: "user",
       createdAt: new Date(),
       updatedAt: new Date(), 
-      Verified: false,
+      verified: false,
       nid: null,
       submit: false,
     };

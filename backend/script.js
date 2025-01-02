@@ -6,6 +6,7 @@ import checkUser from './validateuser/logincheck.js';
 import search from './Search/search.js';
 import verifyuser from './createuser/verifyuser.js';
 import filter from "./Search/filtercar.js";
+
 import displaydata from './displaydata.js';
 import user_history from './userhistory.js';
 import rentCar from "./Rent_cars/rent.js";
@@ -27,6 +28,8 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
+
+
 
 app.use("/api", userRoutes);
 app.use("/api", checkUser);

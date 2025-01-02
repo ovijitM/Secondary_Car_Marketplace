@@ -106,8 +106,9 @@ export default function Admin() {
             </div>
             <div className="stat-card">
               <h2>Rent Service</h2>
-              <div class="container-center">
+              <div class="container-center" style={{ display: "flex" }}>
                 <Link to="/Rent_service">
+                  <button className="btn btn-primary">Rent Portal</button>
                   <button className="btn btn-primary">Rent Portal</button>
                 </Link>
               </div>
