@@ -33,7 +33,6 @@ const RentCars = () => {
       const data = await response.json();
 
       if (data.success) {
-        // Map driver info into the cars
         const carsWithDrivers = data.data.map((car) => ({
           ...car,
           driver: car.driver || {
@@ -44,7 +43,7 @@ const RentCars = () => {
           },
         }));
         setCars(carsWithDrivers);
-        setFilteredCars(carsWithDrivers); // Initially show all cars
+        setFilteredCars(carsWithDrivers);
         setErrorMessage("");
       } else {
         setErrorMessage(data.message || "Failed to fetch cars.");
@@ -59,7 +58,6 @@ const RentCars = () => {
     }
   };
 
-  // Handle "Book Now" button click
   const handleViewDetails = (car) => {
     console.log("Navigating to book page with car and driver details:", car);
     navigate("/book", { state: { car, driver: car.driver } });
@@ -70,11 +68,11 @@ const RentCars = () => {
     setSeatFilter(selectedSeat);
 
     if (selectedSeat === "") {
-      setFilteredCars(cars); // Show all cars if no filter is applied
+      setFilteredCars(cars);
     } else {
       const filtered = cars.filter(
         (car) => parseInt(car.sit) === parseInt(selectedSeat)
-      ); // Convert both to integers before comparing
+      );
       setFilteredCars(filtered);
     }
   };
@@ -87,7 +85,6 @@ const RentCars = () => {
     <>
       <CustomNavbar />
       <Container className="rent-cars-container">
-        {/* Header Row */}
         <Row className="align-items-center mb-4">
           <Col>
             <h1>Available Rental Cars</h1>
@@ -101,27 +98,8 @@ const RentCars = () => {
               Open Calculator
             </Button>
           </Col>
-          {/* <Col xs="auto">
-            <Button
-              variant="primary"
-              onClick={() => navigate("/admin_booking")}
-              className="calculator-button"
-            >
-              Open Admin
-            </Button>
-          </Col>
-          <Col xs="auto">
-            <Button
-              variant="primary"
-              onClick={() => navigate("/dri")}
-              className="calculator-button"
-            >
-              Open Driver
-            </Button>
-          </Col> */}
         </Row>
 
-        {/* Filter Row */}
         <Row className="mb-4">
           <Col md={4}>
             <Form.Group controlId="seatFilter">
@@ -141,7 +119,6 @@ const RentCars = () => {
           </Col>
         </Row>
 
-        {/* Cars List */}
         {loading ? (
           <div className="text-center">
             <Spinner animation="border" role="status">

@@ -9,8 +9,6 @@ const AdminBookings = () => {
   const [successMessage, setSuccessMessage] = useState("");
 
   const API_URL = "http://localhost:8000/api/admin_booking";
-
-  // Fetch bookings from the server
   const fetchBookings = async () => {
     setLoading(true);
     try {
@@ -33,9 +31,9 @@ const AdminBookings = () => {
   };
 
   const updateStatus = async (id, newStatus) => {
-    setLoading(true); // Show loading spinner during API call
-    setError(""); // Clear previous error
-    setSuccessMessage(""); // Clear previous success message
+    setLoading(true);
+    setError("");
+    setSuccessMessage("");
 
     try {
       const response = await fetch(`${API_URL}/${id}`, {
@@ -43,14 +41,14 @@ const AdminBookings = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: newStatus }), // Pass the new status
+        body: JSON.stringify({ status: newStatus }),
       });
 
-      const result = await response.json(); // Parse response JSON
+      const result = await response.json();
 
       if (response.ok && result.success) {
-        setSuccessMessage(result.message); // Show success message
-        fetchBookings(); // Refresh the bookings list to reflect the status update
+        setSuccessMessage(result.message);
+        fetchBookings();
       } else {
         setError(result.message || "Failed to update booking status.");
       }
@@ -60,7 +58,6 @@ const AdminBookings = () => {
     } finally {
       setLoading(false);
 
-      // Auto-clear messages after 3 seconds
       setTimeout(() => {
         setError("");
         setSuccessMessage("");
