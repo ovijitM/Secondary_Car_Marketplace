@@ -9,7 +9,7 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' }); 
 
 router.post('/verify', upload.single('image'), async (req, res) => {
-    const { name, email, password, country, state, nid, verified } = req.body;
+    const { name, email, password, country, state, nid,} = req.body;
     const img = req.file ? req.file.path : null; // Get the file path if uploaded
 
     try {
@@ -26,9 +26,10 @@ router.post('/verify', upload.single('image'), async (req, res) => {
                 { email }, // Find the user by email
                 {
                     $set: {
-                        verified: true,   // Mark the user as verified
+                        verified: false,   // Mark the user as verified
                         nid: nid,         // Add or update NID
                         img: img,         // Add or update image
+                        submit: true     // Reset the submit status
                     }
                 }
             );
@@ -50,7 +51,8 @@ router.post('/verify', upload.single('image'), async (req, res) => {
                 state,
                 nid,
                 img,
-                verified: false// Initially set verify to false
+                verified: false,// Initially set verify to false
+                submit: false
             });
 
             if (result.success) {
