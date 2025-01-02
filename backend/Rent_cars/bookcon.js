@@ -24,10 +24,9 @@ router.get("/admin_booking", async (req, res) => {
   }
 });
 
-// Update booking status
 router.put("/admin_booking/:id", async (req, res) => {
-  const bookingId = req.params.id; // Booking ID from the URL
-  const { status } = req.body; // New status from the request body
+  const bookingId = req.params.id;
+  const { status } = req.body;
 
   try {
     const db = await connectToDatabase();
