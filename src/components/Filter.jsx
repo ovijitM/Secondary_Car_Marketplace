@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Filter.css";
 
-const Filter = () => {
+const Filter = ({ onFilterChange }) => {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [cities, setCities] = useState([]);
@@ -14,12 +14,10 @@ const Filter = () => {
   const [priceRange, setPriceRange] = useState([1, 100000000]);
   const navigate = useNavigate();
 
-
   const loadBrands = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/brands");
       const data = await response.json();
-
       if (data.success) {
         setBrands(data.brands);
       } else {
@@ -30,12 +28,10 @@ const Filter = () => {
     }
   };
 
-  
   const loadConditions = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/conditions");
       const data = await response.json();
-
       if (data.success) {
         setConditions(data.conditions);
       } else {
@@ -56,7 +52,6 @@ const Filter = () => {
     try {
       const response = await fetch(`http://localhost:8000/api/models?brand=${brand}`);
       const data = await response.json();
-
       if (data.success) {
         setModels(data.models);
         setSelectedModel(data.models[0] || "Select brand first");
@@ -72,18 +67,15 @@ const Filter = () => {
     try {
       const response = await fetch("http://localhost:8000/api/city");
       const data = await response.json();
-      console.log(data);
-
       if (data.success) {
-        setCities(data.brands);
+        setCities(data.brands); // Assuming the API returns cities
       } else {
-        console.error("Error fetching brands:", data.message);
+        console.error("Error fetching cities:", data.message);
       }
     } catch (error) {
-      console.error("Error fetching brands:", error);
+      console.error("Error fetching cities:", error);
     }
   };
-
 
   useEffect(() => {
     loadBrands();
@@ -91,17 +83,25 @@ const Filter = () => {
     loadLocation();
   }, []);
 
-
   useEffect(() => {
     loadModels(selectedBrand);
   }, [selectedBrand]);
+
+  useEffect(() => {
+    onFilterChange({
+      brand: selectedBrand,
+      model: selectedModel,
+      city: selectedCity,
+      condition: selectedCondition,
+      priceRange,
+    });
+  }, [selectedBrand, selectedModel, selectedCity, selectedCondition, priceRange]);
 
   const handleSearch = () => {
     if (selectedModel === "Select brand first") {
       console.warn("Please select a valid brand and model before searching.");
       return;
     }
-
     console.log("Searching with:", {
       selectedBrand,
       selectedModel,
@@ -110,7 +110,6 @@ const Filter = () => {
       priceRange,
     });
   };
-
 
   const sell = () => {
     navigate("/Postcar");
@@ -142,7 +141,7 @@ const Filter = () => {
               onChange={(e) => setSelectedModel(e.target.value)}
               disabled={selectedBrand === "All"}
             >
-              <option value="Select brand first">Select brand first</option>
+              <option value=" Select brand first">Select brand first</option>
               {models.map((model) => (
                 <option key={model} value={model}>
                   {model}
@@ -165,7 +164,6 @@ const Filter = () => {
               ))}
             </select>
           </div>
-
 
           <button className="search-button" onClick={handleSearch}>
             Search
