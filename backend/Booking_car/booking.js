@@ -53,7 +53,7 @@ export default async function addUser({
     return {
       success: true,
       message: "User  added successfully",
-      userId: result.insertedId, // Return the inserted ID
+      userId: result.insertedId,
     };
   } catch (error) {
     console.error("There is a problem in adding user:", error);

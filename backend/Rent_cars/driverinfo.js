@@ -1,16 +1,14 @@
 import express from "express";
-import { ObjectId } from "mongodb"; // To handle MongoDB ObjectId
-import connectToDatabase from "../database.js"; // Ensure this path is correct
+import { ObjectId } from "mongodb";
+import connectToDatabase from "../database.js";
 
 const router = express.Router();
 
-// Fetch all drivers
 router.get("/dri", async (req, res) => {
   try {
     const db = await connectToDatabase();
-    const driverCollection = db.collection("Driver"); // Ensure collection name is correct
+    const driverCollection = db.collection("Driver");
 
-    // Fetch all drivers
     const drivers = await driverCollection.find().toArray();
 
     res.status(200).json({
@@ -26,16 +24,14 @@ router.get("/dri", async (req, res) => {
   }
 });
 
-// Update driver status
 router.put("/dri/:id", async (req, res) => {
-  const driverId = req.params.id; // Driver ID from the URL
-  const { status } = req.body; // New status from the request body
+  const driverId = req.params.id;
+  const { status } = req.body;
 
   try {
     const db = await connectToDatabase();
-    const driverCollection = db.collection("Driver"); // Ensure collection name is correct
+    const driverCollection = db.collection("Driver");
 
-    // Ensure the ID is a valid MongoDB ObjectId
     if (!ObjectId.isValid(driverId)) {
       return res.status(400).json({
         success: false,
@@ -55,7 +51,6 @@ router.put("/dri/:id", async (req, res) => {
       });
     }
 
-    // Update the driver status
     const result = await driverCollection.updateOne(
       { _id: new ObjectId(driverId) },
       { $set: { status } }

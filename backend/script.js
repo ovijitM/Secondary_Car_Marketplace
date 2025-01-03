@@ -16,6 +16,9 @@ import dri from "./Rent_cars/driverinfo.js";
 import admin_booking from "./Rent_cars/bookcon.js";
 import assignDriver from "./Rent_cars/driver_assin.js";
 import admin_data from "./validateuser/admin_data.js";
+import kyc from "./validateuser/kyc_approve.js";
+
+
 const port = 8000;
 const app = Express();
 app.use(Express.json());
@@ -42,6 +45,9 @@ app.use("/api", verifyuser);
 app.use("/api", admin_data);
 app.use("/api", insurance);
 app.use("/api", repairhistory);
+app.use('/api', kyc);
+
+
 
 app.use((req, res) => {
   res.send("Hello World!");
