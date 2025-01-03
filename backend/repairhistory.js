@@ -3,10 +3,10 @@ import connectToDatabase from "./database.js";
 
 const router = express.Router();
 
-router.post("/user_history", async (req, res) => {
-  const { name, email, phone, paymentMethod, car } = req.body;
+router.post("/repairhistory", async (req, res) => {
+  const { name, email, phone, paymentMethod, repair } = req.body;
 
-  if (!name || !email || !phone || !paymentMethod || !car ) {
+  if (!name || !email || !phone || !paymentMethod || !repair) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
@@ -15,7 +15,8 @@ router.post("/user_history", async (req, res) => {
     const db = await connectToDatabase();
 
     // Reference the 'User_history' collection
-    const collection = db.collection("Transaction_history");
+    const collection = db.collection("repairhistory");
+    const collection2 = db.collection("Transaction_history");
 
     // Create the document to insert
     const newHistory = {
@@ -23,7 +24,7 @@ router.post("/user_history", async (req, res) => {
       email,
       phone,
       paymentMethod,
-      car,
+      repair,
     
       transactionid: Math.floor(Math.random() * 1000000), // Generate a random transaction ID
       timestamp: new Date(), // Add a timestamp field
@@ -31,6 +32,7 @@ router.post("/user_history", async (req, res) => {
 
     // Insert the document into the collection
     const result = await collection.insertOne(newHistory);
+    const result2 = await collection2.insertOne(newHistory);
 
 
 

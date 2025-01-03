@@ -22,6 +22,8 @@ import Verify from "./screen/Dashboard/verify";
 
 import Kyc from "./screen/KycApplication/Kyc";
 import Insurance from "./screen/Insurance";
+import Repairtransaction from "./screen/Repair/Repairtransaction";
+import Repairslip from "./screen/Repair/Repairslip";
 
 
 
@@ -54,7 +56,13 @@ function App() {
           <Route path="/dri" element={<Driver />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/insurance" element={<Insurance />} />
+
+          <Route path="/repairslip" element={<Repairslip />} />
+          <Route path="/repairtransaction" element={< Repairtransaction />} />
+       
+
           <Route path="/kyc" element={<Kyc />} />
+
         </Routes>
       </div>
     </Router>
