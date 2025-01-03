@@ -19,15 +19,10 @@ import Booking from "./screen/Rentcars/book_con";
 import Driver from "./screen/Rentcars/driver";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Verify from "./screen/Dashboard/verify";
-
-import Kyc from "./screen/KycApplication/Kyc";
+import Kyc from "./screen/UserKyc/Kyc";
 import Insurance from "./screen/Insurance";
 import Repairtransaction from "./screen/Repair/Repairtransaction";
 import Repairslip from "./screen/Repair/Repairslip";
-
-
-
-
 
 function App() {
   return (
@@ -38,7 +33,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/buycars" element={<Cars />} />
-          <Route path="/CarDetails" element={<CarDetails />} />           
+          <Route path="/CarDetails" element={<CarDetails />} />
           <Route path="/rentcars" element={<Rent />} />
           <Route path="/repair" element={<Repair />} />
           <Route path="/Admin_dashboard" element={<Admin />} />
@@ -58,11 +53,9 @@ function App() {
           <Route path="/insurance" element={<Insurance />} />
 
           <Route path="/repairslip" element={<Repairslip />} />
-          <Route path="/repairtransaction" element={< Repairtransaction />} />
-       
+          <Route path="/repairtransaction" element={<Repairtransaction />} />
 
           <Route path="/kyc" element={<Kyc />} />
-
         </Routes>
       </div>
     </Router>
