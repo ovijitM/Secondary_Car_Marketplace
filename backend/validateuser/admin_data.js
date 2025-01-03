@@ -24,8 +24,19 @@ router.post("/admin", async (req, res) => {
 
         const totalCar = newCars.length + usedCars.length;
 
-        
-        const totalRevenue = 1000000;
+
+        const transaction_history = db.collection("Transaction_history");
+        const transactions = await transaction_history.find({}).toArray();
+        let totalCarPrice = 0;
+
+        transactions.forEach((transaction) => {
+            if (transaction.car && transaction.car.price && typeof transaction.car.price === 'number') {
+                totalCarPrice += transaction.car.price;
+              }
+        });
+
+
+        const totalRevenue = totalCarPrice * 0.05;
 
 
         const kycCollection = db.collection("KYCApplications"); 
