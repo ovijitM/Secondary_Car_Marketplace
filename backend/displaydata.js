@@ -23,6 +23,10 @@ router.post('/displaydata', async (req, res) => {
 
     const Rent_Cars = await Rent_Cars_Collection.find({}).toArray();
 
+    const Repair_Collection=cars.collection('Parts');
+
+    const Repair= await Repair_Collection.find({}).toArray();
+
     if (!New_cars.length) {
       return res.status(404).json({
         success: false,
@@ -30,7 +34,7 @@ router.post('/displaydata', async (req, res) => {
       });
     }else{
 
-      res.status(200).json({success: true, new_cars : New_cars , used_cars: Used_cars, rent_cars: Rent_Cars});
+      res.status(200).json({success: true, new_cars : New_cars , used_cars: Used_cars, rent_cars: Rent_Cars, repair: Repair});
     }
   } catch (error) {
     console.error('Error retrieving car data:', error);

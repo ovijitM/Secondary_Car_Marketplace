@@ -6,6 +6,7 @@ import search from "./Search/search.js";
 import verifyuser from "./createuser/verifyuser.js";
 import filter from "./Search/filtercar.js";
 import insurance from "./insurance.js";
+import repairhistory from "./repairhistory.js";
 
 import displaydata from "./displaydata.js";
 import user_history from "./userhistory.js";
@@ -40,6 +41,7 @@ app.use("/api", assignDriver);
 app.use("/api", verifyuser);
 app.use("/api", admin_data);
 app.use("/api", insurance);
+app.use("/api", repairhistory);
 
 app.use((req, res) => {
   res.send("Hello World!");

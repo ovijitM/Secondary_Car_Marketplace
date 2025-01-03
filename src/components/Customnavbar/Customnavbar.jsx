@@ -28,10 +28,10 @@ function CustomNavbar() {
           <Nav className="mx-auto">
             <Nav.Link as={Link} to="/buycars" className="px-4 nav-link">Cars</Nav.Link>
             <Nav.Link as={Link} to="/rentcars" className="px-4 nav-link">Rent</Nav.Link>
-            <Nav.Link as={Link} to="/Repair" className="px-4 nav-link">Repair</Nav.Link>
-            <Nav.Link as={Link} to="/" className="px-4 nav-link">Insurance</Nav.Link>
+            <Nav.Link as={Link} to="/repair" className="px-4 nav-link">Repair</Nav.Link>
+            <Nav.Link as={Link} to="/insurance" className="px-4 nav-link">Insurance</Nav.Link>
             <Nav.Link as={Link} to="/compare" className="px-4 nav-link">Compare</Nav.Link>
-            <Nav.Link as={Link} to="/" className="px-4 nav-link">Loan</Nav.Link>
+           
           </Nav>
 
           <Nav>
