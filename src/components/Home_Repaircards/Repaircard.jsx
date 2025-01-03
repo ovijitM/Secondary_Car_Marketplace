@@ -18,55 +18,55 @@ function Repair() {
         <ul className="repairlogo-list">
           <li className="item item1">
             <img src={img1} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item2">
             <img src={img2} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item3">
             <img src={img3} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item4">
             <img src={img4} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item5">
             <img src={img5} alt="partsswagen" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item6">
             <img src={img6} alt="partsedes" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item7">
             <img src={img7} alt="partsorghini" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item8">
             <img src={img8} alt="partsari" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item9">
             <img src={img9} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
@@ -76,55 +76,55 @@ function Repair() {
         <ul className="repairlogo-list">
           <li className="item item1">
             <img src={img1} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item2">
             <img src={img2} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item3">
             <img src={img3} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item4">
             <img src={img4} alt="parts" />
-            <Link to="/details4">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item5">
             <img src={img5} alt="partsswagen" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item6">
             <img src={img6} alt="partsedes" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item7">
             <img src={img7} alt="partsorghini" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item8">
             <img src={img8} alt="partsari" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>
           <li className="item item9">
             <img src={img9} alt="parts" />
-            <Link to="/">
+            <Link to="/repair">
               <button>Details</button>
             </Link>
           </li>

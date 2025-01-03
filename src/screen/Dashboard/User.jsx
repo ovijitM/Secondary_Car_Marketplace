@@ -69,11 +69,8 @@ console.log(userInfo)
                 </div>
                 <div className="right-section">
                   <div className="role-badge">{userInfo.role}</div>
-                  <div className="role-badge">{userInfo.nid}</div>
-                  <div className="revenue-section">
-                    <h3>Revenue</h3>
-                    <p className="revenue-amount">$</p>
-                  </div>
+                  <div className="role-badge">NID:{userInfo.nid}</div>
+                  
                 </div>
               </div>
             ) : (
@@ -94,8 +91,8 @@ console.log(userInfo)
                 >
                   Verify Account
                 </button>
-                <Link to="">
-                  <button className="btn btn-support">Support</button>
+                <Link to="/Postcar">
+                  <button className="btn btn-support">Sell car</button>
                 </Link>
               </div>
             )}
