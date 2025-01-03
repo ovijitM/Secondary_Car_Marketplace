@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import "./Home.css";
 import { Card } from "react-bootstrap";
 import { Carousel } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -74,7 +74,7 @@ export default function Home() {
   //     car.model.toLowerCase().includes(search.toLowerCase())
   // );
   const handleViewDetails = (car) => {
-    navigate("/rentCar", { state: { car } });
+    navigate("/rentcars", { state: { car } });
   };
   return (
     <>
@@ -379,7 +379,8 @@ export default function Home() {
               </div>
               <div className="load-more-section">
                 <div className="fog-overlay"></div>
-                <button className="load-more-btn">Go to Rent</button>
+                <Link to="/rentcars">
+                <button className="load-more-btn">Go to Rent</button></Link>
               </div>
             </div>
           </div>
