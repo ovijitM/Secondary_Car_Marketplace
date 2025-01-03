@@ -22,8 +22,7 @@ export default function Home() {
   const [loadMoreClicks, setLoadMoreClicks] = useState(0); // Track load-more button clicks
   const navigate = useNavigate();
 
-
-// console.log(Rent_Cars)
+  // console.log(Rent_Cars)
   const loadData = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/displaydata", {
@@ -37,9 +36,9 @@ export default function Home() {
       console.log(data);
       if (data.success) {
         setNew_cars(data.new_cars);
-      
+
         setRent_Cars(data.rent_cars);
-        console.log(data.rent_cars)
+        console.log(data.rent_cars);
         // console.log(New_cars);
       } else {
         console.log("Error fetching data:", data.message);
@@ -75,7 +74,7 @@ export default function Home() {
   //     car.model.toLowerCase().includes(search.toLowerCase())
   // );
   const handleViewDetails = (car) => {
-    navigate("/CarDetails", { state: { car } });
+    navigate("/rentCar", { state: { car } });
   };
   return (
     <>
@@ -210,7 +209,7 @@ export default function Home() {
             style={{ margin: "5px 10px 50px 10px", paddingBottom: "50px" }}
           >
             <h2>Choose Your Dream Car</h2>
-            <hr/>
+            <hr />
             <div className="choose-cars">
               {/* //filtering the new cars */}
 
@@ -299,7 +298,7 @@ export default function Home() {
             className="carbrandlogo"
             style={{
               marginBottom: "50px",
-             
+
               paddingBottom: "50px",
             }}
           >
@@ -311,7 +310,7 @@ export default function Home() {
 
           <div className="" style={{ marginTop: "90px" }}>
             <h2>Rent Car</h2>
-            <hr/>
+            <hr />
             <div className="cars" style={{ margin: "5px 10px 50px 10px" }}>
               <div className="choose-cars">
                 {Rent_Cars.map((car, index) => (
@@ -368,7 +367,8 @@ export default function Home() {
                         </Card.Text>
                         <Button
                           variant="primary"
-                          style={{ width: "100%", overflow: "hidden" }} onClick={() => handleViewDetails(car)}
+                          style={{ width: "100%", overflow: "hidden" }}
+                          onClick={() => handleViewDetails(car)}
                         >
                           Rent Now
                         </Button>
