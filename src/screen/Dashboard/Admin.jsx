@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import Footer from "../../components/Footer/Footer";
 import { Row, Col, Button } from "react-bootstrap";
-import "./admin.css";
+import "./Admin.css";
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -108,7 +108,6 @@ export default function Admin() {
               >
                 KYC Applications
               </button>
-
             </div>
             <div className="stat-card">
               <h2>Rent Service</h2>
