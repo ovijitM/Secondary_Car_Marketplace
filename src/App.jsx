@@ -18,7 +18,7 @@ import RentCalculator from "./screen/Rentcars/calculator";
 import Booking from "./screen/Rentcars/book_con";
 import Driver from "./screen/Rentcars/driver";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Verify from "./screen/Dashboard/verify";
+import Verify from "./screen/Dashboard/Verify";
 import Kyc from "./screen/UserKyc/Kyc";
 import Insurance from "./screen/Insurance";
 import Repairtransaction from "./screen/Repair/Repairtransaction";
