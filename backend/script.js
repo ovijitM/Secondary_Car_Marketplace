@@ -36,10 +36,10 @@ const app = Express();
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
 
-// CORS configuration
+// CORS configuration - Allow access from any IP
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:3000"],
-  credentials: true,
+  origin: "*", // Allow all origins (any IP address)
+  credentials: false, // Set to false when using wildcard origin
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
@@ -77,6 +77,34 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Network info endpoint
+app.get('/network-info', (req, res) => {
+  const os = require('os');
+  const networkInterfaces = os.networkInterfaces();
+  const addresses = [];
+  
+  for (const interfaceName in networkInterfaces) {
+    const interfaces = networkInterfaces[interfaceName];
+    for (const iface of interfaces) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        addresses.push({
+          interface: interfaceName,
+          address: iface.address,
+          url: `http://${iface.address}:${port}`
+        });
+      }
+    }
+  }
+  
+  res.json({
+    message: 'Server accessible from these IP addresses',
+    port: port,
+    addresses: addresses,
+    localhost: `http://localhost:${port}`,
+    anyIP: `Server listening on 0.0.0.0:${port} (accessible from any IP)`
+  });
+});
+
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
@@ -92,5 +120,9 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, '0.0.0.0', () => {
-  console.log(`Server running on port ${port} in ${process.env.NODE_ENV || 'development'} mode`);
+  console.log(`🚀 Server running on port ${port} in ${process.env.NODE_ENV || 'development'} mode`);
+  console.log(`📡 Server accessible from any IP address at: 0.0.0.0:${port}`);
+  console.log(`🌐 Local access: http://localhost:${port}`);
+  console.log(`🔍 Network info: http://localhost:${port}/network-info`);
+  console.log(`❤️  Health check: http://localhost:${port}/health`);
 });
