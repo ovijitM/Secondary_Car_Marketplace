@@ -1,4 +1,8 @@
 import Express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import userRoutes from "./createuser/createuser.js";
 import checkUser from "./validateuser/logincheck.js";
@@ -18,17 +22,32 @@ import assignDriver from "./Rent_cars/driver_assin.js";
 import admin_data from "./validateuser/admin_data.js";
 import kyc from "./validateuser/kyc_approve.js";
 
+// Load environment variables
+dotenv.config();
 
-const port = 8000;
+// Get directory path for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const port = process.env.PORT || 8000;
 const app = Express();
-app.use(Express.json());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-});
+// Middleware
+app.use(Express.json());
+app.use(Express.urlencoded({ extended: true }));
+
+// CORS configuration
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || ["http://localhost:5173", "http://localhost:3000"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
+// Serve static files from uploads directory
+app.use('/uploads', Express.static(path.join(__dirname, 'uploads')));
 
 app.use("/api", userRoutes);
 app.use("/api", checkUser);
@@ -49,10 +68,29 @@ app.use('/api', kyc);
 
 
 
-app.use((req, res) => {
-  res.send("Hello World!");
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    env: process.env.NODE_ENV || 'development'
+  });
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    message: process.env.NODE_ENV === 'production' 
+      ? 'Something went wrong!' 
+      : err.message 
+  });
+});
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port} in ${process.env.NODE_ENV || 'development'} mode`);
 });
