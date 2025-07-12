@@ -21,11 +21,13 @@ router.post('/login', async (req, res) => {
         if (existingUser .password !== password) {
             return res.status(400).json({ success: false, message: 'Email or password is wrong' });
         } 
-        // Generate a JWT token upon successful login
+       
         const token = jwt.sign(
-            { email: existingUser.email, role: existingUser.role, name:existingUser.name, country:existingUser.country},  // Payload (user info)
+
+            { email: existingUser.email, role: existingUser.role, name:existingUser.name, country:existingUser.country, nid:existingUser.nid, img:existingUser.img, verified: existingUser.verified, submit:existingUser.submit},  // Payload (user info)
             JWT_SECRET_KEY,  // Secret key
             { expiresIn: '1h' }  // Token expiration time (1 hour)
+
         );
 
            

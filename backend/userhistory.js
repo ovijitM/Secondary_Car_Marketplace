@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/user_history", async (req, res) => {
   const { name, email, phone, paymentMethod, car } = req.body;
 
-  if (!name || !email || !phone || !paymentMethod || !car) {
+  if (!name || !email || !phone || !paymentMethod || !car ) {
     return res.status(400).json({ message: "All fields are required." });
   }
 
@@ -24,6 +24,7 @@ router.post("/user_history", async (req, res) => {
       phone,
       paymentMethod,
       car,
+    
       transactionid: Math.floor(Math.random() * 1000000), // Generate a random transaction ID
       timestamp: new Date(), // Add a timestamp field
     };

@@ -1,101 +1,111 @@
-import { useState } from 'react';
-import { Container, Row, Col, Card, Button, Modal, Form } from 'react-bootstrap';
-import CustomNavbar from '../../components/Customnavbar/Customnavbar';
-const repairServices = [
-  { id: 1, name: 'Engine Repair', description: 'Fix engine issues such as overheating, oil leaks, or misfiring.', price: 300, available: true },
-  { id: 2, name: 'Tire Replacement', description: 'Replace worn-out or damaged tires with new ones.', price: 100, available: true },
-  { id: 3, name: 'Brake Replacement', description: 'Change brake pads or repair brake systems to ensure safety.', price: 150, available: false },
-  { id: 4, name: 'Oil Change', description: 'Change the oil to keep the engine running smoothly.', price: 50, available: true },
-  { id: 5, name: 'Battery Replacement', description: 'Replace old batteries with new ones to ensure reliable starts.', price: 120, available: true },
-];
+import "bootstrap/dist/css/bootstrap.min.css";
+import Customnavbar from "../../components/Customnavbar/Customnavbar";
+import Footer from "../../components/Footer/Footer";
+import { Card, Carousel, Container, Row, Col, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../Home.css";
 
-function RepairPage() {
-  const [selectedService, setSelectedService] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [serviceDetails, setServiceDetails] = useState('');
-  const [quantity, setQuantity] = useState(1);
+export default function CarsPage() {
+  const [repair, setRepair] = useState([]);
+  const navigate = useNavigate();
 
-  // Handle selecting a service
-  const handleSelectService = (service) => {
-    setSelectedService(service);
-    setServiceDetails(service.description);
-    setShowModal(true);
+  const loadData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/displaydata", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setRepair(data.repair || []);
+        console.log(data.repair);
+      } else {
+        console.error("Error fetching data:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const handleCloseModal = () => setShowModal(false);
+  useEffect(() => {
+    loadData();
+  }, []);
 
-
-  const handleRequestRepair = () => {
-    alert(`You have requested the ${selectedService.name} service.`);
-    setShowModal(false);
+  const handleViewDetails = (repair) => {
+    navigate("/repairtransaction", { state: { repair } });
   };
 
   return (
     <>
-      <CustomNavbar /> 
-      <Container className="my-4">
-        <h2 className="text-center mb-4">Repair Services</h2>
+      <Customnavbar />
 
-        <Row>
-          {repairServices.map((service) => (
-            <Col key={service.id} md={4} className="mb-4">
-              <Card>
+      <div style={{ position: "relative", overflow: "hidden" }}>
+        <Carousel>
+          <Carousel.Item>
+            <img
+              src="https://i.ibb.co.com/zSPKZq0/7.jpg" // Replace with a valid image URL
+              alt="First slide"
+              className="d-block w-100"
+            />
+            <Carousel.Caption></Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      </div>
+
+      <Container className="my-4">
+        <h2 className="text-center mb-4">Welcome to Repair & Maintenance</h2>
+        <div className="choose-cars d-flex flex-wrap justify-content-center">
+          {repair.length > 0 ? (
+            repair.map((repair, index) => (
+              <Card key={index} style={{ width: "18rem", margin: "10px" }}>
+                <Card.Img
+                  variant="top"
+                  src={repair.img}
+                  alt="repair Image"
+                  style={{
+                    height: "180px",
+                    objectFit: "cover",
+                    borderRadius: "5px 5px 0 0",
+                  }}
+                />
                 <Card.Body>
-                  <Card.Title>{service.name}</Card.Title>
-                  <Card.Text>{service.description}</Card.Text>
-                  <Card.Text>
-                    <strong>Price: </strong>${service.price}
-                  </Card.Text>
-                  {service.available ? (
-                    <Button variant="primary" onClick={() => handleSelectService(service)}>
-                      Request Repair
-                    </Button>
-                  ) : (
-                    <Button variant="secondary" disabled>
-                      Not Available
-                    </Button>
-                  )}
+                  <Card.Title className="text-center">{repair.model}</Card.Title>
+                  <Row>
+                    <Col xs={7}></Col>
+                    <Col xs={5} className="text-end">
+                      <div className="text-muted">{repair.year}</div>
+                    </Col>
+                  </Row>
+                  <div className="text-center my-2">
+                    <h5>Price: ${repair.price}</h5>
+                    {repair.offer_price && (
+                      <h6 className="text-muted">Offer: ${repair.offer_price}</h6>
+                    )}
+                  </div>
+                  <Card.Text>{repair.details}</Card.Text>
+                  <Button
+                    variant="primary"
+                    className="w-100"
+                    onClick={() => handleViewDetails(repair)}
+                  >
+                    {repair.label === "imported"
+                      ? "View details for Order"
+                      : "View details for Buy"}
+                  </Button>
                 </Card.Body>
               </Card>
-            </Col>
-          ))}
-        </Row>
+            ))
+          ) : (
+            <p>No cars available at the moment.</p>
+          )}
+        </div>
       </Container>
 
-      {/* Modal for service details */}
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Request {selectedService?.name} Service</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <h5>Service Details</h5>
-          <p><strong>Name:</strong> {selectedService?.name}</p>
-          <p><strong>Description:</strong> {serviceDetails}</p>
-          <p><strong>Price:</strong> ${selectedService?.price}</p>
-
-          <Form.Group controlId="quantity">
-            <Form.Label>Quantity (Optional):</Form.Label>
-            <Form.Control
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            />
-          </Form.Group>
-          <hr />
-          <p><strong>Total Cost: </strong>${selectedService?.price * quantity}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleRequestRepair}>
-            Confirm Repair Request
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <Footer />
     </>
   );
 }
-
-export default RepairPage;

@@ -12,9 +12,8 @@ import Customnavbar from "../../components/Customnavbar/Customnavbar";
 function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Retrieve car details and carId from location state
   const car = location.state?.car;
+  const driver = location.state?.driver;
 
   const [validated, setValidated] = useState(false);
   const [info, setInfo] = useState({
@@ -34,6 +33,16 @@ function Signup() {
       [name]: value,
     });
     setErrorMessage("");
+  };
+
+  const handleViewDetails = (car, userInfo, driver) => {
+    console.log("Navigating to book page with car, user, and driver details:", {
+      car,
+      userInfo,
+      driver,
+    });
+
+    navigate("/p", { state: { car, user: userInfo, driver } });
   };
 
   const handleSubmit = async (e) => {
@@ -62,6 +71,10 @@ function Signup() {
             carSit: car.sit,
             carDetails: car.details,
             carImg: car.img,
+            driverId: driver?._id,
+            driverName: driver?.name,
+            driverPhone: driver?.phone,
+            driverExperience: driver?.experience_years,
           }),
         });
 
@@ -77,10 +90,17 @@ function Signup() {
             PickUp: "",
             Where_to_go: "",
           });
-          // Navigate to the slip page with car details and user info in state
-          navigate("/slip", {
-            state: { car, number: info.number },
-          });
+          handleViewDetails(
+            car,
+            {
+              firstName: info.firstName,
+              lastName: info.lastName,
+              number: info.number,
+              PickUp: info.PickUp,
+              Where_to_go: info.Where_to_go,
+            },
+            driver
+          );
         }
       } catch (error) {
         setErrorMessage("An error occurred while processing your booking.");
@@ -126,6 +146,20 @@ function Signup() {
                     <strong>Seats:</strong> {car.sit}
                     <br />
                     <strong>Details:</strong> {car.details}
+                  </p>
+                </Card.Body>
+              </Card>
+            )}
+            {driver && (
+              <Card className="shadow-lg p-4 mb-4">
+                <Card.Body>
+                  <h5>Assigned Driver</h5>
+                  <p>
+                    <strong>Name:</strong> {driver.name}
+                    <br />
+                    <strong>Phone:</strong> {driver.phone}
+                    <br />
+                    <strong>Experience:</strong> {driver.experience_years} years
                   </p>
                 </Card.Body>
               </Card>
@@ -224,7 +258,7 @@ function Signup() {
 
                   <div className="d-grid gap-2">
                     <Button variant="primary" type="submit">
-                      Book Now
+                      Book Confirm
                     </Button>
                     {errorMessage && (
                       <div className="alert alert-danger" role="alert">
