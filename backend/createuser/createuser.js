@@ -16,6 +16,11 @@ router.post('/createuser', async (req, res) => {
             return res.status(400).json({ success: false, message: 'User  with this email already exists' });
         }
         const result = await addUser ({ name, email, password, country, state });
+        if (result) {
+            return res.status(201).json({ success: true, message: 'User created successfully' });
+        } else {
+            return res.status(500).json({ success: false, message: 'Failed to create user' });
+        }
     } catch {
         console.log("user info not received");
     }

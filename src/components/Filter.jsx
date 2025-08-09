@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./Filter.css";
 
 const Filter = ({ onFilterChange }) => {
@@ -95,7 +96,7 @@ const Filter = ({ onFilterChange }) => {
       condition: selectedCondition,
       priceRange,
     });
-  }, [selectedBrand, selectedModel, selectedCity, selectedCondition, priceRange]);
+  }, [selectedBrand, selectedModel, selectedCity, selectedCondition, priceRange, onFilterChange]);
 
   const handleSearch = () => {
     if (selectedModel === "Select brand first") {
@@ -223,6 +224,10 @@ const Filter = ({ onFilterChange }) => {
       </div>
     </div>
   );
+};
+
+Filter.propTypes = {
+  onFilterChange: PropTypes.func.isRequired
 };
 
 export default Filter;

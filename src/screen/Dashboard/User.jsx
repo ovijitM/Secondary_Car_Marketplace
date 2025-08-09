@@ -8,7 +8,6 @@ import "./dashboard.css";
 export default function UserProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
-  const [verify, setVerify] = useState(null);
 
   // Function to decode JWT token
   const decodeToken = (token) => {

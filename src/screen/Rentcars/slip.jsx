@@ -1,6 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Container, Card, Row, Col, Alert, Spinner } from "react-bootstrap";
+
+const destinations = [
+  { to: "Dhaka", from: "Khulna", distance: 150 },
+  { to: "Dhaka", from: "Cox Bazar", distance: 300 },
+  { to: "Dhaka", from: "Sylhet", distance: 250 },
+  { to: "Dhaka", from: "Rajshahi", distance: 200 },
+  { to: "Dhaka", from: "Barishal", distance: 180 },
+  { to: "Dhaka", from: "Rangpur", distance: 220 },
+  { to: "Dhaka", from: "Mymensingh", distance: 160 },
+  { to: "Dhaka", from: "Jessore", distance: 170 },
+  { to: "Dhaka", from: "Comilla", distance: 190 },
+  { to: "Dhaka", from: "Narayanganj", distance: 140 },
+  { to: "Dhaka", from: "Bogra", distance: 210 },
+  { to: "Dhaka", from: "Dinajpur", distance: 230 },
+  { to: "Dhaka", from: "Feni", distance: 240 },
+  { to: "a", from: "b", distance: 260 },
+];
 
 function Slip() {
   const location = useLocation();
@@ -9,23 +26,6 @@ function Slip() {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [price, setPrice] = useState(null);
-
-  const destinations = [
-    { to: "Dhaka", from: "Khulna", distance: 150 },
-    { to: "Dhaka", from: "Cox Bazar", distance: 300 },
-    { to: "Dhaka", from: "Sylhet", distance: 250 },
-    { to: "Dhaka", from: "Rajshahi", distance: 200 },
-    { to: "Dhaka", from: "Barishal", distance: 180 },
-    { to: "Dhaka", from: "Rangpur", distance: 220 },
-    { to: "Dhaka", from: "Mymensingh", distance: 160 },
-    { to: "Dhaka", from: "Jessore", distance: 170 },
-    { to: "Dhaka", from: "Comilla", distance: 190 },
-    { to: "Dhaka", from: "Narayanganj", distance: 140 },
-    { to: "Dhaka", from: "Bogra", distance: 210 },
-    { to: "Dhaka", from: "Dinajpur", distance: 230 },
-    { to: "Dhaka", from: "Feni", distance: 240 },
-    { to: "a", from: "b", distance: 260 },
-  ];
   console.log(car, user, driver);
   useEffect(() => {
     if (!car || !user || !driver) {
@@ -59,7 +59,7 @@ function Slip() {
     };
 
     calculatePrice();
-  }, [car, user, driver, destinations]);
+  }, [car, user, driver]);
 
   if (loading) {
     return (

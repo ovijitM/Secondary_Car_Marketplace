@@ -70,7 +70,6 @@ router.post('/uploadcars', upload.single('img'), async (req, res) => {
       mileage,
       color,
       transmission,
-      label,
       details,
       description,
       purchase_location,

@@ -20,7 +20,7 @@ export default async function addUser ({ name, email, password, country, state }
     };
 
     const result = await collection.insertOne(newUser);
-     
+    return result.acknowledged;
   } catch {
     console.log("there is an probelm in adding user");
   }

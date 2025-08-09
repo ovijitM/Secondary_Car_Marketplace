@@ -33,12 +33,12 @@ function Signup() {
   useEffect(() => {
     if (userInfo) {
       const [firstName, lastName] = userInfo.name.split(' ');
-      setInfo({
-        ...info,
+      setInfo(prevInfo => ({
+        ...prevInfo,
         firstName,
         lastName,
         email: userInfo.email,
-      });
+      }));
     }
   }, [userInfo]);
 

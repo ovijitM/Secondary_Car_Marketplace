@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
@@ -12,7 +12,6 @@ export default function Admin() {
   const [users, setUsers] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalCar, setTotalCar] = useState(0);
-  const [totalKYC, setTotalKYC] = useState(0);
 
   const decodeToken = (token) => {
     try {
@@ -25,7 +24,7 @@ export default function Admin() {
     }
   };
   console.log("Admin Dashboard");
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       console.error("No token found.");
@@ -48,18 +47,17 @@ export default function Admin() {
         setUsers(data.users);
         setTotalCar(data.totalCar);
         setTotalRevenue(data.totalRevenue);
-        setTotalKYC(data.totalKYC);
       } else {
         console.error("Failed to fetch admin data");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleNavigation = (path) => {
     navigate(path);

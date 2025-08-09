@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Kyc() {
     const [kycApplications, setKycApplications] = useState([]);
+    const [error, setError] = useState(null);
 
     const fetchKycApplications = async () => {
         try {
@@ -79,6 +80,7 @@ export default function Kyc() {
     return (
         <div>
             <h1>KYC Applications</h1>
+            {error && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{error}</div>}
             <table className="table-auto border-collapse border border-gray-400 w-full">
                 <thead className="bg-gray-200">
                     <tr>

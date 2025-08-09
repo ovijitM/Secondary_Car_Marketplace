@@ -49,6 +49,7 @@ function Login() {
         setErrorMessage(data.message);
       }
     } catch (error) {
+      console.error('Login error:', error);
       setErrorMessage('An error occurred while logging in. Please try again.');
     }
   };

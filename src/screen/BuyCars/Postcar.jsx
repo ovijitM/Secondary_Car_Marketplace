@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import "./Postcar.css";
 
 export default function Postcar() {
-  const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
     brand: "",
     model: "",

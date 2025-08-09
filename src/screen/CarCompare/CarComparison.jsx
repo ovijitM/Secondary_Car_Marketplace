@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./CarComparison.css";
 import CustomNavbar from "../../components/Customnavbar/Customnavbar";
 import CarSearch from "../CarSearch/CarSearch";
@@ -10,14 +10,6 @@ const CarComparison = () => {
     setSelectedCars((prev) => {
       const updatedCars = [...prev];
       updatedCars[index] = car;
-      return updatedCars;
-    });
-  };
-
-  const handleRemoveCar = (index) => {
-    setSelectedCars((prev) => {
-      const updatedCars = [...prev];
-      updatedCars[index] = null;
       return updatedCars;
     });
   };

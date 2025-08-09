@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 
 const CarSearch = ({ index, onAddCar }) => {
@@ -53,6 +54,11 @@ const CarSearch = ({ index, onAddCar }) => {
       )}
     </div>
   );
+};
+
+CarSearch.propTypes = {
+  index: PropTypes.number.isRequired,
+  onAddCar: PropTypes.func.isRequired
 };
 
 export default CarSearch;

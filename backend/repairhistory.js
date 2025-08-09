@@ -33,19 +33,15 @@ router.post("/repairhistory", async (req, res) => {
     // Insert the document into the collection
     const result = await collection.insertOne(newHistory);
     const result2 = await collection2.insertOne(newHistory);
-
-
+    
+    if (result.acknowledged && result2.acknowledged) {
+      return res.status(201).json({ success: true, message: 'Repair history added successfully' });
+    } else {
+      return res.status(500).json({ success: false, message: 'Failed to add repair history' });
+    }
 
     // const Transaction_history_Collection=db.collection('Transaction_history');
     // const Transaction_history = await Transaction_history_Collection.find({}).toArray();
-
-
-    res.status(201).json({
-      message: "User history saved successfully.",
-      insertedId: result.insertedId, // Return the inserted document ID
-    });
-
-    // res.status(200).json({ success: true,  transaction_history: Transaction_history });
   } catch (error) {
     console.error("Error saving user history:", error);
     res.status(500).json({ message: "Server error. Please try again later." });

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Container, Form, Row, Col, Button, Card } from "react-bootstrap";
 import CustomNavbar from "../components/Customnavbar/Customnavbar";
 
@@ -113,7 +113,7 @@ export default function InsuranceCalculator() {
   };
 
   // Function to check if the insurance has been approved
-  const checkApprovalStatus = async () => {
+  const checkApprovalStatus = useCallback(async () => {
     console.log('hi');
     try {
       const response = await fetch("http://localhost:8000/api/applyinsurance", {
@@ -135,7 +135,7 @@ export default function InsuranceCalculator() {
     } catch (error) {
       console.error("Error fetching insurance status:", error);
     }
-  };
+  }, [email]);
 
   const handleApply = async () => {
     // Submit the form and set submit flag to true
@@ -146,7 +146,7 @@ export default function InsuranceCalculator() {
     if (premium !== null) {  // Trigger only when premium is calculated
       checkApprovalStatus(); // Ensure status is checked after premium calculation
     }
-  }, [premium]);
+  }, [premium, checkApprovalStatus]);
 
   return (
     <>
